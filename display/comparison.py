@@ -1,31 +1,47 @@
 import json
 import matplotlib.pyplot as plt
 
-# Load the JSON data
+# Load the JSON data from 'comparison.json'
 with open('comparison.json', 'r') as f:
-    data = json.load(f)
+    tempos_ = json.load(f)
 
-# Extract the relevant data from the dictionary
-outer_key = 'worst'
-n_values = data[outer_key]['n']
-insertion_times = data[outer_key]['insertion']
-merge_times = data[outer_key]['merge']
+# Set up a 2x2 subplot layout
+fig, axs = plt.subplots(2, 2, figsize=(12, 10))
 
-# Create a plot
-plt.figure(figsize=(10, 6))
+# Flatten the 2x2 grid of subplots for easier indexing
+axs = axs.flatten()
 
-# Plot insertion sort times
-plt.plot(n_values, insertion_times, label='Insertion Sort')
+# Define titles for each subplot and their corresponding index
+subplot_titles = ['Best', 'Mid-Best', 'Mid-Worst', 'Worst']
 
-# Plot merge sort times
-plt.plot(n_values, merge_times, label='Merge Sort')
+# Loop through each key in tempos_ and plot the respective curves in its own subplot
+for idx, (case, values) in enumerate(tempos_.items()):
+    n_values = values['n']
+    insertion_times = values['insertion']
+    merge_times = values['merge']
+    
+    # Plot insertion sort times (solid line)
+    axs[idx].plot(n_values, insertion_times, label='Insertion Sort')
+    
+    # Plot merge sort times (dotted line)
+    axs[idx].plot(n_values, merge_times, label='Merge Sort')
 
-# Add labels and title
-plt.xlabel('n (size of the list)')
-plt.ylabel('Time (microseconds)')
-plt.title(f'Performance Comparison: {outer_key}')
-plt.legend()
+    # Set title for the subplot
+    axs[idx].set_title(subplot_titles[idx])
+    
+    # Set labels for the x and y axes
+    if idx > 1:
+        axs[idx].set_xlabel('Array Length (n)')
+    axs[idx].set_ylabel('Time (nanoseconds)')
+
+    # Add legend to each subplot
+    axs[idx].legend()
+
+    # Add grid for better readability
+    axs[idx].grid(True)
+
+# Adjust layout so that plots don't overlap
+plt.tight_layout()
 
 # Show the plot
-plt.grid(True)
 plt.show()
