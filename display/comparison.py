@@ -2,7 +2,7 @@ import json
 import matplotlib.pyplot as plt
 
 # Load the JSON data from 'comparison.json'
-with open('comparison.json', 'r') as f:
+with open('./results/comparing-insertion-and-merge/comparison.json', 'r') as f:
     tempos_ = json.load(f)
 
 # Set up a 2x2 subplot layout
