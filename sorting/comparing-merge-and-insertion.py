@@ -3,7 +3,7 @@ import json
 import time
 
 MIN_LENGTH = 10
-MAX_LENGTH = 750
+MAX_LENGTH = 1000
 
 
 def insertion_sort(A, n):
@@ -95,30 +95,31 @@ if __name__ == "__main__":
             'insertion': [],
             'merge': []
         },
-        # COLOCAR OS OUTROS AQUI DEPOIS
     }
-    for n in range(MIN_LENGTH, MAX_LENGTH+1):
-        # BEST CASE
-        
-        # Sequence (copy to prevent in-place sorting)
-        arr = generate_ordered_sequence(n, 'mid-worst')
-        arr_insertion = copy.deepcopy(arr)
-        arr_merge = copy.deepcopy(arr)
-        
-        # Insertion sort
-        start_insertion = time.time_ns()
-        insertion_sorted = insertion_sort(arr_insertion, n)
-        finish_insertion = time.time_ns()
+    for tipo_execucao in tempos_.keys():
+        print(f'Rodando para {tipo_execucao}')
+        for n in range(MIN_LENGTH, MAX_LENGTH+1):
+            # BEST CASE
 
-        # Merge sort
-        start_merge = time.time_ns()
-        merge_sorted = merge_sort(arr_merge)
-        finish_merge = time.time_ns()
+            # Sequence (copy to prevent in-place sorting)
+            arr = generate_ordered_sequence(n, tipo_execucao)
+            arr_insertion = copy.deepcopy(arr)
+            arr_merge = copy.deepcopy(arr)
 
-        tempos_['worst']['n'].append(n)
-        tempos_['worst']['insertion'].append(finish_insertion - start_insertion)
-        tempos_['worst']['merge'].append(finish_merge - start_merge)
-    
+            # Insertion sort
+            start_insertion = time.time_ns()
+            insertion_sorted = insertion_sort(arr_insertion, n)
+            finish_insertion = time.time_ns()
+
+            # Merge sort
+            start_merge = time.time_ns()
+            merge_sorted = merge_sort(arr_merge)
+            finish_merge = time.time_ns()
+
+            tempos_[tipo_execucao]['n'].append(n)
+            tempos_[tipo_execucao]['insertion'].append(finish_insertion - start_insertion)
+            tempos_[tipo_execucao]['merge'].append(finish_merge - start_merge)
+
     with open('comparison.json', 'w+') as file:
         json.dump(tempos_, file, indent=4)
 
