@@ -1,6 +1,8 @@
 import json
-import numpy as np
+from pathlib import Path
+
 import matplotlib.pyplot as plt
+import numpy as np
 
 # Load JSON data from files
 with open('results/annotated-insertion-sort/times.json', 'r') as file:
@@ -36,7 +38,7 @@ ax1.fill_between(x_values_times,
 # Labels for the first plot (times data)
 ax1.set_xlabel('List lengths')
 ax1.set_ylabel('Times (ns)', color='blue')
-ax1.set_title('Mean Curves with Standard Deviation Region')
+ax1.set_title('Insertion Sort Performance')
 
 # Add grid
 ax1.grid(True)
@@ -59,6 +61,14 @@ ax2.set_ylabel('Operations', color='green')
 # Add legends for both axes
 ax1.legend(loc='upper left')
 ax2.legend(loc='upper right')
+
+# Save the plot 
+# Save the figure
+plt.savefig(
+    Path().cwd() / 'results' / "insertion-performance.png",
+    bbox_inches='tight',
+    dpi=500
+)
 
 # Show the plot
 plt.show()

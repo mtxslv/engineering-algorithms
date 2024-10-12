@@ -1,5 +1,6 @@
 import json
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 # Load the JSON data from 'comparison.json'
 with open('./results/comparing-insertion-and-merge/comparison.json', 'r') as f:
@@ -42,6 +43,14 @@ for idx, (case, values) in enumerate(tempos_.items()):
 
 # Adjust layout so that plots don't overlap
 plt.tight_layout()
+
+# Save the plot 
+# Save the figure
+plt.savefig(
+    Path().cwd() / 'results' / "comparison-insertion-merge.png",
+    bbox_inches='tight',
+    dpi=500
+)
 
 # Show the plot
 plt.show()
