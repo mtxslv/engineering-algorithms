@@ -37,7 +37,7 @@ for i in range(4):
 # Add labels and title
 plt.xlabel('Number of tasks per worker')
 plt.ylabel('Load')
-plt.title('Load by Workers (Original vs Shuffled Tasks)')
+plt.title('Load per Worker (Original vs Shuffled Tasks)')
 
 # Add legend
 plt.legend(loc='upper left')
