@@ -11,14 +11,19 @@ n = data['n']
 times = data['time']
 
 constante = 107
+c_sup = 200
 y = [
     (constante*i)*math.log(constante*i) for i in n
+]
+sup = [
+    (c_sup*i)*math.log(i) for i in n
 ]
 # Create the plot
 plt.figure(figsize=(10, 6))
 
-plt.plot(n,times,linestyle='-', linewidth=2,label="Running Time")
-plt.plot(n,y,linestyle='-', linewidth=2, label="107n*ln(107n)")
+plt.plot(n,times, color='darkturquoise',linestyle='-', linewidth=2,label="Running Time")
+plt.plot(n,y, color='darkcyan',linestyle='-', linewidth=2, label=f"Avg: {constante}n*ln(n)")
+plt.plot(n,sup, color='chocolate',linestyle='-', linewidth=2, label=f"Bound: {c_sup}n*ln(n)")
 plt.legend()
 plt.title("Merge Sort Running Time")
 plt.xlabel("Array Size")
