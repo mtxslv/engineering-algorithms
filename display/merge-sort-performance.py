@@ -17,7 +17,15 @@ y = [
 # Create the plot
 plt.figure(figsize=(10, 6))
 
-plt.plot(n,times,linestyle='-', linewidth=2)
-plt.plot(n,y,linestyle='-', linewidth=2)
+plt.plot(n,times,linestyle='-', linewidth=2,label="Running Time")
+plt.plot(n,y,linestyle='-', linewidth=2, label="107n*ln(107n)")
+plt.legend()
+plt.title("Merge Sort Running Time")
+plt.xlabel("Array Size")
 plt.grid(True)
+plt.savefig(
+    Path().cwd() / 'results' / "merge-sort"/"merge-sort-performance.png",
+    bbox_inches='tight',
+    dpi=500    
+)
 plt.show()
