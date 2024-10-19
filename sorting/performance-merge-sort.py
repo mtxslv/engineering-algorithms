@@ -56,7 +56,7 @@ if __name__ == "__main__":
         'n':[],
         'time':[]
     }
-    for n in range(10,2500):
+    for n in range(10,9000):
         arr = [i for i in range(n,0,-1)]
         start = time.time_ns()
         sorted_arr = merge_sort(arr)
