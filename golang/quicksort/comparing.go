@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand/v2"
+    "time"	
 )
 
 // ARRAY GENERATION / DISPLAY / COMPARISON
@@ -94,20 +95,38 @@ func randomized_quicksort(A []int, p int, r int, randomizer *rand.Rand){
 
 func main(){
 	MIN := 10
-	MAX := 5000
+	MAX := 1750
+	
+	i := 0
+	
+	times_quicksort := make([]int64, MAX - MIN + 1)
+	times_randomized := make([]int64, MAX - MIN + 1)
+	arr_n := make([]int32, MAX - MIN + 1)
+
 	r := rand.New(rand.NewPCG(255, 16515616))
 	for n := MIN ; n <= MAX; n++ {
 		fmt.Println("Running for n = ", n)
 		arr_regular := generate_array(n,true)
 		arr_randomized := generate_array(n,true)
 
+		start_quicksort := time.Now()
 		quicksort(arr_regular,0,n-1)
+		regular_quicksort_time := time.Since(start_quicksort)
+
+		start_randomized := time.Now()
 		randomized_quicksort(arr_randomized,0,n-1,r)
+		randomized_quicksort_time := time.Since(start_randomized)
 
 		are_equal := compare_array(arr_regular,arr_randomized)
 		if !are_equal{
 			fmt.Println("Sorted arrays differ. Stopping...")
 			break
 		}
+
+		times_quicksort[i] =  regular_quicksort_time.Nanoseconds()
+		times_randomized[i] = randomized_quicksort_time.Nanoseconds()
+		arr_n[i] = int32(n)
+		i = i+1
 	}
+	fmt.Print(times_quicksort)
 }
