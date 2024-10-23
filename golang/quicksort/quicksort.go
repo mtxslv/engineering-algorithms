@@ -31,19 +31,17 @@ func shuffled_array(n int, r *rand.Rand) []int {
 // QUICKSORT
 
 func partition(A []int, p int, r int) int {
-	fmt.Println("DENTRO DO PARTITION")
 	x := A[r] // the pivot
 	i := p - 1 // highest index into the low side
-	for j := p ; p < r-1 ; p++ {
-		fmt.Println("DENTRO DO FOR DO PARTITION, J = ", j)
+	for j := p ; j < r ; j++ {
 		if A[j] <= x {
-			i := i + 1
+			i = i + 1
 			aux := A[i]
 			A[i] = A[j]
 			A[j] = aux
 		}
 	} 
-	aux := A[i+1]
+	aux := A[r]
 	A[r] = A[i+1]
 	A[i+1] = aux
 	return i + 1
@@ -51,7 +49,6 @@ func partition(A []int, p int, r int) int {
 
 func quicksort(A []int, p int, r int){
 	if p < r {
-		fmt.Println("DENTRO DO IF")
 		// Partition the subarray around the pivot, which ends up in A[q].
 		q := partition(A,p,r)
 		quicksort(A, p, q-1) // recursively sort the low side
@@ -62,11 +59,11 @@ func quicksort(A []int, p int, r int){
 // MAIN
 
 func main(){
-	n := 5
+	n := 15
 	arr := generate_array(n,true)
+	fmt.Println("ORIGINAL ARRAY:", arr)
 	quicksort(arr,0,n-1)
-	display_array(n,arr)
-
+	fmt.Println("SORTED ARRAY:", arr)
 	// r := rand.New(rand.NewPCG(255, 16515616))
 	// for n := 1; n <=7 ; n ++ {
 	// 	arr := generate_array(n,true)
