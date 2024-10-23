@@ -1,10 +1,34 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"math/rand/v2"
-    "time"	
+	"os"	
+    "time"
 )
+
+// JSON STUFF
+
+type Dados struct {
+	N []int32 `json:"n"` // Capitalized field name for export
+	TEMPOS_RANDOMIZED []int64 `json:"tempos_randomized"` // Capitalized field name for export
+	TEMPOS_REGULAR []int64 `json:"tempos_regular"` // Capitalized field name for export
+}
+
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+
+func write_array_json(arr_n []int32, arr_randomized, arr_regular []int64) {
+	tempos := Dados{arr_n, arr_randomized, arr_regular}
+	b, err := json.Marshal(tempos)
+	check(err)
+	err = os.WriteFile("./comparison-quicksort-and-randomized.json", b, 0644)
+	check(err)
+}
 
 // ARRAY GENERATION / DISPLAY / COMPARISON
 
@@ -95,7 +119,7 @@ func randomized_quicksort(A []int, p int, r int, randomizer *rand.Rand){
 
 func main(){
 	MIN := 10
-	MAX := 1750
+	MAX := 75000
 	
 	i := 0
 	
@@ -128,5 +152,6 @@ func main(){
 		arr_n[i] = int32(n)
 		i = i+1
 	}
-	fmt.Print(times_quicksort)
+	fmt.Print("Salvando Arquivo...")
+	write_array_json(arr_n, times_randomized, times_quicksort)
 }
