@@ -119,7 +119,7 @@ func randomized_quicksort(A []int, p int, r int, randomizer *rand.Rand){
 
 func main(){
 	MIN := 10
-	MAX := 75000
+	MAX := 25000
 	
 	i := 0
 	
