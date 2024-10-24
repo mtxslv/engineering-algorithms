@@ -63,7 +63,7 @@ func repeat_elements(p float32, n int, arr []int) []int {
 	how_many := int(p*float32(n))
 	fmt.Print("REPEAT ", how_many)
 	for i := 0; i < how_many; i++{
-		arr[n-i-1] = arr[i]
+		arr[n-i-1] = arr[0]
 	}
 	return arr
 }
@@ -129,7 +129,7 @@ func randomized_quicksort(A []int, p int, r int, randomizer *rand.Rand){
 func main(){
 	N := 40000 // 3000
 	
-	arr_perc := []float32{.1,.15,.2,.25,.3,.35,.4}
+	arr_perc := []float32{.1, .15, .2, .25, .3, .35, .4, .45, .5, .55, .6, .65, .7, .75, .8, .85, .9}
 	times_quicksort := make([]int64, len(arr_perc))
 	times_randomized := make([]int64, len(arr_perc))
 
