@@ -41,6 +41,16 @@ func build_max_heap(A *heap, n int){
 	}
 }
 
+func heapsort(A *heap, n int) {
+	build_max_heap(A,n)
+	for i := n-1; i > 0; i-- {
+		aux := A.heap[0]
+		A.heap[0] = A.heap[i]
+		A.heap[i] = aux
+		A.heap_size = A.heap_size - 1
+		max_heapify(*A,0)
+	}
+}
 
 func main(){
 	var expected_heap = heap{[]int{16, 14, 10, 8, 7, 9, 3, 2, 4, 1,},10} 
@@ -57,4 +67,6 @@ func main(){
 	fmt.Println("A WANNABE HEAP: ", arr)
 	build_max_heap(&arr,10)
 	fmt.Println("A FULL FLEDGED HEAP: ", arr)
+	heapsort(&arr, 10)
+	fmt.Println("HEAPSORTED: ", arr)
 }
