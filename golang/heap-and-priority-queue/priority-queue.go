@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+	"errors"
+)
 
 type heap struct {
 	heap []int
@@ -58,6 +62,32 @@ func max_heap_extract_max(A *heap) int {
 	return max
 }
 
+func max_heap_increase_key(A *heap, index int, key int) error {
+	if key < A.heap[index] {
+		return errors.New("new key is smaller than current key")
+	}
+	A.heap[index] = key
+	for index > 0 && A.heap[parent(index)] < A.heap[index] {
+		A.heap[index], A.heap[parent(index)] = A.heap[parent(index)], A.heap[index]
+		index = parent(index)
+	}
+	return nil
+}
+
+// MAX-HEAP-INSERT function
+func max_heap_insert(A *heap, x int, maxSize int) error {
+	if A.heap_size == maxSize {
+		return errors.New("heap overflow")
+	}
+
+	// Expand the heap and set initial value to -inf
+	A.heap_size++
+	A.heap = append(A.heap, math.MinInt32)
+
+	// Increase the key to the desired value
+	return max_heap_increase_key(A, A.heap_size-1, x)
+}
+
 func main() {
 	// Example usage
 	A := &heap{[]int{16, 14, 10, 8, 7, 9, 3, 2, 4, 1}, 10}
@@ -66,4 +96,27 @@ func main() {
 	max := max_heap_extract_max(A)
 	fmt.Println("Extracted max:", max)
 	fmt.Println("Heap after extraction:", A.heap[:A.heap_size])
+
+	// Create a new heap and define max size
+	A = &heap{heap: []int{}, heap_size: 0}
+	maxSize := 10
+
+	// Insert elements
+	for _, val := range []int{16, 14, 10, 8, 7, 9} {
+		err := max_heap_insert(A, val, maxSize)
+		if err != nil {
+			fmt.Println("Error:", err)
+		}
+	}
+
+	// Display the max heap after insertion
+	fmt.Println("Max Heap after insertions:", A.heap[:A.heap_size])
+
+	// Increase the key of the element at index 3
+	err := max_heap_increase_key(A, 3, 15)
+	if err != nil {
+		fmt.Println("Error:", err)
+	} else {
+		fmt.Println("Max Heap after key increase:", A.heap[:A.heap_size])
+	}	
 }
