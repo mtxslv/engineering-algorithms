@@ -77,6 +77,18 @@ func shuffled_array(n int, r *rand.Rand) []int {
 	return r.Perm(n)
 }
 
+func copyArray(arr []int) []int { 
+	arr_copy := make([]int, len(arr))
+	for i := 0; i < len(arr); i++{
+		arr_copy[i] = arr[i]
+	}
+	// are_equal := compare_array(arr,arr_copy)
+	// if !are_equal{
+	// 	fmt.Println("Sorted arrays differ. Stopping...")
+	// }	
+	return arr_copy
+}
+
 // QUICKSORT
 
 func partition(A []int, p int, r int) int {
@@ -138,8 +150,8 @@ func main(){
 	for i := 0 ; i < len(arr_perc); i++ {
 		p := arr_perc[i]
 		fmt.Println("Running for p = ", p)
-		arr_regular := generate_array(N,true)
-		arr_randomized := generate_array(N,true)
+		arr_regular := shuffled_array(N, r)
+		arr_randomized := copyArray(arr_regular)
 
 		start_quicksort := time.Now()
 		quicksort(arr_regular,0,N-1)
