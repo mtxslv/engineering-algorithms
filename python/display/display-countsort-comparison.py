@@ -22,9 +22,9 @@ n = n[mask]
 radix = radix[mask]
 counting = counting[mask]
 
-plt.scatter(n, radix, color='red',s=8, label='Radix Sort')
+plt.scatter(n, radix, color='red',s=8, label='Radix Sort', alpha=0.3)
 
-plt.scatter(n, counting, color='blue',s=8, label='Counting sort')
+plt.scatter(n, counting, color='blue',s=8, label='Counting sort', alpha=0.3)
 
 plt.title("Sorting Algorithms Running Time")
 plt.xlabel("Array length")
