@@ -22,9 +22,9 @@ n = n[mask]
 randomized = randomized[mask]
 regular = regular[mask]
 
-plt.scatter(n, randomized, color='red',s=8, label='Randomized-QuickSort')
+plt.scatter(n, randomized, color='red',s=8, label='Randomized-QuickSort', alpha=0.3)
 
-plt.scatter(n, regular, color='blue',s=8, label='Quicksort')
+plt.scatter(n, regular, color='blue',s=8, label='Quicksort', alpha=0.3)
 
 plt.title("Sorting Algorithms Running Time")
 plt.xlabel("Array length")
