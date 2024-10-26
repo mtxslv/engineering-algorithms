@@ -139,7 +139,7 @@ func countingSort(A []int, n, k int) []int {
 
 func main() {
 	MIN := 10
-	MAX := 80000
+	MAX := 70000
 	
 	i := 0
 	
