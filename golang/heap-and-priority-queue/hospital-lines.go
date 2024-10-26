@@ -92,6 +92,14 @@ func max_heap_insert(A *heap, x Ticket, maxSize int) error {
 	return max_heap_increase_key(A, A.heap_size-1, x.risk)
 }
 
+func examinePatient(A *heap){
+	patientNumber := len(A.heap)
+	for i := 0; i < patientNumber; i++ {
+		ticket := max_heap_extract_max(A)
+		fmt.Printf("Ticket number: %d, risk: %d\n", ticket.number, ticket.risk)
+	}
+}
+
 func main() {
 	// Create a new heap and define max size
 	A := &heap{heap: []Ticket{}, heap_size: 0}
@@ -118,20 +126,22 @@ func main() {
 		}
 	}
 
-	// Display the max heap after insertion
-	fmt.Println("Max Heap after insertions:")
-	for _, ticket := range A.heap[:A.heap_size] {
-		fmt.Printf("Ticket number: %d, risk: %d\n", ticket.number, ticket.risk)
-	}
+	examinePatient(A)
 
-	// Increase the risk of the ticket at index 3
-	err := max_heap_increase_key(A, 3, 15)
-	if err != nil {
-		fmt.Println("Error:", err)
-	} else {
-		fmt.Println("\nMax Heap after risk increase:")
-		for _, ticket := range A.heap[:A.heap_size] {
-			fmt.Printf("Ticket number: %d, risk: %d\n", ticket.number, ticket.risk)
-		}
-	}
+	// // Display the max heap after insertion
+	// fmt.Println("Max Heap after insertions:")
+	// for _, ticket := range A.heap[:A.heap_size] {
+	// 	fmt.Printf("Ticket number: %d, risk: %d\n", ticket.number, ticket.risk)
+	// }
+
+	// // Increase the risk of the ticket at index 3
+	// err := max_heap_increase_key(A, 3, 15)
+	// if err != nil {
+	// 	fmt.Println("Error:", err)
+	// } else {
+	// 	fmt.Println("\nMax Heap after risk increase:")
+	// 	for _, ticket := range A.heap[:A.heap_size] {
+	// 		fmt.Printf("Ticket number: %d, risk: %d\n", ticket.number, ticket.risk)
+	// 	}
+	// }
 }
