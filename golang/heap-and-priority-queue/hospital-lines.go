@@ -99,12 +99,16 @@ func main() {
 
 	// Insert elements
 	tickets := []Ticket{
-		{number: 1, risk: 16},
-		{number: 2, risk: 14},
-		{number: 3, risk: 10},
-		{number: 4, risk: 8},
-		{number: 5, risk: 7},
-		{number: 6, risk: 9},
+		{number: 1,  risk: 16},
+		{number: 2,  risk: 4},
+		{number: 3,  risk: 8},
+		{number: 4,  risk: 14},
+		{number: 5,  risk: 1},
+		{number: 6,  risk: 9},
+		{number: 7,  risk: 3},
+		{number: 8,  risk: 2},
+		{number: 9,  risk: 10},
+		{number: 10, risk: 7},		
 	}
 
 	for _, ticket := range tickets {
