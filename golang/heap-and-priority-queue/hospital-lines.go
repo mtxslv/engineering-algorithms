@@ -126,22 +126,12 @@ func main() {
 		}
 	}
 
+	// Display the max heap after insertion
+	fmt.Println("Max Heap after insertions:")
+	for _, ticket := range A.heap[:A.heap_size] {
+		fmt.Printf("Ticket number: %d, risk: %d\n", ticket.number, ticket.risk)
+	}	
+
+	fmt.Println("Examining Patients")
 	examinePatient(A)
-
-	// // Display the max heap after insertion
-	// fmt.Println("Max Heap after insertions:")
-	// for _, ticket := range A.heap[:A.heap_size] {
-	// 	fmt.Printf("Ticket number: %d, risk: %d\n", ticket.number, ticket.risk)
-	// }
-
-	// // Increase the risk of the ticket at index 3
-	// err := max_heap_increase_key(A, 3, 15)
-	// if err != nil {
-	// 	fmt.Println("Error:", err)
-	// } else {
-	// 	fmt.Println("\nMax Heap after risk increase:")
-	// 	for _, ticket := range A.heap[:A.heap_size] {
-	// 		fmt.Printf("Ticket number: %d, risk: %d\n", ticket.number, ticket.risk)
-	// 	}
-	// }
 }
