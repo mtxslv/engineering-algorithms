@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"math"
 	"math/rand"
-	"sort"
 	"time"
 )
 
@@ -27,11 +26,11 @@ func randomized_partition(A []int, p int, r int, randomizer *rand.Rand) int {
 	return partition(A, p, r)
 }
 
-func randomized_quicksort(A []int, p int, r int, randomizer *rand.Rand) {
+func randomizedQuicksort(A []int, p int, r int, randomizer *rand.Rand) {
 	if p < r {
 		q := randomized_partition(A, p, r, randomizer)
-		randomized_quicksort(A, p, q-1, randomizer)
-		randomized_quicksort(A, q+1, r, randomizer)
+		randomizedQuicksort(A, p, q-1, randomizer)
+		randomizedQuicksort(A, q+1, r, randomizer)
 	}
 }
 
@@ -54,7 +53,7 @@ func selectHelper(A []int, p, r, i int, randomizer *rand.Rand) int {
 	// Sort each group of five in place
 	for j := 0; j < g; j++ {
 		group := []int{A[p+j], A[p+j+g], A[p+j+2*g], A[p+j+3*g], A[p+j+4*g]}
-		sort.Ints(group)
+		randomizedQuicksort(group,0,len(group)-1,randomizer)
 		A[p+j+2*g] = group[2] // Median of group placed in A[p+j+2*g]
 	}
 
