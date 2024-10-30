@@ -40,6 +40,6 @@ func write_array_json(arr_n, arr_y []int) {
 
 func main() {
 	array_n := []int{1, 2, 3}
-	array_y := []int{1, 2, 3}
+	array_y := []int{10,20,30}
 	write_array_json(array_n, array_y)
 }
