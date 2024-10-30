@@ -36,11 +36,30 @@ func shuffledArray(n int, r *rand.Rand) []int {
 	return r.Perm(n)
 }
 
+func compare_array(arr_1 []int, arr_2 []int) bool { // True if arrays equal
+	leng_arr_1 := len(arr_1)
+	leng_arr_2 := len(arr_2)
+	if leng_arr_1 != leng_arr_2{
+		return false
+	} else {
+		for i := 0; i < leng_arr_1; i++ {
+			if arr_1[i] != arr_2[i] {
+				return false
+			}
+		}
+	}
+	return true
+}
+
 func copyArray(arr []int) []int { 
 	arr_copy := make([]int, len(arr))
 	for i := 0; i < len(arr); i++{
 		arr_copy[i] = arr[i]
 	}	
+	are_equal := compare_array(arr,arr_copy)
+	if !are_equal{
+		fmt.Println("Sorted arrays differ. Stopping...")
+	}		
 	return arr_copy
 }
 
@@ -89,7 +108,7 @@ func randomizedQuicksort(A []int, p int, r int, randomizer *rand.Rand) {
 	}
 }
 
-func selectHelper(A []int, p, r, i int, randomizer *rand.Rand) int {
+func selectSmartPivot(A []int, p, r, i int, randomizer *rand.Rand) int {
 	for (r - p + 1) % 5 != 0 {
 		for j := p + 1; j <= r; j++ {
 			// put the minimum into A[p]
@@ -117,16 +136,16 @@ func selectHelper(A []int, p, r, i int, randomizer *rand.Rand) int {
 	}
 
 	// Recursively find the pivot x as the median of the group medians
-	x := selectHelper(A, p+2*g, p+3*g-1, int(math.Ceil(float64(g)/2.0)), randomizer)
+	x := selectSmartPivot(A, p+2*g, p+3*g-1, int(math.Ceil(float64(g)/2.0)), randomizer)
 	q := partitionAroundPivot(A, p, r, x)
 
 	k := q - p + 1
 	if i == k {
 		return A[q]
 	} else if i < k {
-		return selectHelper(A, p, q-1, i, randomizer)
+		return selectSmartPivot(A, p, q-1, i, randomizer)
 	} else {
-		return selectHelper(A, q+1, r, i-k, randomizer)
+		return selectSmartPivot(A, q+1, r, i-k, randomizer)
 	}
 }
 
@@ -141,13 +160,50 @@ func partitionAroundPivot(A []int, p, r, pivot int) int {
 }
 
 func main() {
+	MIN := 10
+	MAX :=  60000
+	
+	i := 0
+	
+	times_select := make([]int64, MAX - MIN + 1)
+	times_random_select := make([]int64, MAX - MIN + 1)
+	arr_n := make([]int32, MAX - MIN + 1)
+
 	randomizer := rand.New(rand.NewSource(time.Now().UnixNano()))
-	A := []int{6, 19, 4, 12, 14, 9, 15, 7, 8, 11, 3, 13, 2, 5, 10}
-	p := 0              // first element
-	r := len(A) - 1     // last index of A
-	i := 5              // we want the 5th smallest element
-	selection := randomizedSelect(A, p, r, i, randomizer)
-	result := selectHelper(A, 0, r, i, randomizer)
-	fmt.Printf("The value is: %d \n(Must be 6)\n", selection)
-	fmt.Printf("The value is: %d \n(Must be 6)\n", result)
-}
+	for n := MIN ; n <= MAX; n++ {
+		// Generate shuffled array
+		A_select := shuffledArray(n, randomizer)
+		A_random_select := copyArray(A_select)
+
+		fmt.Println("ARRAY: ", A_random_select)
+		fmt.Println("ARRAY: ", A_select)
+		
+		order_stats := 5              // we want the 5th smallest element
+
+		// Search for values
+		start_random_select := time.Now()
+		randomized_ans := randomizedSelect(A_random_select, 0, len(A_random_select) - 1, order_stats, randomizer)
+		random_select_time := time.Since(start_random_select)
+
+		start_select := time.Now()
+		select_ans := selectSmartPivot(A_select, 0, len(A_select) - 1, order_stats, randomizer)
+		select_time := time.Since(start_select)
+
+		fmt.Printf("Order Stats: %d (Random) | %d (Smart Pivot)\n", randomized_ans, select_ans)
+
+		if select_ans != randomized_ans {
+			fmt.Println("Order Statistics found differ. Stopping...")
+			break
+		} 
+			
+		times_random_select[i] =  random_select_time.Nanoseconds()
+		times_select[i] = select_time.Nanoseconds()
+		arr_n[i] = int32(n)
+		i = i+1		
+		
+		fmt.Printf("Run %d finished\n", n)
+		
+	}
+	fmt.Print("Salvando Arquivo...")
+	write_array_json(arr_n, times_random_select, times_select)
+}	
