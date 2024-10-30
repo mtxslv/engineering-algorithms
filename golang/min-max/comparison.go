@@ -23,11 +23,11 @@ func check(e error) {
 	}
 }
 
-func write_array_json(arr_n []int32, arr_counting, arr_radix []int64) {
-	tempos := Dados{arr_n, arr_counting, arr_radix}
+func write_array_json(arr_n []int32, arr_simultaneous, arr_standalone []int64) {
+	tempos := Dados{arr_n, arr_simultaneous, arr_standalone}
 	b, err := json.Marshal(tempos)
 	check(err)
-	err = os.WriteFile("./comparison-counting-and-radix.json", b, 0644)
+	err = os.WriteFile("./comparison-minmax.json", b, 0644)
 	check(err)
 }
 
@@ -140,11 +140,11 @@ func main() {
 	MIN := 10
 	MAX :=  43
 	
-	// i := 0
+	i := 0
 	
-	// times_standalone := make([]int64, MAX - MIN + 1)
-	// times_simultaneous := make([]int64, MAX - MIN + 1)
-	// arr_n := make([]int32, MAX - MIN + 1)
+	times_standalone := make([]int64, MAX - MIN + 1)
+	times_simultaneous := make([]int64, MAX - MIN + 1)
+	arr_n := make([]int32, MAX - MIN + 1)
 
 	randomizer := rand.New(rand.NewSource(time.Now().UnixNano()))
 	for n := MIN ; n <= MAX; n++ {
@@ -152,14 +152,26 @@ func main() {
 		arr := shuffledArray(n, randomizer)
 
 		// Search for values
+		start_simultaneous := time.Now()
 		min_simultaneous, max_simultaneous := findMinMax(arr)
+		simultaneous_time := time.Since(start_simultaneous)
+
+		start_standalone := time.Now()
 		min_standalone := findMin(arr, len(arr))
 		max_standalone := findMax(arr, len(arr))
+		standalone_time := time.Since(start_standalone)
 		
 		fmt.Printf("Minimum: %d, Maximum: %d\n", min_simultaneous, max_simultaneous)
 		if min_simultaneous != min_standalone || max_simultaneous != max_standalone {
 			fmt.Println("Min/Max found differ. Stopping...")
 			break
 		} 
+
+		times_simultaneous[i] =  simultaneous_time.Nanoseconds()
+		times_standalone[i] = standalone_time.Nanoseconds()
+		arr_n[i] = int32(n)
+		i = i+1		
 	}
+	fmt.Print("Salvando Arquivo...")
+	write_array_json(arr_n, times_simultaneous, times_standalone)
 }
