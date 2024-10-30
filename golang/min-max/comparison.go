@@ -1,9 +1,52 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"math"
+	"math/rand"
+	"os"	
+    "time"
 )
+
+// JSON STUFF
+
+type Dados struct {
+	N []int32 `json:"n"` // Capitalized field name for export
+	TEMPOS_SIMULTANEOUS []int64 `json:"tempos_simultaneous"` // Capitalized field name for export
+	TEMPOS_STANDALONE []int64 `json:"tempos_standalone"` // Capitalized field name for export
+}
+
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+
+func write_array_json(arr_n []int32, arr_counting, arr_radix []int64) {
+	tempos := Dados{arr_n, arr_counting, arr_radix}
+	b, err := json.Marshal(tempos)
+	check(err)
+	err = os.WriteFile("./comparison-counting-and-radix.json", b, 0644)
+	check(err)
+}
+
+func shuffledArray(n int, r *rand.Rand) []int {
+	return r.Perm(n)
+}
+
+func copyArray(arr []int) []int { 
+	arr_copy := make([]int, len(arr))
+	for i := 0; i < len(arr); i++{
+		arr_copy[i] = arr[i]
+	}
+	// are_equal := compare_array(arr,arr_copy)
+	// if !are_equal{
+	// 	fmt.Println("Sorted arrays differ. Stopping...")
+	// }	
+	return arr_copy
+}
+
 
 // findMinMax function finds the minimum and maximum values in an array
 func findMinMax(arr []int) (int, int) {
@@ -71,7 +114,7 @@ func maxInt(a, b int) int {
 
 func findMax(arr []int, n int) int {
 
-	max := arr[1]
+	max := arr[0]
 	for i := 1; i < n; i++ {
 		if max < arr[i] {
 			max = arr[i]
@@ -83,7 +126,7 @@ func findMax(arr []int, n int) int {
 
 func findMin(arr []int, n int) int {
 
-	min := arr[1]
+	min := arr[0]
 	for i := 1; i < n; i++ {
 		if min > arr[i] {
 			min = arr[i]
@@ -94,7 +137,29 @@ func findMin(arr []int, n int) int {
 }
 
 func main() {
-	arr := []int{3, 5, 1, 2, 4, 8, 6}
-	min, max := findMinMax(arr)
-	fmt.Printf("Minimum: %d, Maximum: %d\n", min, max)
+	MIN := 10
+	MAX :=  43
+	
+	// i := 0
+	
+	// times_standalone := make([]int64, MAX - MIN + 1)
+	// times_simultaneous := make([]int64, MAX - MIN + 1)
+	// arr_n := make([]int32, MAX - MIN + 1)
+
+	randomizer := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for n := MIN ; n <= MAX; n++ {
+		// Generate shuffled array
+		arr := shuffledArray(n, randomizer)
+
+		// Search for values
+		min_simultaneous, max_simultaneous := findMinMax(arr)
+		min_standalone := findMin(arr, len(arr))
+		max_standalone := findMax(arr, len(arr))
+		
+		fmt.Printf("Minimum: %d, Maximum: %d\n", min_simultaneous, max_simultaneous)
+		if min_simultaneous != min_standalone || max_simultaneous != max_standalone {
+			fmt.Println("Min/Max found differ. Stopping...")
+			break
+		} 
+	}
 }
