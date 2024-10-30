@@ -138,7 +138,7 @@ func findMin(arr []int, n int) int {
 
 func main() {
 	MIN := 10
-	MAX :=  43
+	MAX :=  60000
 	
 	i := 0
 	
@@ -161,16 +161,18 @@ func main() {
 		max_standalone := findMax(arr, len(arr))
 		standalone_time := time.Since(start_standalone)
 		
-		fmt.Printf("Minimum: %d, Maximum: %d\n", min_simultaneous, max_simultaneous)
 		if min_simultaneous != min_standalone || max_simultaneous != max_standalone {
 			fmt.Println("Min/Max found differ. Stopping...")
 			break
 		} 
-
+			
 		times_simultaneous[i] =  simultaneous_time.Nanoseconds()
 		times_standalone[i] = standalone_time.Nanoseconds()
 		arr_n[i] = int32(n)
 		i = i+1		
+		
+		fmt.Printf("Run %d finished\n", n)
+		
 	}
 	fmt.Print("Salvando Arquivo...")
 	write_array_json(arr_n, times_simultaneous, times_standalone)
