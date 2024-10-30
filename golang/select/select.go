@@ -37,10 +37,12 @@ func randomizedQuicksort(A []int, p int, r int, randomizer *rand.Rand) {
 func selectHelper(A []int, p, r, i int, randomizer *rand.Rand) int {
 	for (r - p + 1) % 5 != 0 {
 		for j := p + 1; j <= r; j++ {
+			// put the minimum into A[p]
 			if A[p] > A[j] {
 				A[p], A[j] = A[j], A[p]
 			}
 		}
+		// If we want the minimum of A[p:r], we're done.
 		if i == 1 {
 			return A[p]
 		}
@@ -48,10 +50,12 @@ func selectHelper(A []int, p, r, i int, randomizer *rand.Rand) int {
 		i--
 	}
 
-	g := (r - p + 1) / 5
+	g := (r - p + 1) / 5 // number of 5-element groups
 
 	// Sort each group of five in place
-	for j := 0; j < g; j++ {
+	// Compare the following loop with
+	// for j = p to p + g - 1
+	for j := 0; j < g; j++ { 
 		group := []int{A[p+j], A[p+j+g], A[p+j+2*g], A[p+j+3*g], A[p+j+4*g]}
 		randomizedQuicksort(group,0,len(group)-1,randomizer)
 		A[p+j+2*g] = group[2] // Median of group placed in A[p+j+2*g]
