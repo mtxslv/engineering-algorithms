@@ -58,7 +58,6 @@ func selectHelper(A []int, p, r, i int, randomizer *rand.Rand) int {
 	for j := 0; j < g; j++ { 
 		group := []int{A[p+j], A[p+j+g], A[p+j+2*g], A[p+j+3*g], A[p+j+4*g]}
 		randomizedQuicksort(group,0,len(group)-1,randomizer)
-		A[p+j+2*g] = group[2] // Median of group placed in A[p+j+2*g]
 	}
 
 	// Recursively find the pivot x as the median of the group medians
@@ -91,7 +90,7 @@ func SELECT(A []int, i int) int {
 }
 
 func main() {
-	A := []int{12, 3, 5, 7, 4, 19, 26}
+	A := []int{12, 3, 5, 7, 4, 19, 26} // 3, 4, 5, 7, 12, 19, 26
 	i := 3 // Find the 3rd smallest element
 	result := SELECT(A, i)
 	fmt.Printf("The %d-th smallest element is %d\n", i, result)
