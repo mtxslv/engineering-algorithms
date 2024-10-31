@@ -22,11 +22,11 @@ n = n[mask]
 tempos_simultaneous = tempos_simultaneous[mask]
 tempos_standalone = tempos_standalone[mask]
 
-plt.scatter(n, tempos_simultaneous, color='red',s=8, label='Simultaneous', alpha=0.3)
+plt.scatter(n, tempos_simultaneous, color='red',s=8, label='Simultaneous', alpha=0.2)
 
-plt.scatter(n, tempos_standalone, color='blue',s=8, label='Standalone', alpha=0.3)
+plt.scatter(n, tempos_standalone, color='blue',s=8, label='Standalone', alpha=0.2)
 
-plt.title("Sorting Algorithms Running Time")
+plt.title("Search Algorithms Running Time")
 plt.xlabel("Array length")
 plt.ylabel("Running Time (ns)")
 
