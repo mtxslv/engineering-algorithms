@@ -34,6 +34,8 @@ ax1.set_title('3D Surface of Weighted Distance')
 # Right subplot: 2D color map
 ax2 = fig.add_subplot(1, 2, 2)
 contour = ax2.contourf(X, Y, Z, cmap='viridis')
+ax2.axvline(6, color='orange', linestyle='dashed',label='weighted median')
+ax2.axhline(7, color='orange', linestyle='dashed',label='weighted median')
 fig.colorbar(contour, ax=ax2, label='Weighted Distance')
 ax2.set_xlabel('X')
 ax2.set_ylabel('Y')
