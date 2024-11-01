@@ -1,6 +1,9 @@
-import numpy as np
+from pathlib import Path
+
 import matplotlib.pyplot as plt
+import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
+
 
 # Define the function
 def post_office(x, y):
@@ -34,12 +37,16 @@ ax1.set_title('3D Surface of Weighted Distance')
 # Right subplot: 2D color map
 ax2 = fig.add_subplot(1, 2, 2)
 contour = ax2.contourf(X, Y, Z, cmap='viridis')
-ax2.axvline(6, color='orange', linestyle='dashed',label='weighted median')
-ax2.axhline(7, color='orange', linestyle='dashed',label='weighted median')
+ax2.plot(6,7, color='orange', marker = "X",markersize=10)
 fig.colorbar(contour, ax=ax2, label='Weighted Distance')
 ax2.set_xlabel('X')
 ax2.set_ylabel('Y')
 ax2.set_title('2D Contour Map of Weighted Distance')
 
 plt.tight_layout()
+plt.savefig(
+    Path().cwd() / 'experiments' / "post-office" / "post-office.png",
+    bbox_inches='tight',
+    dpi=500    
+)
 plt.show()
