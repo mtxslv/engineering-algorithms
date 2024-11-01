@@ -74,15 +74,25 @@ func weightedMedian(A []weightedPoint) weightedPoint {
 
 
 func main(){
-	arr := []weightedPoint{
-		weightedPoint{ 1.0, 0.075,},
-		weightedPoint{ 2.0, 0.025,},
-		weightedPoint{ 3.0, 0.12,},
-		weightedPoint{ 4.0, 0.15,},
-		weightedPoint{ 5.0, 0.08,},
-		weightedPoint{ 6.0, 0.2,},
-		weightedPoint{ 8.0, 0.35,},
+	A_x := []weightedPoint{
+		{ 1.0, 0.075,},
+		{ 2.0, 0.025,},
+		{ 3.0, 0.12,},
+		{ 4.0, 0.15,},
+		{ 5.0, 0.08,},
+		{ 6.0, 0.2,},
+		{ 8.0, 0.35,},
 	}
-	ans := weightedMedian(arr)
-	fmt.Println("Ans:" , ans)	
+	A_y := []weightedPoint{
+		{ -3.0, 0.075,},
+		{ -2.0, 0.025,},
+		{  0.0, 0.12,},
+		{ 4.0, 0.15,},
+		{ 5.0, 0.08,},
+		{ 7.0, 0.2,},
+		{ 18.0, 0.35,},
+	}	
+	x_ans := weightedMedian(A_x)
+	y_ans := weightedMedian(A_y)
+	fmt.Printf("Point where minimum occurs: (%.1f, %.1f)",x_ans.point, y_ans.point)
 }
