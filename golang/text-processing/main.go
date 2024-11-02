@@ -1,11 +1,18 @@
 package main
 
 import (
-    "fmt"
-    "io"
-    "os"
-    "log"
+	"fmt"
+	"io"
+	"log"
+	"os"
+	"strings"
 )
+
+func check(e error) {
+    if e != nil {
+        panic(e)
+    }
+}
 
 func loadText(textPath string) string {
 	// adapted from https://stackoverflow.com/questions/36111777/how-to-read-a-text-file
@@ -24,11 +31,32 @@ func loadText(textPath string) string {
   return text
 }
 
+func removePunctuationMarks(text string) string {
+    punctuationMarks := []string{".", ",", "?", "!", "...", "_", "-", ":", ";", "\n", "\t", "--", "«", "»"}
+    processedString := text
+    for _, mark := range punctuationMarks {
+        processedString = strings.ReplaceAll(processedString, mark, " ")
+    }
+    return processedString
+}
+
+func writeStringToFile(text string) {
+    f, err := os.Create("./debug.txt")
+    check(err)
+    defer f.Close()
+    _, err = f.WriteString(text)
+    check(err)
+    f.Sync()
+}
+
 func main() {
-	var memoriasPath = "./samples/memorias-postumas.txt"
-	var casmurroPath = "./samples/dom-casmurro.txt"
-	memoriasPostumasText := loadText(memoriasPath)
+    var casmurroPath = "./samples/dom-casmurro.txt"
 	domCasmurroText := loadText(casmurroPath)
-	fmt.Print(memoriasPostumasText)
-	fmt.Print(domCasmurroText)
+    domCasmurroNoPunctuation := removePunctuationMarks(domCasmurroText)
+    fmt.Printf("Found %d characters in processed text.\n", len(domCasmurroNoPunctuation))
+    writeStringToFile(domCasmurroNoPunctuation)
+
+    // var memoriasPath = "./samples/memorias-postumas.txt"
+	// memoriasPostumasText := loadText(memoriasPath)
+	// fmt.Print(memoriasPostumasText)
 }
