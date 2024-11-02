@@ -55,8 +55,8 @@ func check(e error) {
     }
 }
 
-func writeWordCountDict(wordCountDict []wordCount) {
-    f, err := os.Create("./debug.txt")
+func writeWordCountDict(wordCountDict []wordCount, outputPath string) {
+    f, err := os.Create(outputPath)
     check(err)
     defer f.Close()
     for _, wordWithCounting := range wordCountDict{
@@ -163,5 +163,5 @@ func main() {
     sortDict(resultDict)
     
     // Write to Local File
-    writeWordCountDict(resultDict)
+    writeWordCountDict(resultDict, "./results/dom-casmurro-counting.txt")
 }
