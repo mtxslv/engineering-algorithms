@@ -15,6 +15,38 @@ type wordCount struct {
     count int 
 }
 
+// UTILS
+
+func wordCountPartition(A []wordCount, p int, r int) int {
+	x := A[r].count // the pivot
+	i := p - 1 // highest index into the low side
+	for j := p ; j < r ; j++ {
+		if A[j].count > x { // sort descending
+			i = i + 1 
+			aux := A[i]
+			A[i] = A[j]
+			A[j] = aux
+		}
+	} 
+	aux := A[r]
+	A[r] = A[i+1]
+	A[i+1] = aux
+	return i + 1
+}
+
+func wordCountQuicksort(A []wordCount, p int, r int){
+	if p < r {
+		// Partition the subarray around the pivot, which ends up in A[q].
+		q := wordCountPartition(A,p,r)
+		wordCountQuicksort(A, p, q-1) // recursively sort the low side
+		wordCountQuicksort(A, q+1, r) // recursively sort the high side
+	}
+}
+
+func sortDict(dict []wordCount) {
+    wordCountQuicksort(dict,0,len(dict)-1)
+}
+
 // SAVE FILE
 
 func check(e error) {
@@ -133,5 +165,7 @@ func main() {
     fmt.Printf("SAMPLE:%q \n", words[:100])
     resultDict := countWords(words[:500])
     fmt.Printf("DICT:%q \n", resultDict)
+    // sort array before saving to local storage
+    sortDict(resultDict)
     writeWordCountDict(resultDict)
 }
