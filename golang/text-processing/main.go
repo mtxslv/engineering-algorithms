@@ -40,7 +40,20 @@ func removePunctuationMarks(text string) string {
     return processedString
 }
 
+func splitText(text string) []string {
+    splittedString := strings.Split(text," ")
+    var words []string
+    for _, splitted := range splittedString {
+        // Remove empty characters
+        if len(splitted) > 0 {
+            words = append(words, splitted)
+        }
+    }
+    return words
+}
+
 func writeStringToFile(text string) {
+    // modified from https://gobyexample.com/writing-files
     f, err := os.Create("./debug.txt")
     check(err)
     defer f.Close()
@@ -54,9 +67,6 @@ func main() {
 	domCasmurroText := loadText(casmurroPath)
     domCasmurroNoPunctuation := removePunctuationMarks(domCasmurroText)
     fmt.Printf("Found %d characters in processed text.\n", len(domCasmurroNoPunctuation))
-    writeStringToFile(domCasmurroNoPunctuation)
-
-    // var memoriasPath = "./samples/memorias-postumas.txt"
-	// memoriasPostumasText := loadText(memoriasPath)
-	// fmt.Print(memoriasPostumasText)
+    words := splitText(domCasmurroNoPunctuation)
+    fmt.Printf("SOME WORDS:%q \n", words[:100])
 }
