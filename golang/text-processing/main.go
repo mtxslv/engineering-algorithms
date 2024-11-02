@@ -55,7 +55,7 @@ func loadText(textPath string) string {
 // TEXT PROCESSING
 
 func removePunctuationMarks(text string) string {
-    punctuationMarks := []string{".", ",", "?", "!", "...", "_", "-", ":", ";", "\n", "\r", "\t", "--", "«", "»"}
+    punctuationMarks := []string{".", ",", "?", "!", "...", "_", "-", ":", ";", "\n", "\r", "\t","\ufeff", "--", "«", "»"}
     processedString := text
     for _, mark := range punctuationMarks {
         processedString = strings.ReplaceAll(processedString, mark, " ")
@@ -84,5 +84,6 @@ func main() {
     domCasmurroNoPunctuation := removePunctuationMarks(domCasmurroText)
     fmt.Printf("Found %d characters in processed text.\n", len(domCasmurroNoPunctuation))
     words := splitText(domCasmurroNoPunctuation)
-    fmt.Printf("SOME WORDS:%q \n", words[:100])
+    fmt.Printf("THERE ARE %d WORDS IN TOTAL \n", len(words))
+    fmt.Printf("SAMPLE:%q \n", words[:100])
 }
