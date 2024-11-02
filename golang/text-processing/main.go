@@ -169,4 +169,8 @@ func main() {
     var casmurroInput = "./samples/dom-casmurro.txt"
     var casmurroOutput = "./results/dom-casmurro-counting.txt"
     countHelper(casmurroInput, casmurroOutput)
+
+    var memoriasInput = "./samples/memorias-postumas.txt"
+    var memoriasOutput = "./results/memorias-postumas-counting.txt"
+    countHelper(memoriasInput, memoriasOutput)    
 }
