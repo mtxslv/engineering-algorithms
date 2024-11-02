@@ -32,7 +32,7 @@ func loadText(textPath string) string {
 }
 
 func removePunctuationMarks(text string) string {
-    punctuationMarks := []string{".", ",", "?", "!", "...", "_", "-", ":", ";", "\n", "\t", "--", "«", "»"}
+    punctuationMarks := []string{".", ",", "?", "!", "...", "_", "-", ":", ";", "\n", "\r", "\t", "--", "«", "»"}
     processedString := text
     for _, mark := range punctuationMarks {
         processedString = strings.ReplaceAll(processedString, mark, " ")
