@@ -8,11 +8,26 @@ import (
 	"strings"
 )
 
+// SAVE FILE
+
 func check(e error) {
     if e != nil {
         panic(e)
     }
 }
+
+
+func writeStringToFile(text string) {
+    // modified from https://gobyexample.com/writing-files
+    f, err := os.Create("./debug.txt")
+    check(err)
+    defer f.Close()
+    _, err = f.WriteString(text)
+    check(err)
+    f.Sync()
+}
+
+// READ FILE
 
 func loadText(textPath string) string {
 	// adapted from https://stackoverflow.com/questions/36111777/how-to-read-a-text-file
@@ -30,6 +45,8 @@ func loadText(textPath string) string {
   text := string(b)
   return text
 }
+
+// TEXT PROCESSING
 
 func removePunctuationMarks(text string) string {
     punctuationMarks := []string{".", ",", "?", "!", "...", "_", "-", ":", ";", "\n", "\r", "\t", "--", "«", "»"}
@@ -52,15 +69,8 @@ func splitText(text string) []string {
     return words
 }
 
-func writeStringToFile(text string) {
-    // modified from https://gobyexample.com/writing-files
-    f, err := os.Create("./debug.txt")
-    check(err)
-    defer f.Close()
-    _, err = f.WriteString(text)
-    check(err)
-    f.Sync()
-}
+
+// MAIN FUNCTION 
 
 func main() {
     var casmurroPath = "./samples/dom-casmurro.txt"
