@@ -12,7 +12,7 @@ import (
 
 type wordCount struct {
     word string 
-    count uint64 
+    count int 
 }
 
 // SAVE FILE
@@ -52,7 +52,7 @@ func loadText(textPath string) string {
   return text
 }
 
-// TEXT PROCESSING
+// TEXT PRE-PROCESSING
 
 func removePunctuationMarks(text string) string {
     punctuationMarks := []string{".", ",", "?", "!", "...", "_", "-", ":", ";", "\n", "\r", "\t","\ufeff", "--", "«", "»"}
@@ -75,6 +75,39 @@ func splitText(text string) []string {
     return words
 }
 
+// WORD COUNT
+
+func findWordPosition(dictionary []wordCount, word string) int {
+    for it, wordWithCount := range dictionary {
+        if wordWithCount.word == word {
+            return it
+        }
+    } 
+    return -1
+}
+// 
+
+func countWords(words []string) []wordCount {
+    var wordCountDict []wordCount
+    for _, word := range words {
+        // First word?
+        if len(wordCountDict) == 0 {
+            first := wordCount{word, 1}
+            wordCountDict = append(wordCountDict, first)
+        } else {
+            // check if word exist in counting Words Slice.
+            wordWithCountPosition := findWordPosition(wordCountDict, word)
+            // if so, increment count number
+            if wordWithCountPosition > 0{
+                wordCountDict[wordWithCountPosition].count++
+            } else { // if not, append
+                wordCountDict = append(wordCountDict, wordCount{word, 1})
+            }        
+            // insertion sort based on word key to keep search working
+        }
+    }
+    return wordCountDict
+}
 
 // MAIN FUNCTION 
 
@@ -86,4 +119,6 @@ func main() {
     words := splitText(domCasmurroNoPunctuation)
     fmt.Printf("THERE ARE %d WORDS IN TOTAL \n", len(words))
     fmt.Printf("SAMPLE:%q \n", words[:100])
+    resultDict := countWords(words[:500])
+    fmt.Printf("DICT:%q \n", resultDict)
 }
