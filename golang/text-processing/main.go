@@ -156,16 +156,22 @@ func countWords(words []string) []wordCount {
 // MAIN FUNCTION 
 
 func main() {
+    // Load text file as string
     var casmurroPath = "./samples/dom-casmurro.txt"
-	domCasmurroText := loadText(casmurroPath)
+    domCasmurroText := loadText(casmurroPath)
+
+    // Get Rid Of Punctuation
     domCasmurroNoPunctuation := removePunctuationMarks(domCasmurroText)
-    fmt.Printf("Found %d characters in processed text.\n", len(domCasmurroNoPunctuation))
+
+    // Split Text By Space
     words := splitText(domCasmurroNoPunctuation)
-    fmt.Printf("THERE ARE %d WORDS IN TOTAL \n", len(words))
-    fmt.Printf("SAMPLE:%q \n", words[:100])
-    resultDict := countWords(words[:500])
-    fmt.Printf("DICT:%q \n", resultDict)
-    // sort array before saving to local storage
+
+    // Count Words
+    resultDict := countWords(words)
+
+    // Sort Array Descending 
     sortDict(resultDict)
+    
+    // Write to Local File
     writeWordCountDict(resultDict)
 }
