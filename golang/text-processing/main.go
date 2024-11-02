@@ -8,6 +8,13 @@ import (
 	"strings"
 )
 
+// WORD COUNT STRUCT
+
+type wordCount struct {
+    word string 
+    count uint64 
+}
+
 // SAVE FILE
 
 func check(e error) {
@@ -15,7 +22,6 @@ func check(e error) {
         panic(e)
     }
 }
-
 
 func writeStringToFile(text string) {
     // modified from https://gobyexample.com/writing-files
