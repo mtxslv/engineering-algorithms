@@ -33,6 +33,18 @@ func writeStringToFile(text string) {
     f.Sync()
 }
 
+func writeWordCountDict(wordCountDict []wordCount) {
+    f, err := os.Create("./debug.txt")
+    check(err)
+    defer f.Close()
+    for _, wordWithCounting := range wordCountDict{
+        text := fmt.Sprintf("%s %d\n", wordWithCounting.word, wordWithCounting.count)
+        _, err = f.WriteString(text)
+    } 
+    check(err)
+    f.Sync()    
+}
+
 // READ FILE
 
 func loadText(textPath string) string {
@@ -121,4 +133,5 @@ func main() {
     fmt.Printf("SAMPLE:%q \n", words[:100])
     resultDict := countWords(words[:500])
     fmt.Printf("DICT:%q \n", resultDict)
+    writeWordCountDict(resultDict)
 }
