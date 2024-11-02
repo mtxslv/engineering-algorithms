@@ -55,16 +55,6 @@ func check(e error) {
     }
 }
 
-func writeStringToFile(text string) {
-    // modified from https://gobyexample.com/writing-files
-    f, err := os.Create("./debug.txt")
-    check(err)
-    defer f.Close()
-    _, err = f.WriteString(text)
-    check(err)
-    f.Sync()
-}
-
 func writeWordCountDict(wordCountDict []wordCount) {
     f, err := os.Create("./debug.txt")
     check(err)
