@@ -119,7 +119,31 @@ func findWordPosition(dictionary []wordCount, word string) int {
     } 
     return -1
 }
-// 
+
+func removeFromSlice(arrayWordCount []wordCount, itToRemove int) {
+    // https://stackoverflow.com/questions/37334119/how-to-delete-an-element-from-a-slice-in-golang
+}
+
+func mergeCounts(dict_1 []wordCount, dict_2 []wordCount) {
+    // Extract a wordCount from dict_2 and merge it to dict_1
+    // dict_2 ends up empty, while dict_1 keeps the values.
+    var found int = -1
+    for _, wordWithCountDict1 := range dict_1 {
+        found = -1
+        for it, wordWithCountDict2 := range dict_2 {
+            // If word exist in second dict, second count is incremented
+            if wordWithCountDict1.word == wordWithCountDict2.word {
+                wordWithCountDict1.count += wordWithCountDict2.count
+                found = it
+            }
+            break
+        }
+        if found > 0 {
+            // add wordWithCountDict2 to dict_1
+        }
+        // remove wordWithCountDict2 from dict_2 
+    }
+}
 
 func countWords(words []string) []wordCount {
     var wordCountDict []wordCount
