@@ -121,35 +121,33 @@ func findWordPosition(dictionary []wordCount, word string) int {
 }
 
 func removeFromSlice(arrayWordCount []wordCount, itToRemove int) []wordCount {
-    // https://stackoverflow.com/questions/37334119/how-to-delete-an-element-from-a-slice-in-golang
-    previous := arrayWordCount[0:itToRemove]
-    following := arrayWordCount[itToRemove+1:len(arrayWordCount)]
-    return append(previous,following...)
+	// Remove the element at index itToRemove from the slice
+	previous := arrayWordCount[:itToRemove]
+	following := arrayWordCount[itToRemove+1:]
+	final := append(previous, following...)
+	return final
 }
 
-func mergeCounts(dict_1 []wordCount, dict_2 []wordCount) {
-    // Extract a wordCount from dict_2 and merge it to dict_1
-    // dict_2 ends up empty, while dict_1 keeps the values.
-    var found int = -1
-    for _, wordWithCountDict1 := range dict_1 {
-        found = -1
-        var toAdd wordCount
-        for it, wordWithCountDict2 := range dict_2 {
-            // If word exist in second dict, second count is incremented
-            if wordWithCountDict1.word == wordWithCountDict2.word {
-                wordWithCountDict1.count += wordWithCountDict2.count
-                found = it
-                toAdd = wordWithCountDict2
-            }
-            // break
-        }
-        if found > 0 {
-            // add wordWithCountDict2 to dict_1
-            dict_1 = append(dict_1, toAdd)
-            // remove wordWithCountDict2 from dict_2 
-            dict_2 = removeFromSlice(dict_2,found)
-        }
-    }
+func mergeCounts(arr_1, arr_2 []wordCount) []wordCount {
+	// For each wordCount in arr_1:
+	for i, wC_1 := range arr_1 {
+		var found int = -1
+		// Check if the wordCount exists in arr_2
+		for j, wC_2 := range arr_2 {
+			if wC_1.word == wC_2.word {
+				// Modify arr_1 directly
+				arr_1[i].count += wC_2.count
+				found = j
+				break
+			}
+		}
+		// If found, remove the element from arr_2
+		if found > -1 {
+			arr_2 = removeFromSlice(arr_2, found)
+		}
+	}
+	// Add remaining elements of arr_2 to arr_1
+	return append(arr_1, arr_2...)
 }
 
 func countWords(words []string) []wordCount {
@@ -208,11 +206,11 @@ func main() {
     wordsMemoria := countHelper(textMemorias)
     
     // Merge
-    mergeCounts(wordsCasmurro, wordsMemoria)
+    words := mergeCounts(wordsCasmurro, wordsMemoria)
 
-    fmt.Printf("Words Memoria should be empty: %q\n", len(wordsMemoria))
-    fmt.Printf("SAMPLE: %q\n", wordsMemoria[:10])
-    fmt.Printf("Words Casmurro: %q", wordsCasmurro[:20])
+    // Sort
+    sortDict(words)
 
-
+    // Write to local File
+    writeWordCountDict(words, "./results/machado-array.txt")
 }
