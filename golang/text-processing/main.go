@@ -176,9 +176,7 @@ func countWords(words []string) []wordCount {
 
 // MAIN FUNCTION 
 
-func countHelper(inputPath, outputPath string) {
-    // Load text file as string
-    text := loadText(inputPath)
+func countHelper(text string) []wordCount {
 
     // Get Rid Of Punctuation
     textNoPunctuation := removePunctuationMarks(text)
@@ -192,16 +190,29 @@ func countHelper(inputPath, outputPath string) {
     // Sort Array Descending 
     sortDict(resultDict)
 
-    // Write to Local File
-    writeWordCountDict(resultDict, outputPath)
+    return resultDict
 }
 
 func main() {
     var casmurroInput = "./samples/dom-casmurro.txt"
-    var casmurroOutput = "./results/dom-casmurro-counting.txt"
-    countHelper(casmurroInput, casmurroOutput)
-
     var memoriasInput = "./samples/memorias-postumas.txt"
-    var memoriasOutput = "./results/memorias-postumas-counting.txt"
-    countHelper(memoriasInput, memoriasOutput)    
+
+    // Load text file as string
+    textCasmurro := loadText(casmurroInput)
+    
+    // Count words
+    wordsCasmurro := countHelper(textCasmurro)
+
+    // Load another text file as string
+    textMemorias := loadText(memoriasInput)
+    wordsMemoria := countHelper(textMemorias)
+    
+    // Merge
+    mergeCounts(wordsCasmurro, wordsMemoria)
+
+    fmt.Printf("Words Memoria should be empty: %q\n", len(wordsMemoria))
+    fmt.Printf("SAMPLE: %q\n", wordsMemoria[:10])
+    fmt.Printf("Words Casmurro: %q", wordsCasmurro[:20])
+
+
 }
