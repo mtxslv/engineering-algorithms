@@ -6,20 +6,25 @@ import (
 	"linked-lists/linkedlist" // Replace with the actual module name if you're using a Go module.
 )
 
+type wordCount struct {
+    word string 
+    count int 
+}
+
 func main() {
 	// Instantiate a linked list
-	list := linkedlist.New[int]()
+	list := linkedlist.New[wordCount]()
 
 	// Add three elements to the list
-	list.Add(1)
-	list.Add(2)
-	list.Add(3)
+	list.Add(wordCount{word: "one", count: 1})
+	list.Add(wordCount{word: "two", count: 2})
+	list.Add(wordCount{word: "three", count: 3})
 
 	// Display length after adding elements
 	fmt.Println("Length after adding elements:", list.Length()) // Output: 3
 
 	// Remove the middle element (2)
-	err := list.Remove(2)
+	err := list.Remove(wordCount{word: "two", count: 2})
 	if err != nil {
 		fmt.Println("Error:", err)
 	} else {
