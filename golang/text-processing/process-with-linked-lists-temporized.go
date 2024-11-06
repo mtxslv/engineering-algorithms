@@ -65,19 +65,26 @@ func findWordPosition(ll *linkedlist.LinkedList[wordCount], word string) (*linke
 
 func mergeCounts(ll1, ll2 *linkedlist.LinkedList[wordCount]) *linkedlist.LinkedList[wordCount] {
 	// For each wordCount in ll2, merge counts into ll1
-	current := ll2.Head()
-	for current != nil {
-		node, _ := findWordPosition(ll1, current.Value().word)
+	current_ll2 := ll2.Head()
+	var totalRemovalTime int64 = 0
+
+	for current_ll2 != nil {
+		node, _ := findWordPosition(ll1, current_ll2.Value().word)
 		if node != nil {
-			node.Value().count += current.Value().count
+			node.Value().count += current_ll2.Value().count
+			//  remove node from ll1
+			startRemove := time.Now()
+			ll1.Remove(*node.Value())
+			timeToRemove := time.Since(startRemove)
+            totalRemovalTime += timeToRemove.Nanoseconds()
 		} else {
-			ll1.Add(*current.Value())
+			ll1.Add(*current_ll2.Value())
 		}
-		current = current.Next()
+		current_ll2 = current_ll2.Next()
 	}
+	fmt.Printf("Total Removal Time (ns): %d\n", totalRemovalTime)
 	return ll1
 }
-
 // TEXT PRE-PROCESSING
 
 func removePunctuationMarks(text string) string {
