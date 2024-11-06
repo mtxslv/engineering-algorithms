@@ -4,7 +4,7 @@ package linkedlist
 import "errors"
 
 type Node[T comparable] struct {
-	value T
+	value *T      // Changed to a pointer
 	next  *Node[T]
 }
 
@@ -19,7 +19,7 @@ func New[T comparable]() *LinkedList[T] {
 }
 
 func (ll *LinkedList[T]) Add(v T) {
-	newNode := &Node[T]{value: v}
+	newNode := &Node[T]{value: &v}  // Store a pointer to `v`
 
 	if ll.len == 0 {
 		ll.head = newNode
@@ -36,7 +36,7 @@ func (ll *LinkedList[T]) Remove(v T) error {
 		return ErrEmptyList
 	}
 
-	if ll.head.value == v {
+	if *ll.head.value == v {
 		ll.head = ll.head.next
 		if ll.head == nil {
 			ll.tail = nil
@@ -48,7 +48,7 @@ func (ll *LinkedList[T]) Remove(v T) error {
 
 	current := ll.head
 	for current.next != nil {
-		if current.next.value == v {
+		if *current.next.value == v {
 			current.next = current.next.next
 			if current.next == nil {
 				ll.tail = current
@@ -77,12 +77,10 @@ func (ll *LinkedList[T]) Head() *Node[T] {
 	return ll.head
 }
 
-// linkedlist/linkedlist.go
-func (n *Node[T]) Value() T {
+func (n *Node[T]) Value() *T { // Updated to return a pointer
 	return n.value
 }
 
 func (n *Node[T]) Next() *Node[T] {
 	return n.next
 }
-
