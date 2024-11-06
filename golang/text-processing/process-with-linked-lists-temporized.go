@@ -16,6 +16,37 @@ type wordCount struct {
 
 // UTILS
 
+func wordCountPartition(A []wordCount, p int, r int) int {
+	x := A[r].count // the pivot
+	i := p - 1 // highest index into the low side
+	for j := p ; j < r ; j++ {
+		if A[j].count > x { // sort descending
+			i = i + 1 
+			aux := A[i]
+			A[i] = A[j]
+			A[j] = aux
+		}
+	} 
+	aux := A[r]
+	A[r] = A[i+1]
+	A[i+1] = aux
+	return i + 1
+}
+
+func wordCountQuicksort(A []wordCount, p int, r int){
+	if p < r {
+		// Partition the subarray around the pivot, which ends up in A[q].
+		q := wordCountPartition(A,p,r)
+		wordCountQuicksort(A, p, q-1) // recursively sort the low side
+		wordCountQuicksort(A, q+1, r) // recursively sort the high side
+	}
+}
+
+func sortDict(dict []wordCount) {
+    wordCountQuicksort(dict,0,len(dict)-1)
+}
+
+
 func findWordPosition(ll *linkedlist.LinkedList[wordCount], word string) *linkedlist.Node[wordCount] {
 	current := ll.Head()
 	for current != nil {
@@ -81,23 +112,22 @@ func countWords(words []string) *linkedlist.LinkedList[wordCount] {
 
 // SAVE FILE
 
-func writeWordCountDict(wordCountDict *linkedlist.LinkedList[wordCount], outputPath string) {
-	f, err := os.Create(outputPath)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer f.Close()
+func check(e error) {
+    if e != nil {
+        panic(e)
+    }
+}
 
-	current := wordCountDict.Head()
-	for current != nil {
-		text := fmt.Sprintf("%s %d\n", current.Value().word, current.Value().count)
-		_, err = f.WriteString(text)
-		if err != nil {
-			log.Fatal(err)
-		}
-		current = current.Next()
-	}
-	f.Sync()
+func writeWordCountDict(wordCountDict []wordCount, outputPath string) {
+    f, err := os.Create(outputPath)
+    check(err)
+    defer f.Close()
+    for _, wordWithCounting := range wordCountDict{
+        text := fmt.Sprintf("%s %d\n", wordWithCounting.word, wordWithCounting.count)
+        _, err = f.WriteString(text)
+    } 
+    check(err)
+    f.Sync()    
 }
 
 // MAIN FUNCTION
@@ -136,5 +166,10 @@ func main() {
 	wordsMemorias := countHelper(textMemorias)
 
 	mergedWords := mergeCounts(wordsCasmurro, wordsMemorias)
-	writeWordCountDict(mergedWords, "./results/machado-linkedlist.txt")
+
+	words := mergedWords.ToArray()
+
+	sortDict(words)
+
+	writeWordCountDict(words, "./results/machado-linkedlist.txt")
 }
