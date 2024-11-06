@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 	"strings"
 	"text-processing/linkedlist" // Assuming your linked list package is imported here
 )
@@ -47,22 +48,26 @@ func sortDict(dict []wordCount) {
 }
 
 
-func findWordPosition(ll *linkedlist.LinkedList[wordCount], word string) *linkedlist.Node[wordCount] {
+func findWordPosition(ll *linkedlist.LinkedList[wordCount], word string) (*linkedlist.Node[wordCount], int64) {
+    var totalTime int64 
+    timeStart := time.Now()	
 	current := ll.Head()
 	for current != nil {
 		if current.Value().word == word {
-			return current
+			totalTime = time.Since(timeStart).Nanoseconds()
+			return current, totalTime
 		}
 		current = current.Next()
 	}
-	return nil
+    totalTime = time.Since(timeStart).Nanoseconds()
+	return nil, totalTime
 }
 
 func mergeCounts(ll1, ll2 *linkedlist.LinkedList[wordCount]) *linkedlist.LinkedList[wordCount] {
 	// For each wordCount in ll2, merge counts into ll1
 	current := ll2.Head()
 	for current != nil {
-		node := findWordPosition(ll1, current.Value().word)
+		node, _ := findWordPosition(ll1, current.Value().word)
 		if node != nil {
 			node.Value().count += current.Value().count
 		} else {
@@ -99,14 +104,17 @@ func splitText(text string) []string {
 
 func countWords(words []string) *linkedlist.LinkedList[wordCount] {
 	wordCountDict := linkedlist.New[wordCount]()
+    var totalSearchTime int64 = 0
 	for _, word := range words {
-		node := findWordPosition(wordCountDict, word)
+		node, searchTime := findWordPosition(wordCountDict, word)
+		totalSearchTime += searchTime
 		if node != nil {
 			node.Value().count++
 		} else {
 			wordCountDict.Add(wordCount{word, 1})
 		}
 	}
+    fmt.Printf("Total Search Time: %d \n", totalSearchTime)
 	return wordCountDict
 }
 
@@ -135,7 +143,14 @@ func writeWordCountDict(wordCountDict []wordCount, outputPath string) {
 func countHelper(text string) *linkedlist.LinkedList[wordCount] {
 	textNoPunctuation := removePunctuationMarks(text)
 	words := splitText(textNoPunctuation)
-	return countWords(words)
+
+	// Count Words
+    start := time.Now()
+    resultDict := countWords(words)
+    countWordsTimeElapsed := time.Since(start).Nanoseconds()
+    fmt.Printf("TIME ELAPSED (ns): %d\n", countWordsTimeElapsed)
+
+	return resultDict
 }
 
 func loadText(textPath string) string {
@@ -159,12 +174,16 @@ func main() {
 	casmurroInput := "./samples/dom-casmurro.txt"
 	memoriasInput := "./samples/memorias-postumas.txt"
 
+	fmt.Printf("\t PROCESSANDO CASMURRO \n")
+
 	textCasmurro := loadText(casmurroInput)
 	wordsCasmurro := countHelper(textCasmurro)
 
+    fmt.Printf("\t PROCESSANDO MEMORIAS \n")
 	textMemorias := loadText(memoriasInput)
 	wordsMemorias := countHelper(textMemorias)
-
+	
+    fmt.Printf("\t MERGE \n")
 	mergedWords := mergeCounts(wordsCasmurro, wordsMemorias)
 
 	words := mergedWords.ToArray()
