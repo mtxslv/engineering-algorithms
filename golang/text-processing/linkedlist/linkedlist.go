@@ -84,3 +84,18 @@ func (n *Node[T]) Value() *T { // Updated to return a pointer
 func (n *Node[T]) Next() *Node[T] {
 	return n.next
 }
+
+// toArray traverses the linked list and returns a slice of all values in the list.
+func (ll *LinkedList[T]) ToArray() []T {
+	// Initialize an empty slice to store the values
+	values := make([]T, 0, ll.len)
+
+	// Traverse the linked list
+	current := ll.head
+	for current != nil {
+		values = append(values, *current.value)
+		current = current.next
+	}
+
+	return values
+}
