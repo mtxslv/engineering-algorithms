@@ -6,7 +6,8 @@ import (
 func main() {
 	hashTable := &openaddressing.HashTableOpenAddressing{}
 
-	hashTable.Insert("apple", 100)
+	hashTable.Insert("apple01", 101)
+	hashTable.Insert("apple10", 110)
 	hashTable.Insert("banana", 200)
 	hashTable.Insert("orange", 300)
 
