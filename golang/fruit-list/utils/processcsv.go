@@ -46,3 +46,11 @@ func LoadCsv(filePath string) []ItemPrice {
     items := ProcessCsv(records)
     return items
 }
+
+func (item ItemPrice) GetPrice() float64 {
+    return item.price
+}
+
+func (item ItemPrice) GetName() string {
+    return item.name
+}
