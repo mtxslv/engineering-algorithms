@@ -1,3 +1,3 @@
 package utils
 
-const HashTableSize = 23
+const HashTableSize = 59 // prime number
