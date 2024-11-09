@@ -4,9 +4,6 @@ import (
 	"fmt"
 )
 
-// Define the size of the hash table
-const HashTableSize = 23
-
 // Node represents a node in the linked list for chaining
 type Node struct {
 	key   string
