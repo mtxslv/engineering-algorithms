@@ -5,7 +5,7 @@ import (
 )
 
 // Define the size of the hash table
-const HashTableSize = 10
+const HashTableSize = 23
 
 // Node represents a node in the linked list for chaining
 type Node struct {
