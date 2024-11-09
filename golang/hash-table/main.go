@@ -10,7 +10,8 @@ func main() {
 	hashTable := hashtable.NewHashTable()
 
 	// Insert some key-value pairs
-	hashTable.Insert("apple", 10)
+	hashTable.Insert("apple01", 10)
+	hashTable.Insert("apple10", 10)
 	hashTable.Insert("banana", 20)
 	hashTable.Insert("orange", 30)
 	hashTable.Insert("grape", 40)
