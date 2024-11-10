@@ -8,10 +8,10 @@ import (
 )
 
 func main(){
-	// Timing variables
-	var totalInsertionTimeHash int64
+	// Timing Insertion variables
+	var totalInsertionTimeHash int64 = 0
 	var insertionTimeHash time.Time
-	var totalInsertionTimeOpenAddressing int64
+	var totalInsertionTimeOpenAddressing int64 = 0
 	var insertionTimeOpen time.Time	
 
 	// Create a new hash table
@@ -47,7 +47,40 @@ func main(){
 	fmt.Printf("Took %d nanoseconds to insert in Hash Table\n", totalInsertionTimeHash)
 	fmt.Printf("Took %d nanoseconds to insert with Open Addressing\n", totalInsertionTimeOpenAddressing)
 	
-	
+	////////////////////////////////////////////////////////////////////////////////
+
+	// Search Timing variables
+	var totalSearchTimeHash int64 = 0
+	var searchTimeHash time.Time
+	var totalSearchTimeOpenAddressing int64 = 0
+	var searchTimeOpen time.Time	
+
+	// Search for fruits on regular Hash Table
+	for _, item := range(fruitsAndPrices){
+		name := item.GetName()
+
+		searchTimeHash = time.Now()
+		_, found := hashTable.Get(name) 
+		if found {
+			totalSearchTimeHash += time.Since(searchTimeHash).Nanoseconds()
+		}
+	} 	
+
+	// Search for fruits on Open Addressing
+	for _, item := range(fruitsAndPrices){
+		name := item.GetName()
+
+		searchTimeOpen = time.Now()
+		_, found := openAddressing.Get(name) 
+		if found {
+			totalSearchTimeOpenAddressing += time.Since(searchTimeOpen).Nanoseconds()
+		}
+	} 		
+
+	// Report Search Time
+	fmt.Printf("\nTook %d nanoseconds to search on Hash Table\n", totalSearchTimeHash)
+	fmt.Printf("Took %d nanoseconds to search on Open Addressing\n", totalSearchTimeOpenAddressing)
+		
 	// Display Hash Table
 	// hashTable.Display()
 
