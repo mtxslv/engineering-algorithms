@@ -4,6 +4,10 @@
 
 using namespace std;
 
+void processLine(string line) {
+    int charNumber = line.size();
+    cout << line << " ~~~> " << charNumber << endl;
+}
 
 void readFile(const char * filePath) {
     ifstream file(filePath);
@@ -11,7 +15,7 @@ void readFile(const char * filePath) {
 
     if (file.is_open()){
         while (getline(file, line)) {
-            cout << line << endl;
+            processLine(line);
         }
         file.close();
     } 
