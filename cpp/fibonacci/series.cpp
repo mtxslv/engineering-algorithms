@@ -12,8 +12,23 @@ int fib(int n) {
     }
 }
 
-int main(){
-    int x = 4;
-    int fib_4 = fib(4);
-    cout << "fib(4) = " << fib_4 << endl;
+int processInput(int argc, char * argv[]){
+    return std::stoi(argv[1]);
+}
+
+int main(int argc, char * argv[]){
+    if (argc == 1) {
+        cout << "No argument provided" <<endl;
+        return 0;
+    } else {
+
+        int x = processInput(argc, argv);
+        int ans;
+
+        ans = fib(x);
+
+        cout << "FIBONACCI(" << x << ") = "<< ans << endl;
+
+        return 0;
+    }
 }
