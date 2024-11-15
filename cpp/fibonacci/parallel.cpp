@@ -14,8 +14,7 @@ int p_fib(int n) {
         #pragma omp task shared(x)
         x = p_fib(n-1); // SPAWN HERE
 
-        #pragma omp task shared(y)
-        y = p_fib(n-2);
+        y = p_fib(n-2); 
 
         #pragma omp taskwait // SYNC HERE
 
@@ -28,10 +27,7 @@ int main(){
 
     #pragma omp parallel
     {
-        #pragma omp single
-        {
-            fib_4 = p_fib(x);
-        }
+        fib_4 = p_fib(x);
     }
 
     cout << "fib(4) = " << fib_4 << endl;
