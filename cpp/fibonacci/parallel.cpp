@@ -39,7 +39,10 @@ int main(int argc, char * argv[]){
 
         #pragma omp parallel
         {
-            fib = p_fib(x);
+            #pragma omp single
+            {
+                fib = p_fib(x);
+            }
         }
 
         cout << "FIBONACCI(" << x << ") = "<< fib << endl;
@@ -47,3 +50,10 @@ int main(int argc, char * argv[]){
         return 0;
     }
 }
+
+
+// DOCS
+// SYNC: https://www.openmp.org/spec-html/5.0/openmpsu93.html
+//       https://www.ibm.com/docs/en/zos/2.4.0?topic=processing-pragma-omp-single
+// PARALLEL: https://www.openmp.org/spec-html/5.0/openmpse14.html
+//           https://learn.microsoft.com/pt-br/cpp/parallel/openmp/reference/openmp-directives?view=msvc-170#parallel
