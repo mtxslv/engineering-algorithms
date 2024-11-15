@@ -28,8 +28,18 @@ void mulMat(vector<vector<int>>& m1, vector<vector<int>>& m2,
 
 // Driver code
 int main() {
-    vector<vector<int>> m1 = { {1, 1}, {2, 2} };
-    vector<vector<int>> m2 = { {1, 1}, {2, 2} };
+    vector<vector<int>> m1 = { 
+        {1, 2, 0, 0}, 
+        {3, 4, 0, 0}, 
+        {0, 0, 1, 2}, 
+        {0, 0, 3, 4} 
+    };
+    vector<vector<int>> m2 = { 
+        {5, 6, 0, 0}, 
+        {7, 8, 0, 0}, 
+        {0, 0, 5, 6}, 
+        {0, 0, 7, 8} 
+    };
     vector<vector<int>> res;
 
     mulMat(m1, m2, res);
