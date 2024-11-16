@@ -27,7 +27,7 @@ int main(int argc, char * argv[]){
 
         ans = fib(x);
 
-        cout << "FIBONACCI(" << x << ") = "<< ans << endl;
+        cout<<"FIBONACCI("<<x<< ") = "<<ans<< endl;
 
         return 0;
     }

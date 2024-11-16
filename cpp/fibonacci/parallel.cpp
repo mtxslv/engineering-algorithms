@@ -45,7 +45,7 @@ int main(int argc, char * argv[]){
             }
         }
 
-        cout << "FIBONACCI(" << x << ") = "<< fib << endl;
+        cout<<"FIBONACCI("<<x<< ") = "<<fib<<endl;
 
         return 0;
     }
