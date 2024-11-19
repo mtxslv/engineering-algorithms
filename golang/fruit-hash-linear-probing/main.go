@@ -48,7 +48,7 @@ func main(){
 	
 	// Report Insertion Time
 	fmt.Printf("Took %d nanoseconds to insert with Linear Probing\n", totalInsertionTimeLinearProbe)
-	fmt.Printf("Took %d nanoseconds to insert with Double Hasing\n", totalInsertionTimeDoubleHashing)
+	fmt.Printf("Took %d nanoseconds to insert with Double Hashing\n", totalInsertionTimeDoubleHashing)
 	
 	////////////////////////////////////////////////////////////////////////////////
 
@@ -66,6 +66,9 @@ func main(){
 		_, found := linearProbeTable.Get(name) 
 		if found {
 			totalSearchTimeLinearProbing += time.Since(searchTimeLinearProbing).Nanoseconds()
+		} else {
+			fmt.Printf("NOT FOUDN")
+			break
 		}
 	} 	
 		
@@ -77,6 +80,9 @@ func main(){
 		_, found := doubleHashTable.Get(name) 
 		if found {
 			totalSearchTimeDoubleHashing += time.Since(searchTimeDoubleHashing).Nanoseconds()
+		} else {
+			fmt.Printf("NOT FOUDN")
+			break
 		}
 	} 		
 
