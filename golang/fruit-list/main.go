@@ -40,6 +40,7 @@ func main(){
 			totalInsertionTimeOpenAddressing += time.Since(insertionTimeOpen).Nanoseconds()
 		} else {
 			fmt.Printf("%s not inserted\n",name)
+			break
 		}
 	}
 	
@@ -63,6 +64,9 @@ func main(){
 		_, found := hashTable.Get(name) 
 		if found {
 			totalSearchTimeHash += time.Since(searchTimeHash).Nanoseconds()
+		} else {
+			fmt.Print("NOT FOUND")
+			break
 		}
 	} 	
 
@@ -74,18 +78,21 @@ func main(){
 		_, found := openAddressing.Get(name) 
 		if found {
 			totalSearchTimeOpenAddressing += time.Since(searchTimeOpen).Nanoseconds()
+		} else {
+			fmt.Print("NOT FOUND")
+			break
 		}
 	} 		
 
 	// Report Search Time
 	fmt.Printf("\nTook %d nanoseconds to search on Hash Table\n", totalSearchTimeHash)
 	fmt.Printf("Took %d nanoseconds to search on Open Addressing\n", totalSearchTimeOpenAddressing)
+	fmt.Printf("\n\n")
 		
 	// Display Hash Table
-	// hashTable.Display()
+	hashTable.Display()
 
-	fmt.Printf("\n\n")
 	// Display Open Addressing 
-	// openAddressing.Display()
+	openAddressing.Display()
 
 }
