@@ -30,7 +30,7 @@ func SetDfsGraph(nodes []nodeNameAndLabel, connections [][]int) dfsGraph {
 	return dfsGraph{Vertices: vertices, Connections: connections}
 }
 
-func DepthFirstSearch(nodes []nodeNameAndLabel, connections [][]int) {
+func DepthFirstSearch(nodes []nodeNameAndLabel, connections [][]int) dfsGraph {
     // Set Vertices' color, parent, F (and label) on Graph 
     graph := SetDfsGraph(nodes, connections)
     
@@ -44,6 +44,7 @@ func DepthFirstSearch(nodes []nodeNameAndLabel, connections [][]int) {
         }
 		fmt.Printf("\n\tColor = %s Parent = %d Discovered = %d Finished = %d Label = %s", string(graph.Vertices[vertex_it].Color), graph.Vertices[vertex_it].Parent, graph.Vertices[vertex_it].Discovered, graph.Vertices[vertex_it].Finished, graph.Vertices[vertex_it].Label)
     }
+    return graph 
 }
 
 func DepthFirstSearchVisit(graph *dfsGraph, vertex_it int, time *int) {
