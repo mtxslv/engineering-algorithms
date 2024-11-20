@@ -8,16 +8,6 @@ import (
     "strings"
 )
 
-type nodeNameAndLabel struct {
-    nodeName string
-    nodeLabel string
-} 
-
-type graphEdge struct {
-    nodeNameOrigin string
-    nodeNameDestiny string
-}
-
 func LoadText(textPath string) string {
 	// adapted from https://stackoverflow.com/questions/36111777/how-to-read-a-text-file
 	// and from https://stackoverflow.com/questions/9644139/from-io-reader-to-string-in-go
