@@ -4,6 +4,7 @@ import (
 	"io"
 	"log"
 	"os"
+    "strings"
 )
 
 
@@ -22,4 +23,18 @@ func LoadText(textPath string) string {
   b, err := io.ReadAll(file)
   text := string(b)
   return text
+}
+
+func BreakTextInNewLines(text string) []string {
+    splittedString := strings.Split(text,"\n")
+    var lines []string
+    for _, splitted := range splittedString {
+        // Remove four-whitespaces prefix
+        splitted = strings.TrimPrefix(splitted, "    ")
+        // Remove empty characters
+        if len(splitted) > 0 {
+            lines = append(lines, splitted)
+        }
+    }
+    return lines
 }
