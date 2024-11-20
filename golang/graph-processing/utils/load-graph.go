@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"io"
 	"log"
 	"os"
@@ -112,15 +111,7 @@ func GraphAsSliceOfSlices(graph simpleGraph) [][]int { //
                 break
             } 
         }
-        fmt.Printf("%+v\n", edge)
-        fmt.Printf("ORIGIN NODE AT %d AND DESTINY NODE AT %d\n", origin_node_it, destiny_node_it)
     }
 
     return graphSlice
 }
-
-                // Now search for 
-                // if len(graphSlice[origin_it]) == 0 {
-                    // graphSlice[origin_it] = []int
-                // }
-                // fmt.Printf("\tFound node %s on position %d \n",edge.nodeNameDestiny, origin_it)
