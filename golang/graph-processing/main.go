@@ -10,7 +10,10 @@ import (
 func main(){
 	var graphPath = "graph.dot"
 	graphDefinition := utils.LoadGraphDefinition(graphPath)
-	nodes, edges := utils.ExtractNodesAndEdges(graphDefinition)
+	graph := utils.ExtractGraph(graphDefinition)
+
+	nodes := graph.Nodes
+	edges := graph.Edges
 
 	for i, node := range nodes {
 		fmt.Printf("NODE #%d: %+v\n", i+1, node)

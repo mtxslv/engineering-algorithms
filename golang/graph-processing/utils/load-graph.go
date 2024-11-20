@@ -45,7 +45,7 @@ func LoadGraphDefinition(graphPath string) []string {
     return commands
 }
 
-func ExtractNodesAndEdges(graphCommands []string) ([]nodeNameAndLabel, []graphEdge) {
+func ExtractGraph(graphCommands []string) simpleGraph {
 
     var nodes []nodeNameAndLabel
     var edges []graphEdge
@@ -76,5 +76,5 @@ func ExtractNodesAndEdges(graphCommands []string) ([]nodeNameAndLabel, []graphEd
         }
     }
 
-    return nodes, edges
+    return simpleGraph{Nodes:nodes, Edges:edges}
 }

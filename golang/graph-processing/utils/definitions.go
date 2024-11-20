@@ -9,3 +9,8 @@ type graphEdge struct {
     nodeNameOrigin string
     nodeNameDestiny string
 }
+
+type simpleGraph struct {
+	Nodes []nodeNameAndLabel
+	Edges []graphEdge
+}
