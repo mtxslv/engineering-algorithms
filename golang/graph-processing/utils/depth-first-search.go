@@ -30,29 +30,37 @@ func SetDfsGraph(nodes []nodeNameAndLabel, connections [][]int) dfsGraph {
 	return dfsGraph{Vertices: vertices, Connections: connections}
 }
 
-func DepthFirstSearch(nodes []nodeNameAndLabel, connections [][]int){
-	// Set Vertices' color, parent, F (and label) on Graph 
-	graph := SetDfsGraph(nodes, connections)
-	
-	// Now follow DFS procedure
-	var time = 0
-	for vertex_it, vertex := range graph.Vertices{
-		if vertex.Color == 'w'{
-			fmt.Print("VC EH BRANCO\n")
-			DepthFirstSearchVisit(graph,vertex_it,&time)
-			fmt.Printf("\n\tColor = %s Parent = %d Discovered = %d Finished = %d Label = %s\n",string(vertex.Color) ,vertex.Parent ,vertex.Discovered ,vertex.Finished ,vertex.Label)
-			break
-		}
-	}
+func DepthFirstSearch(nodes []nodeNameAndLabel, connections [][]int) {
+    // Set Vertices' color, parent, F (and label) on Graph 
+    graph := SetDfsGraph(nodes, connections)
+    
+    // Now follow DFS procedure
+    var time = 0
+    for vertex_it, vertex := range graph.Vertices {
+        if vertex.Color == 'w' {
+            // fmt.Print("VC EH BRANCO\n")
+            DepthFirstSearchVisit(&graph, vertex_it, &time) // Pass a pointer to the graph
+            // break
+        }
+		fmt.Printf("\n\tColor = %s Parent = %d Discovered = %d Finished = %d Label = %s", string(graph.Vertices[vertex_it].Color), graph.Vertices[vertex_it].Parent, graph.Vertices[vertex_it].Discovered, graph.Vertices[vertex_it].Finished, graph.Vertices[vertex_it].Label)
+    }
 }
 
-func DepthFirstSearchVisit(graph dfsGraph, vertex_it int, time *int){
-	// Increase time
-	*time++
-	graph.Vertices[vertex_it].Discovered = *time
-	graph.Vertices[vertex_it].Color = 'g'
+func DepthFirstSearchVisit(graph *dfsGraph, vertex_it int, time *int) {
+    // Increase time
+    *time++
+    graph.Vertices[vertex_it].Discovered = *time
+    graph.Vertices[vertex_it].Color = 'g'
 
-	*time++
-	graph.Vertices[vertex_it].Finished = *time
-	graph.Vertices[vertex_it].Color = 'b'
+	for _, adj_vertex_id := range graph.Connections[vertex_it]{
+		adj_vertex := graph.Vertices[adj_vertex_id]
+		if adj_vertex.Color == 'w'{
+			adj_vertex.Parent = vertex_it
+			DepthFirstSearchVisit(graph, adj_vertex_id, time)
+		}
+	}
+
+    *time++
+    graph.Vertices[vertex_it].Finished = *time
+    graph.Vertices[vertex_it].Color = 'b'
 }
