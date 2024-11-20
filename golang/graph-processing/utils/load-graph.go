@@ -78,8 +78,8 @@ func ExtractNodesAndEdges(graphCommands []string) ([]nodeNameAndLabel, []graphEd
             var purpotedEdgeDef = reEdgeDefinition.FindStringSubmatch(command)
             if len(purpotedEdgeDef) > 0 {
                 edge := graphEdge{
-                    nodeNameOrigin: purpotedEdgeDef[0],
-                    nodeNameDestiny: purpotedEdgeDef[1],
+                    nodeNameOrigin: purpotedEdgeDef[1],
+                    nodeNameDestiny: purpotedEdgeDef[2],
                 }
                 edges = append(edges, edge)
             } 
