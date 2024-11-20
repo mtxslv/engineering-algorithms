@@ -53,9 +53,8 @@ func DepthFirstSearchVisit(graph *dfsGraph, vertex_it int, time *int) {
     graph.Vertices[vertex_it].Color = 'g'
 
 	for _, adj_vertex_id := range graph.Connections[vertex_it]{
-		adj_vertex := graph.Vertices[adj_vertex_id]
-		if adj_vertex.Color == 'w'{
-			adj_vertex.Parent = vertex_it
+		if graph.Vertices[adj_vertex_id].Color == 'w'{
+			graph.Vertices[adj_vertex_id].Parent = vertex_it
 			DepthFirstSearchVisit(graph, adj_vertex_id, time)
 		}
 	}
