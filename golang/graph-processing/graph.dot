@@ -1,0 +1,34 @@
+digraph tortilla_graph {
+    node [shape=circle];
+    edge [arrowhead=normal];
+
+    node1 [label="add flour \n to bowl"];
+    node2 [label="indent \n center"];
+    node3 [label="add salt & \n baking powder"];
+    node4 [label="warm water"];
+    node5 [label="warm butter"];
+    node6 [label="add liquids \n to mix"];
+    node7 [label="pull together \n dough"];
+    node8 [label="knead dough"];
+    node9 [label="15 min rest"];
+    node10 [label="Divide \n in pieces"];
+    node11 [label="Roll \n into disks"];
+    node12 [label="Cook \n each"];
+    
+    node1 -> node2;
+    node2 -> node3;
+
+    node4 -> node6;
+    node5 -> node6;
+    
+    node6 -> node7;
+    node3 -> node7;
+    
+    node7 -> node8;
+    node8 -> node9;
+
+    node9 -> node10;
+    node10 -> node11;
+    node11 -> node12;
+    
+}
