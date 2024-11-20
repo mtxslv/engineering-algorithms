@@ -38,3 +38,9 @@ func BreakTextInNewLines(text string) []string {
     }
     return lines
 }
+
+func LoadGraphDefinition(graphPath string) []string {
+    graphCode := LoadText(graphPath)
+    commands := BreakTextInNewLines(graphCode)
+    return commands
+}
