@@ -22,4 +22,11 @@ func main(){
 	for i, edge := range edges {
 		fmt.Printf("EDGE #%d: %+v\n", i+1, edge)
 	} 	
+
+	a := utils.GraphAsSliceOfSlices(graph)
+	for origin_it, ass := range a {
+		fmt.Printf("%d :", origin_it)
+		fmt.Println(ass)
+	}
+	// fmt.Println(a)
 }

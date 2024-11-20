@@ -1,11 +1,12 @@
 package utils
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"os"
-    "regexp"
-    "strings"
+	"regexp"
+	"strings"
 )
 
 func LoadText(textPath string) string {
@@ -78,3 +79,48 @@ func ExtractGraph(graphCommands []string) simpleGraph {
 
     return simpleGraph{Nodes:nodes, Edges:edges}
 }
+
+func GraphAsSliceOfSlices(graph simpleGraph) [][]int { // 
+    // Outer slice has size as the amount of nodes
+    graphSlice := make([][]int, len(graph.Nodes))  
+
+    // Utils vars
+    var origin_node_it int 
+    var destiny_node_it int
+
+    // Iterate on the edges
+    for _, edge := range graph.Edges {
+
+        // Set nodes it to negative values (not found)
+        origin_node_it = -1
+        destiny_node_it = -1
+
+        // Search the nodes to find the position of both origin and destiny nodes
+        for current_node_it, current_node := range graph.Nodes {
+            if current_node.nodeName == edge.nodeNameOrigin { // Origin node found
+                origin_node_it = current_node_it
+            } 
+            if current_node.nodeName == edge.nodeNameDestiny { // Destiny node found
+                destiny_node_it = current_node_it
+            }
+            if origin_node_it >= 0 && destiny_node_it >= 0 { // Both nodes found
+                if len(graphSlice[origin_node_it]) == 0 { // First time origin node is set
+                    graphSlice[origin_node_it] = []int{destiny_node_it}
+                } else { // origin node was already found
+                    graphSlice[origin_node_it] = append(graphSlice[origin_node_it], destiny_node_it)
+                }
+                break
+            } 
+        }
+        fmt.Printf("%+v\n", edge)
+        fmt.Printf("ORIGIN NODE AT %d AND DESTINY NODE AT %d\n", origin_node_it, destiny_node_it)
+    }
+
+    return graphSlice
+}
+
+                // Now search for 
+                // if len(graphSlice[origin_it]) == 0 {
+                    // graphSlice[origin_it] = []int
+                // }
+                // fmt.Printf("\tFound node %s on position %d \n",edge.nodeNameDestiny, origin_it)
