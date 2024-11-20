@@ -6,9 +6,12 @@ import (
 )
 
 
+
 func main(){
-	var textPath = "graph.dot"
-	song := utils.LoadText(textPath)
-	fmt.Print(song)
-	fmt.Printf("music to watch boys to \n")
+	var graphPath = "graph.dot"
+	graphDefinition := utils.LoadGraphDefinition(graphPath)
+	for i, cmd := range graphDefinition {
+		fmt.Printf("%d LINE: \n", i)
+		fmt.Println(cmd)
+	} 
 }
