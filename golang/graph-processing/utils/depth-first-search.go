@@ -1,6 +1,9 @@
 package utils
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 type dfsVertex struct {
 	Color rune // 'b' for black, 'g' for grey, and 'w' for white 
@@ -63,4 +66,13 @@ func DepthFirstSearchVisit(graph *dfsGraph, vertex_it int, time *int) {
     *time++
     graph.Vertices[vertex_it].Finished = *time
     graph.Vertices[vertex_it].Color = 'b'
+}
+
+func TopologicalSorting(graph dfsGraph) []dfsVertex {
+	v := make([]dfsVertex, len(graph.Vertices))
+	copy(v, graph.Vertices)
+	sort.Slice(v, func(i,j int) bool {
+		return v[i].Finished > v[j].Finished
+	})
+	return v
 }
