@@ -10,8 +10,13 @@ import (
 func main(){
 	var graphPath = "graph.dot"
 	graphDefinition := utils.LoadGraphDefinition(graphPath)
-	for i, cmd := range graphDefinition {
-		fmt.Printf("%d LINE: \n", i)
-		fmt.Println(cmd)
+	nodes, edges := utils.ExtractNodesAndEdges(graphDefinition)
+
+	for i, node := range nodes {
+		fmt.Printf("NODE #%d: %+v\n", i+1, node)
 	} 
+
+	for i, edge := range edges {
+		fmt.Printf("EDGE #%d: %+v\n", i+1, edge)
+	} 	
 }
