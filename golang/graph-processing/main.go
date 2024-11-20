@@ -23,10 +23,16 @@ func main(){
 		fmt.Printf("EDGE #%d: %+v\n", i+1, edge)
 	} 	
 
-	a := utils.GraphAsSliceOfSlices(graph)
-	for origin_it, ass := range a {
+	connections := utils.GraphAsSliceOfSlices(graph)
+	for origin_it, conn := range connections {
 		fmt.Printf("%d :", origin_it)
-		fmt.Println(ass)
+		fmt.Println(conn)
 	}
-	// fmt.Println(a)
+
+	g := utils.DepthFirstSearch(nodes,connections)
+	v := utils.TopologicalSorting(g) 
+	fmt.Println()
+	for _, verticinho := range v{
+		fmt.Printf("\n\tColor = %s Parent = %d Discovered = %d Finished = %d Label = %s", string(verticinho.Color), verticinho.Parent, verticinho.Discovered, verticinho.Finished, verticinho.Label)
+	}
 }
