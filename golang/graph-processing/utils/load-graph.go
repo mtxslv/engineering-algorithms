@@ -4,9 +4,19 @@ import (
 	"io"
 	"log"
 	"os"
+    "regexp"
     "strings"
 )
 
+type nodeNameAndLabel struct {
+    nodeName string
+    nodeLabel string
+} 
+
+type graphEdge struct {
+    nodeNameOrigin string
+    nodeNameDestiny string
+}
 
 func LoadText(textPath string) string {
 	// adapted from https://stackoverflow.com/questions/36111777/how-to-read-a-text-file
@@ -43,4 +53,38 @@ func LoadGraphDefinition(graphPath string) []string {
     graphCode := LoadText(graphPath)
     commands := BreakTextInNewLines(graphCode)
     return commands
+}
+
+func ExtractNodesAndEdges(graphCommands []string) ([]nodeNameAndLabel, []graphEdge) {
+
+    var nodes []nodeNameAndLabel
+    var edges []graphEdge
+
+    var reNodeDefinition = regexp.MustCompile(`(node\d+) \[label="(.+)"];`)
+    var reEdgeDefinition = regexp.MustCompile(`(node\d+) -> (node\d+);`)
+
+    // Check if command is a Node Definition
+    for _, command := range graphCommands {
+        
+        var purpotedNodeDef = reNodeDefinition.FindStringSubmatch(command)
+
+        if len(purpotedNodeDef) > 0 {
+            node := nodeNameAndLabel{
+                nodeName: purpotedNodeDef[1],
+                nodeLabel: purpotedNodeDef[2],
+            }
+            nodes = append(nodes, node)
+        } else {
+            var purpotedEdgeDef = reEdgeDefinition.FindStringSubmatch(command)
+            if len(purpotedEdgeDef) > 0 {
+                edge := graphEdge{
+                    nodeNameOrigin: purpotedEdgeDef[0],
+                    nodeNameDestiny: purpotedEdgeDef[1],
+                }
+                edges = append(edges, edge)
+            } 
+        }
+    }
+
+    return nodes, edges
 }
