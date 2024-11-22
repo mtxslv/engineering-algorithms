@@ -1,9 +1,9 @@
 import osmnx as ox
 
-distance = 1550
+distance = 2550
 city_address = 'Recife, Pernambuco'
 pt = (-8.056556,-34.8731439)
-graph = ox.graph_from_point(pt, dist=distance)
+graph = ox.graph_from_point(pt, dist=distance, dist_type='network')
 
 # Plot the graph
 ox.plot_graph(graph)
