@@ -3,10 +3,12 @@ from pathlib import Path
 import numpy as np
 import osmnx as ox
 
-
-class Vertex:
-    parent = None
-    d = np.inf # upper bound
+def initialize_single_source(G, source_node_id):
+    for node in G.nodes:
+        node['d'] = np.inf
+        node['parent'] = None
+    node[source_node_id]['d'] = 0
+    return G
 
 def load_graph():
     file_path = Path().home() / "Documentos/engineering-algorithms/python/graph-extraction/recife_praca_comunidade.graphml"
