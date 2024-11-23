@@ -77,6 +77,24 @@ class MinPriorityQueue:
 
     def __len__(self):
         return len(self.queue)
+    
+    def pop_node_by_id(self, node_id):
+        """
+        Since it is impossible to decrease elements in heap using float
+        let's just pop old node and add it back in the main code. 
+
+        Parameters
+        ----------
+        node_id : _type_
+            _description_
+        """
+        pos = -1
+        for it, node in enumerate(self.queue):
+            if node['id'] == node_id:
+                pos = it
+                break
+        if pos > 0:
+            del self.queue[pos]
 
 def initialize_single_source(G, source_node_id):
     for node_ID in G.nodes:
@@ -103,7 +121,7 @@ def dijkstra(G, w, source_node_id):
     Q = MinPriorityQueue(main_key='d')
     for vertex in vertices.values():
         Q.add(vertex)
-
+    print(f"LEN(Q) BEFORE WHILE: {len(Q)}")
     while len(Q) > 0:
         u = Q.extract_min()
         S.append(u)
@@ -113,10 +131,13 @@ def dijkstra(G, w, source_node_id):
             v = G.nodes[edge_info[1]]  
             weight_u_to_v = edge_info[-1]['length']
             decreased_node_v = relax(u,v,weight_u_to_v)
-            # if decreased_node_v:
-                # Q.decrease_key(v,len(Q)-1)
+            if decreased_node_v:
+                Q.pop_node_by_id(v['id'])
+                Q.min_heapify(len(Q)//2-1)
+                Q.add(v)
             # print(edge_info)
         break
+    print(f"LEN(Q) AFTER WHILE: {len(Q)}")
 
     return G # change later
 
