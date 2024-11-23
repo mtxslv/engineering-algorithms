@@ -114,7 +114,9 @@ def relax(node_u, node_v, weight_from_u_to_v):
     else:
         return False
 
-def dijkstra(G, w, source_node_id):
+def dijkstra(G, source_node_id): 
+    # No weight function w is supplied, given 
+    # the graph edges are weighted themselves. 
     G = initialize_single_source(G,source_node_id)
     S = []
     vertices = deepcopy(G.nodes)
@@ -148,8 +150,7 @@ def main():
     SOURCE_NODE_ID = 3691433990
     TARGET_NODE_ID = 3921998309
     G = load_graph()
-    S = dijkstra(G,0,SOURCE_NODE_ID)
-    print(len(S))
+    S = dijkstra(G,SOURCE_NODE_ID)
 
 if __name__=='__main__':
     main()
