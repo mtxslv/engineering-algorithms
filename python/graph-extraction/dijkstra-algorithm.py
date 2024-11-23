@@ -80,15 +80,20 @@ def initialize_single_source(G, source_node_id):
         node = G.nodes[node_ID]
         node['d'] = np.inf
         node['parent'] = None
+        node['id'] = node_ID
     G.nodes[source_node_id]['d'] = 0
     return G
 
 def dijkstra(G, w, source_node_id):
     G = initialize_single_source(G,source_node_id)
     S = set()
-    Q = deepcopy(G.nodes)
-    while len(Q) > 0:
-        pass
+    vertices = deepcopy(G.nodes)
+    Q = MinPriorityQueue(main_key='d')
+    for vertex in vertices.values():
+        Q.add(vertex)
+        print(vertex)
+    # while len(Q) > 0:
+        # pass
     return G # change later
 
 def load_graph():
