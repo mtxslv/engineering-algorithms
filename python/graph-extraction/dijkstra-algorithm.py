@@ -109,7 +109,7 @@ def relax(node_u, node_v, weight_from_u_to_v):
     if node_v['d'] > node_u['d'] + weight_from_u_to_v:
         node_v['d'] = node_u['d'] + weight_from_u_to_v
         node_v['parent'] = node_u['id']
-        print(node_v['id'])
+        # print(node_v['id'])
         return True
     else:
         return False
@@ -121,25 +121,24 @@ def dijkstra(G, w, source_node_id):
     Q = MinPriorityQueue(main_key='d')
     for vertex in vertices.values():
         Q.add(vertex)
-    print(f"LEN(Q) BEFORE WHILE: {len(Q)}")
     while len(Q) > 0:
+        print(f"QUEUE SIZE: {len(Q)}")
         u = Q.extract_min()
         S.append(u)
-        # print(u)
         for edge_info in G.out_edges(u['id'],data=True):
             # edge_info[1] is adj vertex index
             v = G.nodes[edge_info[1]]  
             weight_u_to_v = edge_info[-1]['length']
             decreased_node_v = relax(u,v,weight_u_to_v)
             if decreased_node_v:
+                # The following three lines tries to ammend 
+                # the priority queue, once decrease key
+                # does not support float values for keys.
                 Q.pop_node_by_id(v['id'])
                 Q.min_heapify(len(Q)//2-1)
                 Q.add(v)
-            # print(edge_info)
-        break
-    print(f"LEN(Q) AFTER WHILE: {len(Q)}")
 
-    return G # change later
+    return S 
 
 def load_graph():
     file_path = Path().home() / "Documentos/engineering-algorithms/python/graph-extraction/recife_praca_comunidade.graphml"
@@ -149,10 +148,8 @@ def main():
     SOURCE_NODE_ID = 3691433990
     TARGET_NODE_ID = 3921998309
     G = load_graph()
-    G = dijkstra(G,0,SOURCE_NODE_ID)
-    print(G.nodes[1453115310])
-    print(G.nodes[3691433989])
-    # print(G.out_edges(SOURCE_NODE_ID,data=True))
+    S = dijkstra(G,0,SOURCE_NODE_ID)
+    print(len(S))
 
 if __name__=='__main__':
     main()
