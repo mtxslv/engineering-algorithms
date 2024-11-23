@@ -146,11 +146,37 @@ def load_graph():
     file_path = Path().home() / "Documentos/engineering-algorithms/python/graph-extraction/recife_praca_comunidade.graphml"
     return ox.load_graphml(str(file_path))
 
+def plot_path(G, path, source_node, target_node):
+    # Create a node color map
+    node_colors = []
+    for node in G.nodes():
+        if node == source_node:
+            node_colors.append('yellow')
+        elif node == target_node:
+            node_colors.append('red')
+        elif node in path:
+            node_colors.append('orange')
+        else:
+            node_colors.append('gray')  # Default color for other nodes
+
+    # Plot the graph with color-coded nodes
+    fig, ax = ox.plot_graph(G, node_color=node_colors, node_size=10, edge_color='gray', edge_linewidth=0.5)
+
+
+
 def main():
     SOURCE_NODE_ID = 3691433990
     TARGET_NODE_ID = 3921998309
     G = load_graph()
     S = dijkstra(G,SOURCE_NODE_ID)
+
+    path = []
+    parent_node_id = G.nodes[TARGET_NODE_ID]['parent']
+    while parent_node_id != SOURCE_NODE_ID:
+        path.append(parent_node_id)
+        parent_node_id = G.nodes[parent_node_id]['parent']
+
+    plot_path(G,path,SOURCE_NODE_ID,TARGET_NODE_ID)    
 
 if __name__=='__main__':
     main()
