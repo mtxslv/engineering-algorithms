@@ -92,3 +92,11 @@ if __name__ == "__main__":
 
     print("\nQueue after decreasing the priority of id=3 to 2:")
     print(pq.queue)
+
+    min_ = pq.extract_min()
+
+    print("\nQueue after extracting minimum:")
+    print(pq.queue)
+
+    print('\nMinimum Extracted:')
+    print(min_)
