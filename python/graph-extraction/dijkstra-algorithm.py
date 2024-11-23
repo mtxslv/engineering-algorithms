@@ -75,6 +75,9 @@ class MinPriorityQueue:
             self.queue[i], self.queue[parent] = self.queue[parent], self.queue[i]
             i = parent
 
+    def __len__(self):
+        return len(self.queue)
+
 def initialize_single_source(G, source_node_id):
     for node_ID in G.nodes:
         node = G.nodes[node_ID]
@@ -91,9 +94,10 @@ def dijkstra(G, w, source_node_id):
     Q = MinPriorityQueue(main_key='d')
     for vertex in vertices.values():
         Q.add(vertex)
-        print(vertex)
-    # while len(Q) > 0:
-        # pass
+
+    while len(Q) > 0:
+        pass
+    
     return G # change later
 
 def load_graph():
