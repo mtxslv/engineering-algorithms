@@ -4,10 +4,11 @@ import numpy as np
 import osmnx as ox
 
 def initialize_single_source(G, source_node_id):
-    for node in G.nodes:
+    for node_ID in G.nodes:
+        node = G.nodes[node_ID]
         node['d'] = np.inf
         node['parent'] = None
-    node[source_node_id]['d'] = 0
+    G.nodes[source_node_id]['d'] = 0
     return G
 
 def load_graph():
@@ -18,7 +19,9 @@ def main():
     SOURCE_NODE_ID = 3691433990
     TARGET_NODE_ID = 3921998309
     G = load_graph()
-    print(G.out_edges(SOURCE_NODE_ID,data=True))
-    
+    # G = dijkstra(G,0,TARGET_NODE_ID)
+    print(G.nodes[TARGET_NODE_ID])
+    # print(G.out_edges(SOURCE_NODE_ID,data=True))
+
 if __name__=='__main__':
     main()
