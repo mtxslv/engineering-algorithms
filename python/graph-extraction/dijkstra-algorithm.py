@@ -163,7 +163,7 @@ def plot_path(G, path, source_node, target_node):
     fig, ax = ox.plot_graph(G, node_color=node_colors, node_size=10, edge_color='gray', edge_linewidth=0.5)
 
     file_path = Path().home() / "Documentos/engineering-algorithms/python/graph-extraction/"
-    fig.savefig(file_path.parent / 'path.png', dpi=1000, bbox_inches='tight')
+    fig.savefig(file_path / 'path.png', dpi=1000, bbox_inches='tight')
 
 def main():
     SOURCE_NODE_ID = 3691433990
