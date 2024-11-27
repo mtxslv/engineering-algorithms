@@ -34,31 +34,31 @@ int main(int argc, char * argv[]) {
         cout << "Generating " << n << " terms (using ";
         cout << "uint "<< seed<< " as seed) and saving to: \n\t" << path << endl;
 
-        // // Seed the random number generator with the current time
-        // srand(seed);
+        // Seed the random number generator with the current time
+        srand(seed);
 
-        // // Open the file for writing
-        // ofstream outfile(path);
+        // Open the file for writing
+        ofstream outfile(path);
 
-        // if (!outfile.is_open()) {
-        //     cerr << "Error opening file: " << path << endl;
-        //     return 1;
-        // }
+        if (!outfile.is_open()) {
+            cerr << "Error opening file: " << path << endl;
+            return 1;
+        }
 
-        // // Generate n^2 random integers and write them to the file
-        // for (int i = 0; i < n * n; ++i) {
-        //     int random_number = rand() % 256;
-        //     outfile << random_number << " ";
+        // Generate n^2 random integers and write them to the file
+        for (int i = 0; i < n * n; ++i) {
+            int random_number = rand() % 10;
+            outfile << random_number << " ";
 
-        //     // Add a newline after every n values
-        //     if ((i + 1) % n == 0) {
-        //         outfile << endl;
-        //     }
-        // }
+            // Add a newline after every n values
+            if ((i + 1) % n == 0) {
+                outfile << endl;
+            }
+        }
 
-        // outfile.close();
+        outfile.close();
 
-        // cout << "File saved successfully!" << endl;
-        // return 0;
+        cout << "File saved successfully!" << endl;
+        return 0;
     }
 }
