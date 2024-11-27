@@ -57,13 +57,14 @@ void mulMat(vector<vector<int>>& m1, vector<vector<int>>& m2,
 
 // Driver code
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
-        cerr << "Usage: " << argv[0] << " <filename>" << endl;
+    if (argc != 4) {
+        cerr << "Usage: " << argv[0] << " <first_matrix_file> <second_matrix_file> <output_file>" << endl;
         return 1;
     }
 
     string firstMatrixFilePath = argv[1];
     string secondMatrixFilePath = argv[2];
+    string outputFilePath = argv[3];
     
     vector<vector<int>> m1 = read_matrix_from_file(firstMatrixFilePath);
     vector<vector<int>> m2 = read_matrix_from_file(secondMatrixFilePath);
@@ -72,13 +73,25 @@ int main(int argc, char* argv[]) {
 
     mulMat(m1, m2, res);
 
-    cout << "Multiplication of given two matrices is:\n";
-    for (const auto& row : res) {
-        for (int val : row) {
-            cout << val << "\t";
-        }
-        cout << endl;
+    // Open the output file
+    ofstream outfile(outputFilePath);
+    if (!outfile.is_open()) {
+        cerr << "Error opening output file: " << outputFilePath << endl;
+        return 1;
     }
 
+    // Write the result matrix to the file
+    for (const auto& row : res) {
+        for (int val : row) {
+            outfile << val << "\t";
+        }
+        outfile << endl;
+    }
+
+    outfile.close();
+
+    cout << "Result saved to: " << outputFilePath << endl;
+
     return 0;
+
 }
