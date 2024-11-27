@@ -2,7 +2,7 @@
 
 SEEDA=1223334444
 SEEDB=1224444333
-N=1024
+N=2048
 
 g++ -o generate generate.cpp
 g++ -o matmult matmultserial.cpp
