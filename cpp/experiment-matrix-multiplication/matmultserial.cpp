@@ -2,8 +2,10 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <chrono>
 
 using namespace std;
+using namespace chrono;
 
 vector<vector<int>> read_matrix_from_file(const string& filename) {
     vector<vector<int>> matrix;
@@ -71,7 +73,11 @@ int main(int argc, char* argv[]) {
 
     vector<vector<int>> res;
 
+    auto start = high_resolution_clock::now();
     mulMat(m1, m2, res);
+    auto stop = high_resolution_clock::now();
+
+    auto duration = duration_cast<microseconds>(stop - start);
 
     // Open the output file
     ofstream outfile(outputFilePath);
@@ -91,7 +97,19 @@ int main(int argc, char* argv[]) {
     outfile.close();
 
     cout << "Result saved to: " << outputFilePath << endl;
+    cout << "Execution time: " << duration.count() << " microseconds" << endl;
 
+    // Open the output file
+    string logFilePath = "./log.txt";
+    ofstream logfile(logFilePath);
+    if (!logfile.is_open()) {
+        cerr << "Error opening log file: " << outputFilePath << endl;
+        return 1;
+    }    
+    
+    logfile << "Execution time: " << duration.count() << " microseconds" << endl;
+
+    logfile.close();
     return 0;
 
 }
