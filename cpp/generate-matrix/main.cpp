@@ -2,7 +2,7 @@
 // $ g++ -o main main.cpp
 // generate matrices using:
 // $ ./main 5 1223334444 ./matrix_a.txt
-// $ ./main 5 4444333221 ./matrix_b.txt
+// $ ./main 5 1224444333 ./matrix_b.txt
 
 #include <iostream>
 #include <string>
