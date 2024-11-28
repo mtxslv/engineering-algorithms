@@ -4,6 +4,11 @@ SEEDA=1223334444
 SEEDB=1224444333
 N=2048
 RESULTSFOLDER=./results
+NUM_THREADS=10
+
+export OMP_NUM_THREADS=$NUM_THREADS
+
+echo "Using $NUM_THREADS threads."
 
 if [ ! -d "$RESULTSFOLDER" ]; then 
     echo "$RESULTSFOLDER does not exist. Making it..."
