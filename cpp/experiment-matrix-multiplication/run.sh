@@ -22,9 +22,9 @@ g++ -o matmultparallel -fopenmp matmultparallel.cpp
 ./generate $N $SEEDB ./matrix_b.txt
 
 # RUN SERIAL PART
-for i in {1..3}; do
-    ./matmultserial ./matrix_a.txt ./matrix_b.txt $RESULTSFOLDER/serial/ans_$i.txt $RESULTSFOLDER/serial/log_$i.txt
-done
+# for i in {1..3}; do
+#     ./matmultserial ./matrix_a.txt ./matrix_b.txt $RESULTSFOLDER/serial/ans_$i.txt $RESULTSFOLDER/serial/log_$i.txt
+# done
 
 # RUN PARALLEL PART
 for i in {1..3}; do
