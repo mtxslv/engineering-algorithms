@@ -59,14 +59,15 @@ void mulMat(vector<vector<int>>& m1, vector<vector<int>>& m2,
 
 // Driver code
 int main(int argc, char* argv[]) {
-    if (argc != 4) {
-        cerr << "Usage: " << argv[0] << " <first_matrix_file> <second_matrix_file> <output_file>" << endl;
+    if (argc != 5) {
+        cerr << "Usage: " << argv[0] << " <first_matrix_file> <second_matrix_file> <output_file> <log_file>" << endl;
         return 1;
     }
 
     string firstMatrixFilePath = argv[1];
     string secondMatrixFilePath = argv[2];
     string outputFilePath = argv[3];
+    string logFilePath = argv[4];
     
     vector<vector<int>> m1 = read_matrix_from_file(firstMatrixFilePath);
     vector<vector<int>> m2 = read_matrix_from_file(secondMatrixFilePath);
@@ -100,7 +101,6 @@ int main(int argc, char* argv[]) {
     cout << "Execution time: " << duration.count() << " microseconds" << endl;
 
     // Open the output file
-    string logFilePath = "./log.txt";
     ofstream logfile(logFilePath);
     if (!logfile.is_open()) {
         cerr << "Error opening log file: " << outputFilePath << endl;

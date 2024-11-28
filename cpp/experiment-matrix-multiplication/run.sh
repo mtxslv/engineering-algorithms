@@ -2,7 +2,7 @@
 
 SEEDA=1223334444
 SEEDB=1224444333
-N=4
+N=9
 RESULTSFOLDER=./results
 
 if [ ! -d "$RESULTSFOLDER" ]; then 
@@ -22,7 +22,7 @@ g++ -o matmult matmultserial.cpp
 
 # RUN SERIAL PART
 for i in {1..3}; do
-    ./matmult ./matrix_a.txt ./matrix_b.txt $RESULTSFOLDER/serial/ans_$i.txt
+    ./matmult ./matrix_a.txt ./matrix_b.txt $RESULTSFOLDER/serial/ans_$i.txt $RESULTSFOLDER/serial/log_$i.txt
 done
 
 #https://stackoverflow.com/questions/59838/how-do-i-check-if-a-directory-exists-or-not-in-a-bash-shell-script
