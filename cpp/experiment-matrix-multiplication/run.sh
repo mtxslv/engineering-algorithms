@@ -14,7 +14,8 @@ fi
 
 # COMPILE CODE
 g++ -o generate generate.cpp
-g++ -o matmult matmultserial.cpp
+g++ -o matmultserial matmultserial.cpp
+g++ -o matmultparallel -fopenmp matmultparallel.cpp
 
 # GENERATE MATRICES
 ./generate $N $SEEDA ./matrix_a.txt
@@ -22,7 +23,12 @@ g++ -o matmult matmultserial.cpp
 
 # RUN SERIAL PART
 for i in {1..3}; do
-    ./matmult ./matrix_a.txt ./matrix_b.txt $RESULTSFOLDER/serial/ans_$i.txt $RESULTSFOLDER/serial/log_$i.txt
+    ./matmultserial ./matrix_a.txt ./matrix_b.txt $RESULTSFOLDER/serial/ans_$i.txt $RESULTSFOLDER/serial/log_$i.txt
+done
+
+# RUN PARALLEL PART
+for i in {1..3}; do
+    ./matmultparallel ./matrix_a.txt ./matrix_b.txt $RESULTSFOLDER/parallel/ans_$i.txt $RESULTSFOLDER/parallel/log_$i.txt
 done
 
 #https://stackoverflow.com/questions/59838/how-do-i-check-if-a-directory-exists-or-not-in-a-bash-shell-script
