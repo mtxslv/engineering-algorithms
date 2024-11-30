@@ -44,6 +44,7 @@ plt.title("Tempos de Execução")
 plt.xlabel("Número de Threads")
 plt.ylabel("Tempo (Microsegundos)")
 plt.xticks([1, 5, 10, 15])
+plt.yscale('log')  # Optional: Log scale to better visualize large differences
 plt.legend()
 plt.grid(True, which='both', linestyle='--', linewidth=0.5)
 plt.tight_layout()
