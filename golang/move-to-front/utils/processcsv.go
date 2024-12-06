@@ -37,7 +37,6 @@ func ProcessCsv(records [][]string) []Item {
 		title := row [2]
 		length := row [3]
 		albumName := row [4]
-		fmt.Printf("%d : AUTHOR = %s | NUMBER = %s | TITLE = %s | LENGTH = %s | ALBUM = %s\n\n",i, author, number,title, length, albumName)
 		item := Item{author, number,title,length,albumName}
 		items[i] = item
 	}
