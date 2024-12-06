@@ -43,3 +43,20 @@ func (ll *LinkedList) Add(item *Item) {
 	}
 	ll.len++
 }
+
+func (ll *LinkedList) Search(title string) *Item {
+	// Traverse and print the linked list.
+	current := ll.Head
+	for current != nil {
+		// Ensure current.Content is not nil before dereferencing.
+		if current.Content != nil {
+			content := *current.Content 
+			if content.Title == title {
+				return current.Content
+			}
+		}
+		// Move to the next node.
+		current = current.Next
+	}
+	return nil
+}
