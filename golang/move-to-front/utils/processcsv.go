@@ -11,13 +11,6 @@ import (
 	// "strconv"
 )
 
-type Item struct {
-	Author string
-	Number string
-	Title string
-	Length string
-	AlbumName string
-}
 
 func ReadCsvFile(filePath string) [][]string {
     f, err := os.Open(filePath)
