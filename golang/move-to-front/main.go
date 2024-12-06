@@ -21,18 +21,14 @@ func main() {
 	filePath := argsWithProg[1]
     trackList := utils.LoadCsv(filePath)
 
-	for _, track := range trackList {
-		fmt.Printf("%+v\n", track)
-	} 
-
 	// Create a new linked list.
 	ll := utils.New()
 
 	// Add items to the linked list
-	ll.Add(&trackList[0])
-	ll.Add(&trackList[1])
-	ll.Add(&trackList[2])
-	
+	for _, track := range trackList {
+		ll.Add(&track)
+	} 
+
 	fmt.Printf("\n\n")
 	// Traverse and print the linked list.
 	current := ll.Head
