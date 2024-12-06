@@ -31,9 +31,26 @@ func main() {
 
 	fmt.Printf("\n\n")
 	// Traverse and print the linked list.
-	current := ll.Head
-	for current != nil {
-		fmt.Printf("%+v\n", *current.Content)
-		current = current.Next
-	}	
+	// current := ll.Head
+	// for current != nil {
+	// 	fmt.Printf("%+v\n", *current.Content)
+	// 	current = current.Next
+	// }	
+
+	// Search for  a given song
+	title := "I Wanna Be Yours"
+	itemRef := ll.Search(title)
+	if itemRef != nil {
+		item := *itemRef
+		fmt.Printf(
+			"AUTHOR: %s | TRACK NUMBER: %s | TITLE: %s | LENGTH: %s | ALBUM: %s\n",
+			item.Author,
+			item.Number,
+			item.Title,
+			item.Length,
+			item.AlbumName,
+		)
+	} else {
+		fmt.Printf("Song not found \n")
+	}
 }
