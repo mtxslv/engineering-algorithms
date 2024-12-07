@@ -63,6 +63,24 @@ func (ll *LinkedList) Search(title string) *Item {
 	return nil
 }
 
+func (ll *LinkedList) SearchAndMoveToFront(title string) *Item{
+	// Traverse and print the linked list.
+	current := ll.Head
+	for current != nil {
+		// Ensure current.Content is not nil before dereferencing.
+		if current.Content != nil {
+			content := *current.Content 
+			if content.Title == title {
+				ll.MoveToFront(current)
+				return current.Content
+			}
+		}
+		// Move to the next node.
+		current = current.Next
+	}
+	return nil	
+}
+
 func (ll *LinkedList) MoveToFront(node *Node) {
 	// Move a given node to the front of the list.
 	rightNode := node
