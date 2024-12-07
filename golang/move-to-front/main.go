@@ -40,9 +40,13 @@ func main() {
 		current = current.Next
 	}	
 	
-	song := ll.SearchAndMoveToFront("Wish You Were Gay")
-
-	fmt.Printf("\n\t The music you looked for: %+v\n", *song)
+	song := ll.SearchAndMoveToFront("I Wanna Be Yours")
+	
+	if song != nil {
+		fmt.Printf("\n\t The music you looked for: %+v\n", *song)
+	} else {
+		fmt.Printf("\n\t Couldn't find your music :(\n")
+	}
 
 	fmt.Printf("\n\n")
 	// Traverse and print the linked list.
