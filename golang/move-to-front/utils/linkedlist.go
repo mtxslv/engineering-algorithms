@@ -1,6 +1,8 @@
 package utils
 
-// import "fmt"
+import (
+	"fmt"
+)
 
 type Node struct{
 	Previous *Node
@@ -59,4 +61,74 @@ func (ll *LinkedList) Search(title string) *Item {
 		current = current.Next
 	}
 	return nil
+}
+
+func (ll *LinkedList) MoveToFront(node *Node) {
+	// Move a given node to the front of the list.
+
+
+	// In case of being last node, it is necessary to update the list's Tail attribute
+	
+	// Upon finishing, update the list's Head attribute 
+}
+
+
+func (ll *LinkedList) SwapNodes(leftNode, rightNode *Node) error {
+/*
+Suppose the front of the list (first node) is on the left:
+
+					A == B == C == D == E
+
+A is the front of the list.
+So let's always refer to the nodes swapping position as leftNode and rightNode such that, before swapping:
+
+
+					alphaNode == leftNode == rightNode == omegaNode
+
+and after swapping
+
+					alphaNode == rightNode == leftNode == omegaNode
+
+The operations then must be:
+	rightNode.Previous = &alphaNode
+	rightNode.Next = &leftNode
+	leftNode.Previous = &rightNode
+	leftNode.Next = &omegaNode
+	alphaNode.Next = &rightNode
+	omegaNode.Previous = &leftNode
+*/
+
+	if leftNode == nil || rightNode == nil || leftNode == rightNode {
+		return fmt.Errorf("Error occurred: %w", ErrNodesInvalid)
+	}
+	// Ensure leftNode comes right before rightNode 
+	if leftNode.Next != rightNode {
+		return fmt.Errorf("Error occurred: %w",ErrNodesOrderInvalid)
+	}
+
+	alphaNode := leftNode.Previous
+	omegaNode := rightNode.Next
+
+	// Update rightNode's pointers
+	rightNode.Previous = alphaNode
+	rightNode.Next = leftNode
+
+	// Update leftNode's pointers
+	leftNode.Previous = rightNode
+	leftNode.Next = omegaNode
+
+	if alphaNode != nil { // alphaNode exists
+		alphaNode.Next = rightNode
+	} else { // alphaNode does not exist. 
+		ll.Head = rightNode // Now rightNode is the Head
+	}
+
+	if omegaNode != nil { // omegaNode exists
+		omegaNode.Previous = leftNode
+	} else { // omegaNode does not exist
+		ll.Tail = leftNode // Now leftNode is the Tail
+	}
+
+	return nil
+
 }
