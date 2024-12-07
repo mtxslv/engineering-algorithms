@@ -25,32 +25,32 @@ func main() {
 	ll := utils.New()
 
 	// Add items to the linked list
-	for _, track := range trackList {
+	for it, track := range trackList {
 		ll.Add(&track)
+		if it == 5 {
+			break
+		}
 	} 
 
 	fmt.Printf("\n\n")
 	// Traverse and print the linked list.
-	// current := ll.Head
-	// for current != nil {
-	// 	fmt.Printf("%+v\n", *current.Content)
-	// 	current = current.Next
-	// }	
+	current := ll.Head
+	for current != nil {
+		fmt.Printf("%+v\n", *current.Content)
+		current = current.Next
+	}	
 
-	// Search for  a given song
-	title := "I Wanna Be Yours"
-	itemRef := ll.Search(title)
-	if itemRef != nil {
-		item := *itemRef
-		fmt.Printf(
-			"AUTHOR: %s | TRACK NUMBER: %s | TITLE: %s | LENGTH: %s | ALBUM: %s\n",
-			item.Author,
-			item.Number,
-			item.Title,
-			item.Length,
-			item.AlbumName,
-		)
-	} else {
-		fmt.Printf("Song not found \n")
+	err := ll.SwapNodes(ll.Head.Next,ll.Head.Next.Next)
+
+	if err != nil {
+		panic(err)
 	}
+
+	fmt.Printf("\n\n")
+	// Traverse and print the linked list.
+	current = ll.Head
+	for current != nil {
+		fmt.Printf("%+v\n", *current.Content)
+		current = current.Next
+	}		
 }
