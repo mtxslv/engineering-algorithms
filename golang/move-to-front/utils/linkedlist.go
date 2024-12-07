@@ -65,11 +65,14 @@ func (ll *LinkedList) Search(title string) *Item {
 
 func (ll *LinkedList) MoveToFront(node *Node) {
 	// Move a given node to the front of the list.
-
-
-	// In case of being last node, it is necessary to update the list's Tail attribute
-	
-	// Upon finishing, update the list's Head attribute 
+	rightNode := node
+	for rightNode.Previous != nil { // While there is a previous node
+		leftNode := rightNode.Previous
+		err := ll.SwapNodes(leftNode, rightNode)
+		if err != nil {
+			panic(err)
+		}
+	}
 }
 
 
