@@ -7,8 +7,6 @@ import (
     "encoding/csv"
     "log"
     "os"
-	"fmt"
-	// "strconv"
 )
 
 
@@ -30,7 +28,7 @@ func ReadCsvFile(filePath string) [][]string {
 
 func ProcessCsv(records [][]string) []Item {
 	items := make([]Item, len(records)-1) // len(records)-1 to ignore csv header
-	fmt.Printf("%d records in total.\n",len(records))
+	// fmt.Printf("%d records in total.\n",len(records)-1)
 	for i, row := range records {
         if i > 0 { // i > 0 to ignore csv header
             author := row [0]
