@@ -29,16 +29,18 @@ func ReadCsvFile(filePath string) [][]string {
 }
 
 func ProcessCsv(records [][]string) []Item {
-	items := make([]Item, len(records))
+	items := make([]Item, len(records)-1) // len(records)-1 to ignore csv header
 	fmt.Printf("%d records in total.\n",len(records))
 	for i, row := range records {
-		author := row [0]
-		number := row [1]
-		title := row [2]
-		length := row [3]
-		albumName := row [4]
-		item := Item{author, number,title,length,albumName}
-		items[i] = item
+        if i > 0 { // i > 0 to ignore csv header
+            author := row [0]
+            number := row [1]
+            title := row [2]
+            length := row [3]
+            albumName := row [4]
+            item := Item{author, number,title,length,albumName}
+            items[i-1] = item // to ignore csv header
+        }
 	}
 	return items
 }
