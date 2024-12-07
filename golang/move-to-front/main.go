@@ -39,12 +39,8 @@ func main() {
 		fmt.Printf("%+v\n", *current.Content)
 		current = current.Next
 	}	
-
-	err := ll.SwapNodes(ll.Head.Next,ll.Head.Next.Next)
-
-	if err != nil {
-		panic(err)
-	}
+	
+	ll.MoveToFront(ll.Tail)
 
 	fmt.Printf("\n\n")
 	// Traverse and print the linked list.
