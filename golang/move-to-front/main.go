@@ -52,19 +52,12 @@ func main() {
 	for _, songName := range names {
 		songMetadata, cost := ll.SearchAndMoveToFrontWithCostIncurred(songName)
 		if songMetadata != nil {
-			fmt.Printf("\n\t The music you looked for: %+v\n (took %d operations)", *songMetadata, cost)
+			fmt.Printf("\n\t Took %d operations (ratio = %.3f) to find the music's metadata (title: %s)", cost, float32(cost)/100.0 ,songName)
 		} else {
 			fmt.Printf("\n\t Couldn't find your music :(\n [Took %d operations]", cost)
+			return
 		}
-	
 	}
-	// song, cost := ll.SearchAndMoveToFrontWithCostIncurred("I Wanna Be Yours")
-	
-
-	// // Traverse and print the linked list.
-	// current := ll.Head
-	// for current != nil {
-	// 	fmt.Printf("%+v\n", *current.Content)
-	// 	current = current.Next
-	// }	
+		
+	fmt.Println();
 }
