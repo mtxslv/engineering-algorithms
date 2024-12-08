@@ -153,3 +153,41 @@ The operations then must be:
 	return nil
 
 }
+
+func (ll *LinkedList) SearchAndMoveToFrontWithCostIncurred(title string) (*Item , uint16){
+	// Traverse and print the linked list.
+	var totalCost uint16 = 0
+	current := ll.Head
+	for current != nil {
+		// Reached a new node, thus increasing totalCost
+		totalCost++
+		// Ensure current.Content is not nil before dereferencing.
+		if current.Content != nil {
+			content := *current.Content 
+			if content.Title == title {
+				moveCost := ll.MoveToFrontWithCostIncurred(current)
+				return current.Content, moveCost+totalCost
+			}
+		}
+		// Move to the next node.
+		current = current.Next
+	}
+	return nil, totalCost
+}
+
+
+func (ll *LinkedList) MoveToFrontWithCostIncurred(node *Node) uint16 {
+	// Move a given node to the front of the list.
+	var totalCost uint16 = 0
+	rightNode := node
+	for rightNode.Previous != nil { // While there is a previous node
+		leftNode := rightNode.Previous
+		err := ll.SwapNodes(leftNode, rightNode)
+		if err != nil {
+			panic(err)
+		} else {
+			totalCost++ // Each swap takes 1 operation
+		}
+	}
+	return totalCost
+}
