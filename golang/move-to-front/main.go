@@ -44,20 +44,23 @@ func main() {
 	} 
 
 	// Randomly sample 50 song names to look for 
-	names := getSampleSongNames(trackList, 50)
+	var sampleSize int = 50
+	names := getSampleSongNames(trackList, sampleSize)
 
 
 	fmt.Printf("\n\n")
-
+	var totalCost = float32(0.0)
 	for _, songName := range names {
 		songMetadata, cost := ll.SearchAndMoveToFrontWithCostIncurred(songName)
 		if songMetadata != nil {
-			fmt.Printf("\n\t Took %d operations (ratio = %.3f) to find the music's metadata (title: %s)", cost, float32(cost)/100.0 ,songName)
+			totalCost += float32(cost) ///100.0 
+			fmt.Printf("\n\t Music Found!")
+			// fmt.Printf("\n\t Took %d operations (ratio = %.3f) to find the music's metadata (title: %s)", cost, ,songName)
 		} else {
 			fmt.Printf("\n\t Couldn't find your music :(\n [Took %d operations]", cost)
 			return
 		}
 	}
+	fmt.Printf("\nTotal Cost of Sequence: %.3f\n",totalCost/float32(2*sampleSize))
 		
-	fmt.Println();
 }
