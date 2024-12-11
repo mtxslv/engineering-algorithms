@@ -59,6 +59,26 @@ func getOfflineList(tracklist *utils.LinkedList, names []string) *utils.LinkedLi
 
 }
 
+func randomChoiceExperiment(ll *utils.LinkedList, trackList []utils.Item, sampleSize int) {
+
+	names := getSampleSongNames(trackList, sampleSize)
+
+	offlineList := getOfflineList(ll, names)
+
+	totalCostForesee := 0
+	totalCostMTF := 0
+
+	for _, name := range names {
+		_, costForesee := offlineList.SearchAndMoveToFrontWithCostIncurred(name)
+		_, costMTF := ll.SearchAndMoveToFrontWithCostIncurred(name)
+
+		totalCostForesee += int(costForesee)
+		totalCostMTF += int(costMTF)
+	}
+
+	fmt.Printf("RATIO RANDOM CHOICE: %.4f\n", float32(totalCostMTF)/float32(totalCostForesee))
+}
+
 func main() {
 
 	// Check if path to csv file was provided
@@ -82,24 +102,9 @@ func main() {
 		ll.Add(&track)
 	} 
 
-	// Randomly sample 50 song names to look for 
+	// Requests Batch will have 50 song names to look for 
 	var sampleSize int = 50
-	names := getSampleSongNames(trackList, sampleSize)
 
-	offlineList := getOfflineList(ll, names)
-
-	totalCostForesee := 0
-	totalCostMTF := 0
-
-	for _, name := range names {
-		_, costForesee := offlineList.SearchAndMoveToFrontWithCostIncurred(name)
-		_, costMTF := ll.SearchAndMoveToFrontWithCostIncurred(name)
-
-		totalCostForesee += int(costForesee)
-		totalCostMTF += int(costMTF)
-	}
-
-	fmt.Printf("RATIO: %.4f\n", float32(totalCostMTF)/float32(totalCostForesee))
-
-		
+	randomChoiceExperiment(ll, trackList, sampleSize)
+	
 }
