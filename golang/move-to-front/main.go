@@ -121,7 +121,7 @@ func worstCaseScenarioExperiment(ll *utils.LinkedList, sampleSize int) {
 		totalCostForesee += int(costForesee)
 		totalCostMTF += int(costMTF)
 	}
-	fmt.Printf("(worst) COST FORESEE: %d | COST MTF: %d\n", totalCostForesee, totalCostMTF)
+	// fmt.Printf("(worst) COST FORESEE: %d | COST MTF: %d\n", totalCostForesee, totalCostMTF)
 	fmt.Printf("RATIO WORST CASE: %.4f\n", float32(totalCostMTF)/float32(totalCostForesee))
 }
 
