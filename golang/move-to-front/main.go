@@ -5,6 +5,7 @@ import (
 	"os"
 	"utils/utils"
 	"math/rand"
+	"sort"
     "time"
 )
 
@@ -18,6 +19,44 @@ func getSampleSongNames(tracklist []utils.Item, sampleSize int) []string {
 		i++
 	}
 	return names
+}
+
+func getOfflineList(tracklist *utils.LinkedList, names []string) *utils.LinkedList {
+	offlineList := utils.New()
+
+	type titleCount struct {
+		title string
+		number int
+	}
+	
+	requests := make([]titleCount, tracklist.Len)
+
+	// Define how many times each name
+	// appear in offline request batch
+	current := tracklist.Head
+	it := 0
+	for current != nil {
+		count := 0
+		for _, name := range names{
+			if name == current.Content.Title{
+				count++
+			}
+		}
+		requests[it] = titleCount{title:current.Content.Title,number:count}
+		current = current.Next
+		it++
+	}
+	sort.Slice(requests, func(i, j int) bool { return requests[i].number > requests[j].number })
+	// fmt.Printf("\n%+v\n",requests)
+
+	// Now build a new list 
+	for _, titleCountObj := range requests{
+		obj := tracklist.Search(titleCountObj.title)
+		offlineList.Add(obj)
+	}
+
+	return offlineList
+
 }
 
 func main() {
@@ -47,20 +86,20 @@ func main() {
 	var sampleSize int = 50
 	names := getSampleSongNames(trackList, sampleSize)
 
+	offlineList := getOfflineList(ll, names)
 
-	fmt.Printf("\n\n")
-	var totalCost = float32(0.0)
-	for _, songName := range names {
-		songMetadata, cost := ll.SearchAndMoveToFrontWithCostIncurred(songName)
-		if songMetadata != nil {
-			totalCost += float32(cost) ///100.0 
-			fmt.Printf("\n\t Music Found!")
-			// fmt.Printf("\n\t Took %d operations (ratio = %.3f) to find the music's metadata (title: %s)", cost, ,songName)
-		} else {
-			fmt.Printf("\n\t Couldn't find your music :(\n [Took %d operations]", cost)
-			return
-		}
+	totalCostForesee := 0
+	totalCostMTF := 0
+
+	for _, name := range names {
+		_, costForesee := offlineList.SearchAndMoveToFrontWithCostIncurred(name)
+		_, costMTF := ll.SearchAndMoveToFrontWithCostIncurred(name)
+
+		totalCostForesee += int(costForesee)
+		totalCostMTF += int(costMTF)
 	}
-	fmt.Printf("\nTotal Cost of Sequence: %.3f\n",totalCost/float32(2*sampleSize))
+
+	fmt.Printf("RATIO: %.4f\n", float32(totalCostMTF)/float32(totalCostForesee))
+
 		
 }
