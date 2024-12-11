@@ -3,161 +3,88 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"utils/utils"
 	"math/rand"
-	"sort"
-    "time"
+	// "sort"
+	// "time"
 )
 
-func getSampleSongNames(tracklist []utils.Item, sampleSize int) []string {
-	names := make([]string, sampleSize)
-	randomizer := rand.New(rand.NewSource(time.Now().UnixNano()))
-	i := 0
-	for i < sampleSize {
-		position := randomizer.Intn(len((tracklist)))
-		names[i] = tracklist[position].Title
-		i++
-	}
-	return names
+func RandStringBytes(n int) string {
+	const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    b := make([]byte, n)
+    for i := range b {
+        b[i] = letterBytes[rand.Intn(len(letterBytes))]
+    }
+    return string(b)
 }
 
-func getOfflineList(tracklist *utils.LinkedList, names []string) *utils.LinkedList {
-	offlineList := utils.New()
-
-	type titleCount struct {
-		title string
-		number int
-	}
-	
-	requests := make([]titleCount, tracklist.Len)
-
-	// Define how many times each name
-	// appear in offline request batch
-	current := tracklist.Head
+func generateTrackList(listSize int) []utils.Item {
+	stringSize := 50
 	it := 0
-	for current != nil {
-		count := 0
-		for _, name := range names{
-			if name == current.Content.Title{
-				count++
-			}
+	tracklist := make([]utils.Item, listSize)
+	for it < listSize {
+		// Generate Author as a String
+		author := RandStringBytes(16)
+		// Generate No. as a String, from a Number between 1 and 15
+		number := fmt.Sprintf("%d", rand.Intn(15)+1)
+		// Generate Title as a String 
+		title := RandStringBytes(stringSize)
+		// Generate Length as a String 
+		// 		"<Number between 0 and 6>:<Number betweem 0 and 59>"
+		length := fmt.Sprintf("%d:%d",rand.Intn(7),rand.Intn(59))
+		// Generate album-name as a String
+		albumName := RandStringBytes(16)
+		
+		// Create a track
+		track := utils.Item{
+			Author: author,
+			Number: number,
+			Title: title,
+			Length: length,
+			AlbumName: albumName,			
 		}
-		requests[it] = titleCount{title:current.Content.Title,number:count}
-		current = current.Next
+
+		// Add to track
+		tracklist[it] = track
+
+		// Goes to next
 		it++
 	}
-	sort.Slice(requests, func(i, j int) bool { return requests[i].number > requests[j].number })
-	// fmt.Printf("\n%+v\n",requests)
 
-	// Now build a new list 
-	for _, titleCountObj := range requests{
-		obj := tracklist.Search(titleCountObj.title)
-		offlineList.Add(obj)
-	}
-
-	return offlineList
-
+	return tracklist
 }
-
-func randomChoiceExperiment(ll *utils.LinkedList, trackList []utils.Item, sampleSize int) string {
-
-	names := getSampleSongNames(trackList, sampleSize)
-
-	offlineList := getOfflineList(ll, names)
-
-	totalCostForesee := 0
-	totalCostMTF := 0
-
-	for _, name := range names {
-		foundF, costForesee := offlineList.SearchWithCostIncurred(name)
-		foundM, costMTF := ll.SearchAndMoveToFrontWithCostIncurred(name)
-		if foundF == nil || foundM == nil {
-			fmt.Printf("NOT FOUND. ERROR")
-			return ""
-		}
-		totalCostForesee += int(costForesee)
-		totalCostMTF += int(costMTF)
-	}
-	msg := fmt.Sprintf("RATIO RANDOM CHOICE: %.4f", float32(totalCostMTF)/float32(totalCostForesee))
-	return msg
-}
-
-func worstCaseScenarioExperiment(ll *utils.LinkedList, sampleSize int) string {
-
-	names := make([]string, sampleSize)
-	offlineList := utils.New()
-	
-	// Iterate on the linked list,
-	// Adding the last elements in reverse order
-	// such that the reversed last 50 values
-	// will be queried
-	current := ll.Tail
-	it := 0
-	for current != nil {
-		offlineList.Add(current.Content)
-		if it < sampleSize {
-			names[it] = current.Content.Title
-			it++
-		}
-		current = current.Previous	
-	}
-	
-	current = offlineList.Head
-	for current != nil {
-		// fmt.Printf("%+v\n", current.Content)
-		current = current.Next
-	}
-
-	totalCostForesee := 0
-	totalCostMTF := 0
-
-	for _, name := range names {
-		foundF, costForesee := offlineList.SearchWithCostIncurred(name) // (50*(51))/2
-		foundM, costMTF := ll.SearchAndMoveToFrontWithCostIncurred(name) // (126+125)*50
-		if foundF == nil || foundM == nil {
-			fmt.Printf("NOT FOUND. ERROR")
-			return ""
-		}
-		totalCostForesee += int(costForesee)
-		totalCostMTF += int(costMTF)
-	}
-	// fmt.Printf("(worst) COST FORESEE: %d | COST MTF: %d\n", totalCostForesee, totalCostMTF)
-	msg := fmt.Sprintf("RATIO WORST CASE: %.4f", float32(totalCostMTF)/float32(totalCostForesee))
-	return msg
-}
-
 
 func main() {
 
-	// Check if path to csv file was provided
+	// Check if parameters were provided
 	argsWithProg := os.Args
-	if len(argsWithProg) != 2 {
-		fmt.Printf("Usage: \n./main <path-to-csv-file>\n")
+	if len(argsWithProg) != 3 {
+		fmt.Printf("Usage: \n./main <list-size> <number-of-requests>\n")
 		return
 	} 
 	
 	// If everything is fine, code follows...
 
-	// Load CSV
-	filePath := argsWithProg[1]
-    trackList := utils.LoadCsv(filePath)
+	// Define parameters
+	listSize, errArg1 := strconv.Atoi(argsWithProg[1])
+	requestsNumber, errArg2 := strconv.Atoi(argsWithProg[2])
+	if errArg1 != nil {
+		panic(errArg1)
+	}
+	if errArg2 != nil {
+		panic(errArg2)
+	}
+	if listSize < 1 || requestsNumber < 1 {
+		fmt.Printf("Arguments must be numeric and positive.\n")
+		return
+	}
 
-	// Create a pair of linked list.
-	llRandom := utils.New()
-	llWorst := utils.New()
-
-	// Add items to them
+	trackList := generateTrackList(listSize)
+	fmt.Printf("====== TRACKLIST ======\n")
 	for _, track := range trackList {
-		// fmt.Print("%+v",track)
-		llRandom.Add(&track)
-		llWorst.Add(&track)
-	} 
+		fmt.Printf("%+v\n", track)
+	}
+	fmt.Printf("============\n")
 
-	// Requests Batch will have 50 song names to look for 
-	var sampleSize int = 50
-
-	msgRandom := randomChoiceExperiment(llRandom, trackList, sampleSize)
-	msgWorst := worstCaseScenarioExperiment(llWorst,sampleSize)
-	
-	fmt.Printf("%s | %s \n", msgRandom, msgWorst)
 }
