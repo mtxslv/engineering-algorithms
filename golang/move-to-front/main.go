@@ -59,7 +59,7 @@ func getOfflineList(tracklist *utils.LinkedList, names []string) *utils.LinkedLi
 
 }
 
-func randomChoiceExperiment(ll *utils.LinkedList, trackList []utils.Item, sampleSize int) {
+func randomChoiceExperiment(ll *utils.LinkedList, trackList []utils.Item, sampleSize int) string {
 
 	names := getSampleSongNames(trackList, sampleSize)
 
@@ -73,16 +73,16 @@ func randomChoiceExperiment(ll *utils.LinkedList, trackList []utils.Item, sample
 		foundM, costMTF := ll.SearchAndMoveToFrontWithCostIncurred(name)
 		if foundF == nil || foundM == nil {
 			fmt.Printf("NOT FOUND. ERROR")
-			return
+			return ""
 		}
 		totalCostForesee += int(costForesee)
 		totalCostMTF += int(costMTF)
 	}
-
-	fmt.Printf("RATIO RANDOM CHOICE: %.4f\n", float32(totalCostMTF)/float32(totalCostForesee))
+	msg := fmt.Sprintf("RATIO RANDOM CHOICE: %.4f", float32(totalCostMTF)/float32(totalCostForesee))
+	return msg
 }
 
-func worstCaseScenarioExperiment(ll *utils.LinkedList, sampleSize int) {
+func worstCaseScenarioExperiment(ll *utils.LinkedList, sampleSize int) string {
 
 	names := make([]string, sampleSize)
 	offlineList := utils.New()
@@ -116,13 +116,14 @@ func worstCaseScenarioExperiment(ll *utils.LinkedList, sampleSize int) {
 		foundM, costMTF := ll.SearchAndMoveToFrontWithCostIncurred(name) // (126+125)*50
 		if foundF == nil || foundM == nil {
 			fmt.Printf("NOT FOUND. ERROR")
-			return
+			return ""
 		}
 		totalCostForesee += int(costForesee)
 		totalCostMTF += int(costMTF)
 	}
 	// fmt.Printf("(worst) COST FORESEE: %d | COST MTF: %d\n", totalCostForesee, totalCostMTF)
-	fmt.Printf("RATIO WORST CASE: %.4f\n", float32(totalCostMTF)/float32(totalCostForesee))
+	msg := fmt.Sprintf("RATIO WORST CASE: %.4f", float32(totalCostMTF)/float32(totalCostForesee))
+	return msg
 }
 
 
@@ -155,8 +156,8 @@ func main() {
 	// Requests Batch will have 50 song names to look for 
 	var sampleSize int = 50
 
-	randomChoiceExperiment(llRandom, trackList, sampleSize)
-	// worstCaseScenarioExperiment(llWorst)
-	worstCaseScenarioExperiment(llWorst,sampleSize)
+	msgRandom := randomChoiceExperiment(llRandom, trackList, sampleSize)
+	msgWorst := worstCaseScenarioExperiment(llWorst,sampleSize)
 	
+	fmt.Printf("%s | %s \n", msgRandom, msgWorst)
 }
