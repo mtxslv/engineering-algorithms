@@ -191,3 +191,23 @@ func (ll *LinkedList) MoveToFrontWithCostIncurred(node *Node) uint16 {
 	}
 	return totalCost
 }
+
+func (ll *LinkedList) SearchWithCostIncurred(title string) (*Item , uint16) {
+	var totalCost uint16 = 0
+	// Traverse and print the linked list.
+	current := ll.Head
+	for current != nil {
+		// Reached a new node, thus increasing totalCost
+		totalCost++		
+		// Ensure current.Content is not nil before dereferencing.
+		if current.Content != nil {
+			content := *current.Content 
+			if content.Title == title {
+				return current.Content, totalCost
+			}
+		}
+		// Move to the next node.
+		current = current.Next
+	}
+	return nil, totalCost
+}
