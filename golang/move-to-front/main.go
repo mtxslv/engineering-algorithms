@@ -82,23 +82,28 @@ func randomChoiceExperiment(ll *utils.LinkedList, trackList []utils.Item, sample
 func worstCaseScenarioExperiment(ll *utils.LinkedList, sampleSize int) {
 
 	names := make([]string, sampleSize)
-	it := 0
+	offlineList := utils.New()
+	
+	// Iterate on the linked list,
+	// Adding the last elements in reverse order
+	// such that the reversed last 50 values
+	// will be queried
 	current := ll.Tail
-	for it < sampleSize {
-		names[it] = current.Content.Title
-		current = current.Previous
-		it++
+	it := 0
+	for current != nil {
+		offlineList.Add(current.Content)
+		if it < sampleSize {
+			names[it] = current.Content.Title
+			it++
+		}
+		current = current.Previous	
 	}
-
-	// fmt.Printf("%+v\n", names)
-
-	offlineList := getOfflineList(ll, names)
-
-	// current = offlineList.Tail
-	// for current != nil {
-	// 	fmt.Printf("OFFLINE LIST: %+v\n", current.Content)
-	// 	current = current.Previous
-	// }
+	
+	current = offlineList.Head
+	for current != nil {
+		// fmt.Printf("%+v\n", current.Content)
+		current = current.Next
+	}
 
 	totalCostForesee := 0
 	totalCostMTF := 0
