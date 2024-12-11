@@ -79,6 +79,42 @@ func randomChoiceExperiment(ll *utils.LinkedList, trackList []utils.Item, sample
 	fmt.Printf("RATIO RANDOM CHOICE: %.4f\n", float32(totalCostMTF)/float32(totalCostForesee))
 }
 
+func worstCaseScenarioExperiment(ll *utils.LinkedList, sampleSize int) {
+
+	names := make([]string, sampleSize)
+	it := 0
+	current := ll.Tail
+	for it < sampleSize {
+		names[it] = current.Content.Title
+		current = current.Previous
+		it++
+	}
+
+	// fmt.Printf("%+v\n", names)
+
+	offlineList := getOfflineList(ll, names)
+
+	// current = offlineList.Tail
+	// for current != nil {
+	// 	fmt.Printf("OFFLINE LIST: %+v\n", current.Content)
+	// 	current = current.Previous
+	// }
+
+	totalCostForesee := 0
+	totalCostMTF := 0
+
+	for _, name := range names {
+		_, costForesee := offlineList.SearchAndMoveToFrontWithCostIncurred(name)
+		_, costMTF := ll.SearchAndMoveToFrontWithCostIncurred(name)
+
+		totalCostForesee += int(costForesee)
+		totalCostMTF += int(costMTF)
+	}
+
+	fmt.Printf("RATIO WORST CASE: %.4f\n", float32(totalCostMTF)/float32(totalCostForesee))
+}
+
+
 func main() {
 
 	// Check if path to csv file was provided
@@ -94,17 +130,22 @@ func main() {
 	filePath := argsWithProg[1]
     trackList := utils.LoadCsv(filePath)
 
-	// Create a new linked list.
-	ll := utils.New()
+	// Create a pair of linked list.
+	llRandom := utils.New()
+	llWorst := utils.New()
 
-	// Add items to the linked list
+	// Add items to them
 	for _, track := range trackList {
-		ll.Add(&track)
+		// fmt.Print("%+v",track)
+		llRandom.Add(&track)
+		llWorst.Add(&track)
 	} 
 
 	// Requests Batch will have 50 song names to look for 
 	var sampleSize int = 50
 
-	randomChoiceExperiment(ll, trackList, sampleSize)
+	randomChoiceExperiment(llRandom, trackList, sampleSize)
+	// worstCaseScenarioExperiment(llWorst)
+	worstCaseScenarioExperiment(llWorst,sampleSize)
 	
 }
