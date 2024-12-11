@@ -13,7 +13,7 @@ type Node struct{
 type LinkedList struct {
 	Head *Node
 	Tail *Node
-	len int
+	Len int
 }
 
 func New() *LinkedList {
@@ -28,7 +28,7 @@ func (ll *LinkedList) Add(item *Item) {
 		Next: nil, // it will be the last node, so no next node
 	}
 
-	if ll.len == 0 {
+	if ll.Len == 0 {
 		// List empty. Then newNode is both Head and Tail
 		ll.Head = newNode
 		ll.Tail = newNode
@@ -43,7 +43,7 @@ func (ll *LinkedList) Add(item *Item) {
 		// newNode is the new Tails
 		ll.Tail = newNode
 	}
-	ll.len++
+	ll.Len++
 }
 
 func (ll *LinkedList) Search(title string) *Item {
