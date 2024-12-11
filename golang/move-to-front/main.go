@@ -112,8 +112,8 @@ func worstCaseScenarioExperiment(ll *utils.LinkedList, sampleSize int) {
 	totalCostMTF := 0
 
 	for _, name := range names {
-		foundF, costForesee := offlineList.SearchWithCostIncurred(name)
-		foundM, costMTF := ll.SearchAndMoveToFrontWithCostIncurred(name)
+		foundF, costForesee := offlineList.SearchWithCostIncurred(name) // (50*(51))/2
+		foundM, costMTF := ll.SearchAndMoveToFrontWithCostIncurred(name) // (126+125)*50
 		if foundF == nil || foundM == nil {
 			fmt.Printf("NOT FOUND. ERROR")
 			return
