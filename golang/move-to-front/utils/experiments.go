@@ -73,30 +73,24 @@ func offlineOptimize(tracklist *LinkedList, names []string) int {
 		number int
 	}
 	
-	requests := make([]titleCount, tracklist.Len)
+	var requests []titleCount
 
 	// Define how many times each name
 	// appear in offline request batch
-	current := tracklist.Head
-	it := 0
-	for current != nil {
-		count := 0
-		for _, name := range names{
-			if name == current.Content.Title{
-				count++
-			}
-		}
-		requests[it] = titleCount{title:current.Content.Title,number:count}
-		current = current.Next
-		it++
+	counter := make(map[string]int)
+	for _, name := range names {
+		counter[name]++
 	}
-	// COST OF ACCESSING THE LIST: tracklist.Len
+
+	for k := range counter {
+		requests = append(requests, titleCount{title:k,number:counter[k]})
+	}
 
 	sort.Slice(requests, func(i, j int) bool { return requests[i].number < requests[j].number })
 	// fmt.Printf("\n%+v\n",requests)
 
 	// Now build a new list 
-	totalCost := tracklist.Len // Cost of accessing
+	totalCost := 0
 	for _, titleCountObj := range requests{
 		_, cost := tracklist.SearchAndMoveToFrontWithCostIncurred(titleCountObj.title)
 		totalCost += int(cost)
