@@ -32,6 +32,7 @@ func main() {
 		return
 	}
 
-	utils.ExperimentListSizeEqualToRequestsWorstCase(listSize,requestsNumber)
+	utils.ExperimentRequests(listSize,requestsNumber)
+	// utils.ExperimentListSizeEqualToRequestsWorstCase(listSize,requestsNumber)
 
 }

@@ -4,8 +4,8 @@ package utils
 import (
 	"fmt"
 	"math/rand"
-	// "sort"
-	// "time"
+	"sort"
+	"time"
 )
 
 func RandStringBytes(n int) string {
@@ -51,6 +51,110 @@ func generateTrackList(listSize int) []Item {
 	}
 
 	return tracklist
+}
+
+
+func getSampleSongNames(tracklist []Item, sampleSize int) []string {
+	names := make([]string, sampleSize)
+	randomizer := rand.New(rand.NewSource(time.Now().UnixNano()))
+	i := 0
+	for i < sampleSize {
+		position := randomizer.Intn(len((tracklist)))
+		names[i] = tracklist[position].Title
+		i++
+	}
+	return names
+}
+
+func offlineOptimize(tracklist *LinkedList, names []string) int {
+
+	type titleCount struct {
+		title string
+		number int
+	}
+	
+	requests := make([]titleCount, tracklist.Len)
+
+	// Define how many times each name
+	// appear in offline request batch
+	current := tracklist.Head
+	it := 0
+	for current != nil {
+		count := 0
+		for _, name := range names{
+			if name == current.Content.Title{
+				count++
+			}
+		}
+		requests[it] = titleCount{title:current.Content.Title,number:count}
+		current = current.Next
+		it++
+	}
+	// COST OF ACCESSING THE LIST: tracklist.Len
+
+	sort.Slice(requests, func(i, j int) bool { return requests[i].number < requests[j].number })
+	// fmt.Printf("\n%+v\n",requests)
+
+	// Now build a new list 
+	totalCost := tracklist.Len // Cost of accessing
+	for _, titleCountObj := range requests{
+		_, cost := tracklist.SearchAndMoveToFrontWithCostIncurred(titleCountObj.title)
+		totalCost += int(cost)
+	}
+
+	return totalCost
+}
+
+func ExperimentRequests(listSize, requestsNumber int) {
+	// Generate tracklist
+	trackList := generateTrackList(listSize)
+
+	// Create Linked Lists
+	llMTF := New()
+	llForesee := New()
+
+	// Add items to them
+	for _, track := range trackList {
+		// fmt.Print("%+v",track)
+		llMTF.Add(&track)
+		llForesee.Add(&track)
+		// fmt.Printf("%s\n",track.Title)
+	} 	
+	
+	// Generate random requests
+	requests := getSampleSongNames(trackList, requestsNumber)
+
+	offlineOptimizationCost := offlineOptimize(llForesee, requests)
+
+	totalCostForesee := offlineOptimizationCost
+	totalCostMTF := 0
+
+	for _, name := range requests {
+		foundF, costForesee := llForesee.SearchWithCostIncurred(name) 
+		foundM, costMTF := llMTF.SearchAndMoveToFrontWithCostIncurred(name) 
+		if foundF == nil || foundM == nil {
+			fmt.Printf("NOT FOUND. ERROR")
+		}
+		totalCostForesee += int(costForesee)
+		totalCostMTF += int(costMTF)
+	}
+
+	fmt.Printf("LIST SIZE: %d . REQUESTS SIZE: %d .RATIO: %.4f\n", listSize, requestsNumber, float32(totalCostMTF)/float32(totalCostForesee))
+
+	// fmt.Printf(" ====== OFFLINE TRACKLIST ====== \n")
+	// current := llForesee.Head 
+	// for current != nil {
+	// 	fmt.Printf("%s\n", current.Content.Title)
+	// 	current = current.Next
+	// }
+	// fmt.Printf(" ======================== \n")
+	
+	// fmt.Printf(" ====== REQUESTS ====== \n")
+	// for _, req := range requests {
+	// 	fmt.Printf("%s\n", req)
+	// }
+	// fmt.Printf(" ======================== \n")
+
 }
 
 func ExperimentListSizeEqualToRequestsWorstCase(listSize, requestsNumber int){
