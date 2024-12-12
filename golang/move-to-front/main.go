@@ -11,16 +11,24 @@ func main() {
 
 	// Check if parameters were provided
 	argsWithProg := os.Args
-	if len(argsWithProg) != 3 {
-		fmt.Printf("Usage: \n./main <list-size> <number-of-requests>\n")
+	if len(argsWithProg) != 4 {
+		fmt.Printf("Usage: \n./main <type> <list-size> <number-of-requests>\n")
+		fmt.Printf("\t <type> must be 'equal' or 'diff'\n")
 		return
 	} 
-	
+	// What is the type?
+	typeArg := argsWithProg[1]
+
+	if typeArg != "equal" && typeArg != "diff" {
+		fmt.Printf("Usage: \n./main <type> <list-size> <number-of-requests>\n")
+		fmt.Printf("\t <type> must be 'equal' or 'diff'\n")
+		return		
+	}
 	// If everything is fine, code follows...
 
 	// Define parameters
-	listSize, errArg1 := strconv.Atoi(argsWithProg[1])
-	requestsNumber, errArg2 := strconv.Atoi(argsWithProg[2])
+	listSize, errArg1 := strconv.Atoi(argsWithProg[2])
+	requestsNumber, errArg2 := strconv.Atoi(argsWithProg[3])
 	if errArg1 != nil {
 		panic(errArg1)
 	}
@@ -31,8 +39,11 @@ func main() {
 		fmt.Printf("Arguments must be numeric and positive.\n")
 		return
 	}
-
-	utils.ExperimentRequests(listSize,requestsNumber)
-	// utils.ExperimentListSizeEqualToRequestsWorstCase(listSize,requestsNumber)
+	
+	if typeArg == "diff" {
+		utils.ExperimentRequests(listSize,requestsNumber)
+	} else {
+		utils.ExperimentListSizeEqualToRequestsWorstCase(listSize,requestsNumber)
+	}
 
 }
