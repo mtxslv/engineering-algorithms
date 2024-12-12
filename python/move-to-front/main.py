@@ -9,29 +9,26 @@ assert data_path.exists() and data_path.is_file()
 with open(data_path) as file:
     file_contents = file.readlines()
 
-contents_str = ''.join(file_contents)
-experiments_str = contents_str.split('\n\n\n')[1:]
-
-assert len(experiments_str) == 5
-
-pattern = r'\(ratio = (\d\.\d+)\)'
+pattern = r'LIST SIZE: (\d.+) . REQUESTS SIZE: (\d.+) .RATIO: (.+)'
 
 data = {}
-for it, exp_str in enumerate(experiments_str):
-    chunk = re.findall(pattern, exp_str)
-    values = [float(c) for c in chunk]
-    assert len(values) == 50
-    data[it+1] = values
+for it, exp_str in enumerate(file_contents):
+    list_len, request_num, ratio = re.findall(pattern, exp_str)[0]
+    list_len, request_num, ratio = int(list_len), int(request_num), float(ratio)
+    data[list_len] = ratio
 
 # Plot each list as a line
-for key, value in data.items():
-    plt.plot(value, label=f"Experimento #{key}")
+# for key, value in data.items():
+x,y = list(data.keys()), list(data.values())
+plt.plot(x,y, color='midnightblue')
+
+plt.scatter(x,y, color='midnightblue')
 
 # Add horizontal line at y=4
 plt.axhline(y=4, color='black', linestyle='--', label='Competitividade')
 
 # Set x and y axis labels
-plt.xlabel('Buscas Efetuadas')
+plt.xlabel('Tamanho de Lista/Requisições')
 plt.ylabel('Razão entre Operações Realizadas')
 
 # Add legend and title
