@@ -80,11 +80,46 @@ func main() {
 		return
 	}
 
+	// Generate tracklist
 	trackList := generateTrackList(listSize)
-	fmt.Printf("====== TRACKLIST ======\n")
+
+	// Create Linked Lists
+	llMTF := utils.New()
+	llForesee := utils.New()
+
+	// Add items to them
 	for _, track := range trackList {
-		fmt.Printf("%+v\n", track)
+		// fmt.Print("%+v",track)
+		llMTF.Add(&track)
+		llForesee.Add(&track)
+		// fmt.Printf("%s\n",track.Title)
+	} 	
+
+	// Generate string list to keep requests
+	requests := make([]string, llMTF.Len)
+	// Fill requests 
+	it := 0
+	current := llMTF.Tail
+	for current != nil {
+		requests[it] = current.Content.Title
+		it++
+		current = current.Previous
 	}
-	fmt.Printf("============\n")
+
+	// fmt.Printf("%+v",requests)
+	totalCostForesee := 0
+	totalCostMTF := 0
+
+	for _, name := range requests {
+		foundF, costForesee := llForesee.SearchWithCostIncurred(name) // (50*(51))/2
+		foundM, costMTF := llMTF.SearchAndMoveToFrontWithCostIncurred(name) // (126+125)*50
+		if foundF == nil || foundM == nil {
+			fmt.Printf("NOT FOUND. ERROR")
+		}
+		totalCostForesee += int(costForesee)
+		totalCostMTF += int(costMTF)
+	}
+
+	fmt.Printf("LIST SIZE: %d . REQUESTS SIZE: %d .RATIO: %.4f\n", listSize, requestsNumber, float32(totalCostMTF)/float32(totalCostForesee))
 
 }
