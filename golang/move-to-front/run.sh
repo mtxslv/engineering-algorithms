@@ -9,7 +9,7 @@ y=1
 trial=1
 
 # Outer loop: Iterate over powers of 10 from 1 to 4
-while [ $x -le 4 ]
+while [ $x -le 3 ]
 do
   # Inner loop: Iterate from 1 to 10
   while [ $y -le 10 ]
@@ -21,7 +21,7 @@ do
     echo "Trial #$trial: Size $size"
 
     # Execute the Go program with the specified arguments
-    # ./main songs.csv >> experiments.txt
+    ./main $size $size>> experiments.txt
 
     # Increment the trial counter
     ((trial++))
