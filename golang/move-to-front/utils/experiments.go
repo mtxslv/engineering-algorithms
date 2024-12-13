@@ -86,14 +86,19 @@ func offlineOptimize(tracklist *LinkedList, names []string) int {
 		requests = append(requests, titleCount{title:k,number:counter[k]})
 	}
 
-	sort.Slice(requests, func(i, j int) bool { return requests[i].number < requests[j].number })
+	sort.Slice(
+		requests, 
+		func(i, j int) bool { return requests[i].number < requests[j].number },
+	)
 	// fmt.Printf("\n%+v\n",requests)
 
 	// Now build a new list 
 	totalCost := 0
 	for _, titleCountObj := range requests{
-		_, cost := tracklist.SearchAndMoveToFrontWithCostIncurred(titleCountObj.title)
-		totalCost += int(cost)
+		if titleCountObj.number > 0 {
+			_, cost := tracklist.SearchAndMoveToFrontWithCostIncurred(titleCountObj.title)
+			totalCost += int(cost)
+		}
 	}
 
 	return totalCost
