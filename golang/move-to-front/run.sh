@@ -41,7 +41,7 @@ done
 # Initialize loop counters
 multiplier=1
 NEWSIZE=900
-while [ $multiplier -le 100 ]
+while [ $multiplier -le 500 ]
 do
     REQUESTS=$(( 180 * $multiplier ))
     # Execute the Go program with the specified arguments
