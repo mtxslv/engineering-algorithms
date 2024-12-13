@@ -138,7 +138,7 @@ func ExperimentRequests(listSize, requestsNumber int) {
 		totalCostMTF += int(costMTF)
 	}
 
-	fmt.Printf("LIST SIZE: %d . REQUESTS SIZE: %d .RATIO: %.4f\n", listSize, requestsNumber, float32(totalCostMTF)/float32(totalCostForesee))
+	fmt.Printf("DIFF | LIST SIZE: %d . REQUESTS SIZE: %d .RATIO: %.4f\n", listSize, requestsNumber, float32(totalCostMTF)/float32(totalCostForesee))
 
 	// fmt.Printf(" ====== OFFLINE TRACKLIST ====== \n")
 	// current := llForesee.Head 
@@ -198,6 +198,6 @@ func ExperimentListSizeEqualToRequestsWorstCase(listSize, requestsNumber int){
 		totalCostMTF += int(costMTF)
 	}
 
-	fmt.Printf("LIST SIZE: %d . REQUESTS SIZE: %d .RATIO: %.4f\n", listSize, requestsNumber, float32(totalCostMTF)/float32(totalCostForesee))
+	fmt.Printf("EQUAL | LIST SIZE: %d . REQUESTS SIZE: %d .RATIO: %.4f\n", listSize, requestsNumber, float32(totalCostMTF)/float32(totalCostForesee))
 
 }
