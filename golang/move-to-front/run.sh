@@ -21,7 +21,7 @@ do
     echo "Trial #$trial: Size $size"
 
     # Execute the Go program with the specified arguments
-    ./main $size $size>> experiments.txt
+    ./main equal $size $size>> experiments.txt
 
     # Increment the trial counter
     ((trial++))
@@ -35,4 +35,24 @@ do
 
   # Increment the outer loop counter
   ((x++))
+done
+
+
+# Initialize loop counters
+multiplier=1
+NEWSIZE=900
+while [ $multiplier -le 100 ]
+do
+    REQUESTS=$(( 180 * $multiplier ))
+    # Execute the Go program with the specified arguments
+    ./main diff $NEWSIZE $REQUESTS>> experiments.txt
+
+    # Print the trial number and size
+    echo "Trial #$trial: Size $NEWSIZE, Requests $REQUESTS"
+    
+    # Increment the trial counter
+    ((trial++))
+    
+    ((multiplier++))
+
 done
