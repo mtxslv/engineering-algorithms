@@ -17,3 +17,12 @@ func TestRandomIntSlice(t *testing.T){
 		}
 	}
 }
+
+func TestCheckMisses(t *testing.T){
+	lru := NewLRUCache(3)
+	requests := []int{1,2,3}
+	msg := CheckMisses(lru,requests)
+	if msg != "3 misses"{
+		t.Errorf("Number of cache misses wrong")
+	}
+}

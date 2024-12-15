@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"math/rand"
 )
 
@@ -14,4 +15,17 @@ func RandomIntSlice(listSize, maximumValue int) []int {
 		it++
 	}
 	return list
+}
+
+func CheckMisses(lru *LRUCache, requests []int) string {
+	lruMisses := 0
+
+	for _, req := range requests {
+		if !lru.Get(req) {
+			lruMisses++
+			lru.Put(req,10*req)
+		}
+	}
+	msg := fmt.Sprintf("%d misses", lruMisses)
+	return msg
 }
