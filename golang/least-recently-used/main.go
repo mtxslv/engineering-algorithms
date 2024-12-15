@@ -3,7 +3,7 @@ package main
 import "utils/utils"
 
 func main() {
-	utils.SimpleSimulation()
+	utils.SimulationWithRandomness()
 }
 
 // package main

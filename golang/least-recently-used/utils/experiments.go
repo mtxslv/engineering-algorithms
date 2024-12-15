@@ -56,3 +56,26 @@ func SimulateRequestsVaryingInputSize(cacheSize int, inputSizes []int) {
 		fmt.Printf("Cache Size: %d, Input Size: %d, LRU Misses: %d\n", cacheSize, size, lruMisses)
 	}
 }
+
+func SimulationWithRandomness(){
+
+	cacheSizes := []int{3,6,9,12}
+	var multiplier int
+	var maxLim int
+	var numberOfRequests int
+	var requests []int
+
+	for _, aCacheSize := range cacheSizes {
+		lru := NewLRUCache(aCacheSize)
+		multiplier = 2
+		for multiplier <= 4 {
+			maxLim = int(1.5*float32(aCacheSize))		
+			numberOfRequests = multiplier*aCacheSize
+			requests = RandomIntSlice(numberOfRequests,maxLim)
+			msg := CheckMisses(lru,requests)
+			result := fmt.Sprintf("CACHE: %d | %d REQUESTS | RandLimMax: %d | %s\n",aCacheSize,numberOfRequests,maxLim,msg)
+			fmt.Printf(result)
+			multiplier++
+		}
+	}
+}
