@@ -59,3 +59,21 @@ func TestGet(t *testing.T){
 	}
 	
 }
+
+func TestPutNewTerm(t *testing.T){
+	lru := initializeFullCache()
+
+	// Start from the beginning
+	current := lru.list.Front()
+	for current != nil {
+		t.Logf("LIST ITEM: %+v", current.Value)
+		current = current.Next()
+	}
+	
+	lru.Put(4,40)
+	current = lru.list.Front()
+	for current != nil {
+		t.Logf("LIST ITEM: %+v", current.Value)
+		current = current.Next()
+	}
+}
