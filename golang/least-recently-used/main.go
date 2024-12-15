@@ -3,14 +3,7 @@ package main
 import "utils/utils"
 
 func main() {
-	// requests := []int{1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5}
-	// for cacheSize := 2; cacheSize <= 5; cacheSize++ {
-	// 	utils.SimulateRequests(cacheSize, requests)
-	// }
-	inputSizes := []int{10, 20, 50, 100, 200}
-	for cacheSize := 2; cacheSize <= 5; cacheSize++ {
-		utils.SimulateRequestsVaryingInputSize(cacheSize, inputSizes)
-	}	
+	utils.SimpleSimulation()
 }
 
 // package main

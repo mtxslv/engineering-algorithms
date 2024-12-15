@@ -2,6 +2,26 @@ package utils
 
 import "fmt"
 
+func SimpleSimulation(){
+	cacheSize := 3
+	lru := NewLRUCache(cacheSize)
+	lruMisses := 0
+
+	requests := []int{4, 4, 1, 2, 4, 2, 3, 4, 5, 2, 2, 1, 2, 2}
+	
+	// First Epoch
+	for _, el := range []int{1, 2, 1, 5}{
+		lru.Put(el, 10*el)
+	}
+	for _, req := range requests {
+		if !lru.Get(req) {
+			lruMisses++
+			lru.Put(req,10*req)
+		}
+	}
+	fmt.Printf("Cache Size: %d, Requests: %d, LRU Misses: %d\n", cacheSize, len(requests), lruMisses)
+}
+
 func SimulateRequests(cacheSize int, requests []int) {
 	lru := NewLRUCache(cacheSize)
 	lruMisses := 0
