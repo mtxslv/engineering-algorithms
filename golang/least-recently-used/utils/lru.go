@@ -34,6 +34,9 @@ func NewLRUCache(capacity int) *LRUCache {
 }
 
 func (c *LRUCache) Get(key int) bool {
+	// If the key exists in the hashmap,
+	// move it to front (recently used)
+	// and return true
 	if el, found := c.cache[key]; found {
 		c.list.MoveToFront(el)
 		return true
@@ -42,6 +45,8 @@ func (c *LRUCache) Get(key int) bool {
 }
 
 func (c *LRUCache) Put(key, value int) {
+	// The element exist, move to front
+	// (recently used) and update the hash
 	if el, found := c.cache[key]; found {
 		c.list.MoveToFront(el)
 		el.Value = entry{key, value}
