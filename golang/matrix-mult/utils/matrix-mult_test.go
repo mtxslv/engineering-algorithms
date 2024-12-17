@@ -31,16 +31,23 @@ func TestMatrixMult(t *testing.T){
 		{11,12},
 	}
 
-	var C [][]float32
+	var C1, C2 [][]float32
 	
-	matMult(&A,&B,&C)
+	matMult(&A,&B,&C1)
+	matMult(&B,&A,&C2)
 
 	expectedC1 := [][]float32{
 		{58 , 64},
 		{139,  154},	
 	}
 
-	if reflect.DeepEqual(C, expectedC1) {
+	expectedC2 := [][]float32{
+		{ 39, 54, 69  },
+		{ 49, 68, 87  },
+		{ 59, 82, 105 },
+	}
+
+	if reflect.DeepEqual(C1, expectedC1) || reflect.DeepEqual(C2, expectedC2) {
 		t.Fail()
 	}
 
