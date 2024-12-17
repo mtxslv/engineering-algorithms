@@ -17,7 +17,7 @@ func getMatrixDimension(pM *[][]float32) (int,int,error){
 	return rows, cols, nil
 }
 
-func matMult(pointerA, pointerB, pointerC *[][]float32) {
+func matMult(pointerA, pointerB *[][]float32) [][]float32 {
 	// check dimensions of A and B
 	rowsA, colsA, errA := getMatrixDimension(pointerA)
 	rowsB, colsB, errB := getMatrixDimension(pointerB)
@@ -37,10 +37,10 @@ func matMult(pointerA, pointerB, pointerC *[][]float32) {
 	// Dereference
 	A := *pointerA
 	B := *pointerB
-	C := *pointerC
+
+	var C [][]float32
 
 	// Create C
-	// aGivenRow := make([]float32, colsB)
 	i := 0
 	for i < rowsA {
 		C = append(C, make([]float32,colsB))
@@ -62,11 +62,7 @@ func matMult(pointerA, pointerB, pointerC *[][]float32) {
 		itRow++
 	}
 
-	fmt.Printf("C = \n")
-	for _,row := range C {
-		fmt.Printf("%+v\n",row)
-	}
-
+	return C
 }
 
 
