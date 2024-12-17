@@ -66,7 +66,7 @@ func matMult(pointerA, pointerB *[][]float32) [][]float32 {
 }
 
 
-func MatMultWithCosts(pointerA, pointerB, pointerC *[][]float32) []string {
+func MatMultWithCosts(pointerA, pointerB *[][]float32) ([][]float32,[]string) {
 	
 	// Cost variable
 	var costs []string
@@ -90,8 +90,9 @@ func MatMultWithCosts(pointerA, pointerB, pointerC *[][]float32) []string {
 	// Dereference
 	A := *pointerA
 	B := *pointerB
-	C := *pointerC
 
+	var C [][]float32
+	
 	// Create C
 	// aGivenRow := make([]float32, colsB)
 	i := 0
@@ -131,9 +132,5 @@ func MatMultWithCosts(pointerA, pointerB, pointerC *[][]float32) []string {
 		itRow++
 	}
 
-	// fmt.Printf("C = \n")
-	// for _,row := range C {
-	// 	fmt.Printf("%+v\n",row)
-	// }
-	return costs
+	return C, costs
 }
