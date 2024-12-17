@@ -19,9 +19,14 @@ func main(){
 
 	var C [][]float32
 
-	costs := utils.MatMultWithCosts(&A,&B,&C)
+	C, costs := utils.MatMultWithCosts(&A,&B)
 
 	for _, cost := range costs {
 		fmt.Printf("%s\n", cost)
+	}
+	
+	fmt.Printf("\n")
+	for _, row := range C {
+		fmt.Printf("%+v\n", row)
 	}
 }
