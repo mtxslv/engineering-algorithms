@@ -7,26 +7,25 @@ import (
 
 func main(){
 	A := [][]float32{
-		{1,2,3},
-		{4,5,6},
+		{1,2},
+		{2,4},
+		{5,6},
+		{7,8},
 	}
 
 	B := [][]float32{
-		{7,8},
-		{9,10},
-		{11,12},
+		{5,1,8,1},
+		{9,2,5,9},
 	}
 
-	var C [][]float32
-
-	C, costs := utils.MatMultWithCosts(&A,&B)
+	_, costs := utils.MatMultWithCosts(&A,&B)
 
 	for _, cost := range costs {
 		fmt.Printf("%s\n", cost)
 	}
 	
-	fmt.Printf("\n")
-	for _, row := range C {
-		fmt.Printf("%+v\n", row)
-	}
+	// fmt.Printf("\n")
+	// for _, row := range C {
+	// 	fmt.Printf("%+v\n", row)
+	// }
 }
