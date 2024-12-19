@@ -68,19 +68,43 @@ func (c *LRUCacheV0) Put(key, value int) {
 type entryV1 struct {
 	key string 
 	value float32
-	elementPointer *list.Element
+	// elementPointer *list.Element
 }
 
 type LRUCacheV1 struct {
 	capacity int
-	cache map[string]entryV1
+	cache map[string]*list.Element
 	list *list.List
 }
 
 func NewLRUCacheV1(capacity int) *LRUCacheV1 {
 	return &LRUCacheV1{
 		capacity: capacity,
-		cache: make(map[string]entryV1),
+		cache: make(map[string]*list.Element),
 		list: list.New(),
 	}
+}
+
+func (c *LRUCacheV1) Put(key string, value float32){
+	// Does the element exist?
+	el, found := c.cache[key]
+	if !found {
+		// It does not! Check if the cache is full
+		if c.list.Len() == c.capacity {
+			// Is full, so let's evict last item
+			back := c.list.Back() // least used item
+			if back != nil {
+				c.list.Remove(back) // evict from usage list
+				delete(c.cache,back.Value.(entryV1).key)
+			}
+		}
+		// Add to front list (recently used)
+		el = c.list.PushFront(entryV1{key,value})
+		// Save on hash
+		c.cache[key] = el
+	} // else {
+		// Element does exist, move to front
+		
+	// }
+	// and update the value
 }
