@@ -109,3 +109,18 @@ func (c *LRUCacheV1) Put(key string, value float32){
 	}
 	// and update the value
 }
+
+func (c *LRUCacheV1) Get(key string) (float32, bool) {
+	// Does the element exist?
+	el, found := c.cache[key]	
+	if !found{
+		// No, return nothing
+		return 0.0,false
+	} else {
+		// Since it is recently used
+		// Move to front
+		c.list.MoveToFront(el)
+		value := el.Value.(entryV1).value
+		return value, true
+	}
+}
