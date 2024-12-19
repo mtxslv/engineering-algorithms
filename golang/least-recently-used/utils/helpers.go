@@ -17,7 +17,7 @@ func RandomIntSlice(listSize, maximumValue int) []int {
 	return list
 }
 
-func CheckMisses(lru *LRUCache, requests []int) string {
+func CheckMisses(lru *LRUCacheV0, requests []int) string {
 	lruMisses := 0
 
 	for _, req := range requests {

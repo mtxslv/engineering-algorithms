@@ -13,27 +13,27 @@ import (
 	"container/list"
 )
 
-// LRUCache represents a simple LRU cache
-type LRUCache struct {
+// LRUCacheV0 represents a simple LRU cache
+type LRUCacheV0 struct {
 	capacity int
 	cache    map[int]*list.Element
 	list     *list.List
 }
 
-type entry struct {
+type entryV0 struct {
 	key   int
 	value int
 }
 
-func NewLRUCache(capacity int) *LRUCache {
-	return &LRUCache{
+func NewLRUCacheV0(capacity int) *LRUCacheV0 {
+	return &LRUCacheV0{
 		capacity: capacity,
 		cache:    make(map[int]*list.Element),
 		list:     list.New(),
 	}
 }
 
-func (c *LRUCache) Get(key int) bool {
+func (c *LRUCacheV0) Get(key int) bool {
 	// If the key exists in the hashmap,
 	// move it to front (recently used)
 	// and return true
@@ -44,21 +44,21 @@ func (c *LRUCache) Get(key int) bool {
 	return false
 }
 
-func (c *LRUCache) Put(key, value int) {
+func (c *LRUCacheV0) Put(key, value int) {
 	// The element exist, move to front
 	// (recently used) and update the hash
 	if el, found := c.cache[key]; found {
 		c.list.MoveToFront(el)
-		el.Value = entry{key, value}
+		el.Value = entryV0{key, value}
 	} else {
 		if c.list.Len() == c.capacity {
 			back := c.list.Back()
 			if back != nil {
 				c.list.Remove(back)
-				delete(c.cache, back.Value.(entry).key)
+				delete(c.cache, back.Value.(entryV0).key)
 			}
 		}
-		el := c.list.PushFront(entry{key, value})
+		el := c.list.PushFront(entryV0{key, value})
 		c.cache[key] = el
 	}
 }

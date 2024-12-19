@@ -4,14 +4,14 @@ import (
 	"testing"
 )
 
-func initializeEmptyCache() *LRUCache{
+func initializeEmptyCache() *LRUCacheV0{
 	cacheSize := 3
-	return NewLRUCache(cacheSize)
+	return NewLRUCacheV0(cacheSize)
 }
 
-func initializeFullCache() *LRUCache{
+func initializeFullCache() *LRUCacheV0{
 	cacheSize := 3
-	lru := NewLRUCache(cacheSize)
+	lru := NewLRUCacheV0(cacheSize)
 	
 	lru.Put(1,10)
 	lru.Put(2,20)

@@ -4,7 +4,7 @@ import "fmt"
 
 func SimpleSimulation(){
 	cacheSize := 3
-	lru := NewLRUCache(cacheSize)
+	lru := NewLRUCacheV0(cacheSize)
 	lruMisses := 0
 
 	requests := []int{4, 4, 1, 2, 4, 2, 3, 4, 5, 2, 2, 1, 2, 2}
@@ -23,7 +23,7 @@ func SimpleSimulation(){
 }
 
 func SimulateRequests(cacheSize int, requests []int) {
-	lru := NewLRUCache(cacheSize)
+	lru := NewLRUCacheV0(cacheSize)
 	lruMisses := 0
 
 	for _, req := range requests {
@@ -43,7 +43,7 @@ func SimulateRequestsVaryingInputSize(cacheSize int, inputSizes []int) {
 			requests[i] = i % (cacheSize + 1)
 		}
 
-		lru := NewLRUCache(cacheSize)
+		lru := NewLRUCacheV0(cacheSize)
 		lruMisses := 0
 
 		for _, req := range requests {
@@ -66,7 +66,7 @@ func SimulationWithRandomness(){
 	var requests []int
 
 	for _, aCacheSize := range cacheSizes {
-		lru := NewLRUCache(aCacheSize)
+		lru := NewLRUCacheV0(aCacheSize)
 		multiplier = 2
 		for multiplier <= 4 {
 			maxLim = int(1.5*float32(aCacheSize))		
