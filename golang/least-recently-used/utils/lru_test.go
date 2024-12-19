@@ -9,6 +9,11 @@ func initializeEmptyCache() *LRUCacheV0{
 	return NewLRUCacheV0(cacheSize)
 }
 
+func initializeEmptyCacheV1() *LRUCacheV1{
+	cacheSize := 3
+	return NewLRUCacheV1(cacheSize)
+}
+
 func initializeFullCache() *LRUCacheV0{
 	cacheSize := 3
 	lru := NewLRUCacheV0(cacheSize)
@@ -75,5 +80,15 @@ func TestPutNewTerm(t *testing.T){
 	for current != nil {
 		t.Logf("LIST ITEM: %+v", current.Value)
 		current = current.Next()
+	}
+}
+
+
+/////////////// LRU V1 ///////////////
+
+func TestNewCacheV1(t *testing.T) {
+	lru := initializeEmptyCacheV1()
+	if lru.list.Len() != 0{
+		t.Fail()
 	}
 }
