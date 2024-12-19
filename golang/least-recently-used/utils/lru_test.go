@@ -129,6 +129,7 @@ func TestCacheGet(t *testing.T){
 }
 
 ////////// OPT CACHE //////////////
+
 var requests = []string{
 	"rick", "morty", "rick", "morty", "summer", 
 	"beth", "rick", "morty", "rick", "rick", 
@@ -178,4 +179,25 @@ func TestCacheOptWhoToEvict(t *testing.T){
 	// 	"Evict %s ",
 	// 	toEvict.Value.(entryV1).key,
 	// )
+}
+
+func TestOptCacheMisses(t *testing.T) {
+	cacheMisses := 0
+	lruOpt := initializeEmptyCacheOPT()
+	for it, key := range requests {
+		_, ok := lruOpt.Get(key)
+		lruOpt.lastRequestNum++
+		if !ok { // Not found
+			cacheMisses++
+			lruOpt.Put(
+				requests[it],
+				data[requests[it]],
+			)
+		}
+	}
+	t.Logf("MISSES: %d", cacheMisses)
+	if cacheMisses != 5 {
+		t.Fail()
+	}
+
 }
