@@ -114,3 +114,16 @@ func TestCacheV1Update(t *testing.T){
 		t.Fail()
 	}
 }
+
+func TestCacheGet(t *testing.T){
+	lru := initializeEmptyCacheV1()
+	lru.Put("it",5.0) // it has original value 5.0
+	val, _ := lru.Get("it") // Get value
+	if val != 5.0 {
+		t.Fail()
+	}	
+	_, found := lru.Get("doesnotexist") 
+	if found == true {
+		t.Fail()
+	}
+}
