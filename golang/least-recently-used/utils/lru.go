@@ -62,3 +62,25 @@ func (c *LRUCacheV0) Put(key, value int) {
 		c.cache[key] = el
 	}
 }
+
+/////////////// NEW LRU ///////////////
+
+type entryV1 struct {
+	key string 
+	value float32
+	elementPointer *list.Element
+}
+
+type LRUCacheV1 struct {
+	capacity int
+	cache map[string]entryV1
+	list *list.List
+}
+
+func NewLRUCacheV1(capacity int) *LRUCacheV1 {
+	return &LRUCacheV1{
+		capacity: capacity,
+		cache: make(map[string]entryV1),
+		list: list.New(),
+	}
+}
