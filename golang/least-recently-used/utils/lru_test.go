@@ -127,3 +127,55 @@ func TestCacheGet(t *testing.T){
 		t.Fail()
 	}
 }
+
+////////// OPT CACHE //////////////
+var requests = []string{
+	"rick", "morty", "rick", "morty", "summer", 
+	"beth", "rick", "morty", "rick", "rick", 
+	"beth", "jerry",
+}
+var data = map[string]float32{
+	"rick":70.0,
+	"beth":34.0,
+	"jerry":35.0,
+	"summer":17.0,
+	"morty":14.0,
+}
+
+func initializeEmptyCacheOPT() *LRUCacheOPT{
+	cacheSize := 3
+	return NewOPTCache(cacheSize, requests)
+}
+
+func TestCacheOptWhoToEvict(t *testing.T){
+	
+	lruOpt := initializeEmptyCacheOPT()
+	it := 0
+	for it < 5 {
+		lruOpt.Put(
+			requests[it],
+			data[requests[it]],
+		)
+		lruOpt.lastRequestNum++
+		it++
+	}
+	
+	// current := lruOpt.list.Front()
+	// for current != nil {
+	// 	t.Logf(
+	// 		"Age of %s : %.2f years", 
+	// 		current.Value.(entryV1).key,
+	// 		current.Value.(entryV1).value,
+	// 	)
+	// 	current = current.Next()
+	// }
+	// t.Logf("LAST QUERY MADE? %d", lruOpt.lastRequestNum)
+	toEvict := lruOpt.CheckLateUse()
+	if toEvict.Value.(entryV1).key != "summer" {
+		t.Fail()
+	}
+	// t.Logf(
+	// 	"Evict %s ",
+	// 	toEvict.Value.(entryV1).key,
+	// )
+}
