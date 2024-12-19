@@ -102,9 +102,10 @@ func (c *LRUCacheV1) Put(key string, value float32){
 		el = c.list.PushFront(entryV1{key,value})
 		// Save on hash
 		c.cache[key] = el
-	} // else {
+	}  else {
 		// Element does exist, move to front
-		
-	// }
+		c.list.MoveToFront(el)
+		el.Value = entryV1{key, value}
+	}
 	// and update the value
 }
