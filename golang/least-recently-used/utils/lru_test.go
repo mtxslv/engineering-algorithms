@@ -92,3 +92,16 @@ func TestNewCacheV1(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestCacheV1Put(t *testing.T) {
+	lru := initializeEmptyCacheV1()
+	lru.Put("it",5.0)
+	if lru.list.Len() != 1{
+		t.Fail()
+	}
+	current := lru.list.Front()
+	for current != nil {
+		t.Logf("Value: %.3f", current.Value.(entryV1).value)
+		current = current.Next()
+	}
+}
