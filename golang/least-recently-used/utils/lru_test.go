@@ -105,3 +105,12 @@ func TestCacheV1Put(t *testing.T) {
 		current = current.Next()
 	}
 }
+
+func TestCacheV1Update(t *testing.T){
+	lru := initializeEmptyCacheV1()
+	lru.Put("it",5.0) // it has original value 5.0
+	lru.Put("it",13.47) // now it has value 13.47
+	if lru.list.Front().Value.(entryV1).value != 13.47 {
+		t.Fail()
+	}
+}
