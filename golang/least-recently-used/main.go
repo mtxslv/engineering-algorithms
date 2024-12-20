@@ -13,7 +13,13 @@ import (
 )
 
 func main(){
-	N := 10 // or 100
-	K := 6 // or 3
-	utils.SimulationLRUOPT(6,10,N,K)
+	N := 500
+	for N < 1000 {
+		K := 3 
+		for K < 15 {
+			utils.SimulationLRUOPT(6,10,N,K)
+			K++
+		}
+		N++
+	}
 } 
