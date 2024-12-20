@@ -110,11 +110,11 @@ func SimulationWithRandomness(){
 		}
 		// Now Opt
 		_, okOpt := opt.Get(key)
-		opt.lastRequestNum++
 		if !okOpt { // not found
 			opt.Put(key, 2.71828) 
 			optMisses++
 		}
 	}
+	fmt.Printf("LRU misses: %d | OPT misses: %d\n", lruMisses, optMisses)
 	fmt.Printf("COMPETITIVENESS: %.3f\n", float32(lruMisses)/float32(optMisses))
 }
