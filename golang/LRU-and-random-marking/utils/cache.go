@@ -92,3 +92,7 @@ func NewRandomMarkingCache(capacity int) (*RandomMarkingCache, error) {
 	}
 	return cachePtr, nil
 }
+
+func (c *RandomMarkingCache) Mark(i int) {
+	c.markingByte = c.markingByte + 1 << i
+}
