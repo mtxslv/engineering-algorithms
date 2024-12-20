@@ -116,5 +116,5 @@ func SimulationWithRandomness(){
 			optMisses++
 		}
 	}
-	fmt.Printf("COMPETITIVENESS: %.3f", float32(lruMisses)/float32(optMisses))
+	fmt.Printf("COMPETITIVENESS: %.3f\n", float32(lruMisses)/float32(optMisses))
 }
