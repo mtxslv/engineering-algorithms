@@ -188,7 +188,6 @@ func TestOptCacheMisses(t *testing.T) {
 	lruOpt := initializeEmptyCacheOPT()
 	for it, key := range requests {
 		_, ok := lruOpt.Get(key)
-		lruOpt.lastRequestNum++
 		if !ok { // Not found
 			cacheMisses++
 			lruOpt.Put(
