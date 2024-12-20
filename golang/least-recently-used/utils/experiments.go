@@ -117,7 +117,7 @@ func SimulationWithRandomness(){
 	}
 
 	// Display results
-	fmt.Printf("Total Requests (N): %d | Cache Size (K): %d\n", len(requests), capacity)
-	fmt.Printf("LRU Misses: %d | OPT Misses: %d\n", lruMisses, optMisses)
+	fmt.Printf("Total Requests (N): %d | Cache Size (K): %d | ", len(requests), capacity)
+	fmt.Printf("LRU Misses: %d | OPT Misses: %d | ", lruMisses, optMisses)
 	fmt.Printf("Competitiveness (LRU/OPT): %.3f\n", float32(lruMisses)/float32(optMisses))
 }
