@@ -169,39 +169,36 @@ func (c *LRUCacheOPT) Get(key string) (float32, bool) {
 }
 
 func (c *LRUCacheOPT) CheckLateUse() *list.Element {
-	
-	// Variables
 	elToEvict := c.list.Front()
 	furthest := -1
-	key := ""
-	var diff int
-	
-	// Elements to iterate
-	it := c.lastRequestNum + 1
-	current := c.list.Front()
-	
-	for current != nil {
-		// This cache element's key
-		key = current.Value.(entryV1).key
 
-		for it < len(c.requests){
-			// If key appear ....
+	current := c.list.Front()
+	for current != nil {
+		key := current.Value.(entryV1).key
+		it := c.lastRequestNum + 1 // Reset for every element
+		foundFuture := false
+
+		for it < len(c.requests) {
 			if c.requests[it] == key {
-				diff = it - c.lastRequestNum 
-				// ... furthest in future ...
-				if diff > furthest {
-					// Update the element to be
-					//  evicted and the furthest seen
+				foundFuture = true
+				if it - c.lastRequestNum > furthest {
 					elToEvict = current
-					furthest = diff
+					furthest = it - c.lastRequestNum
 				}
+				break
 			}
 			it++
+		}
+
+		// If never used again, evict immediately
+		if !foundFuture {
+			return current
 		}
 		current = current.Next()
 	}
 	return elToEvict
 }
+
 
 func (c *LRUCacheOPT) Put(key string, value float32) {
 	// Does the element exist?
