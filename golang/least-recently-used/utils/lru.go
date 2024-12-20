@@ -163,9 +163,6 @@ func (c *LRUCacheOPT) Get(key string) (float32, bool) {
 		// No, return nothing
 		return 0.0,false
 	} else {
-		// Since it is recently used
-		// Move to front
-		c.list.MoveToFront(el)
 		value := el.Value.(entryV1).value
 		return value, true
 	}
