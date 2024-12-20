@@ -48,3 +48,14 @@ func generateRandomStrings(wordLen, listLen int) []string {
 	}
 	return arr
 }
+
+func generateRandomSequenceStr(sequenceLen int, words []string) []string {
+	
+	arr := make([]string, sequenceLen)
+
+	for it, _ := range arr {
+		arr[it] = words[rand.Intn(len(words))]
+	}
+
+	return arr
+}
