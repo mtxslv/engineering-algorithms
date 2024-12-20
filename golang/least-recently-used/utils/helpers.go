@@ -29,3 +29,22 @@ func CheckMisses(lru *LRUCacheV0, requests []int) string {
 	msg := fmt.Sprintf("%d misses", lruMisses)
 	return msg
 }
+
+func RandStringBytes(n int) string {
+	const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    b := make([]byte, n)
+    for i := range b {
+        b[i] = letterBytes[rand.Intn(len(letterBytes))]
+    }
+    return string(b)
+}
+
+func generateRandomStrings(wordLen, listLen int) []string {
+	var arr []string
+	it := 0
+	for it < listLen {
+		arr = append(arr, RandStringBytes(wordLen))
+		it++
+	}
+	return arr
+}
