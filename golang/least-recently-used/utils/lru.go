@@ -224,8 +224,8 @@ func (c *LRUCacheOPT) Put(key string, value float32) {
 		// Save on hash
 		c.cache[key] = el		
 	} else {
-		// Element does exist, move to front
-		c.list.MoveToFront(el)
+		// Element does exist, but there 
+		//  is no need to move to front
 		el.Value = entryV1{key, value}
 	}
 	// and update the value
