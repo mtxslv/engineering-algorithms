@@ -157,7 +157,9 @@ func TestCacheOptWhoToEvict(t *testing.T){
 			requests[it],
 			data[requests[it]],
 		)
-		lruOpt.lastRequestNum++
+		// the following lastRequestNum++
+		// means a Get was issued
+		lruOpt.lastRequestNum++ 
 		it++
 	}
 	
