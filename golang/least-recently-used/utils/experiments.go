@@ -1,6 +1,8 @@
 package utils
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func SimpleSimulation(){
 	cacheSize := 3
@@ -78,4 +80,41 @@ func SimulationWithRandomness(){
 			multiplier++
 		}
 	}
+}
+
+/* wordLen can be 6, listLen can be 10.
+
+ requestsNum is length of requests (N), 
+ while capacity is cache size (K)
+*/
+ func SimulationLRUOPT(wordLen, listLen, requestsNum, capacity int){
+	// First of all generate ids [strings]
+	words := generateRandomStrings(wordLen,listLen)
+	requests := generateRandomSequenceStr(wordLen,words)
+
+	// Now the caches...
+	lru := NewLRUCacheV1(capacity)
+	opt := NewOPTCache(capacity,requests)
+
+	// ... and their misses
+	lruMisses := 0
+	optMisses := 0
+
+	// Now let's iterate on the requests
+	for _, key := range requests { 
+		// First on LRU
+		_, okLru := lru.Get(key)
+		if !okLru { // not found
+			lru.Put(key, 1.6180) 
+			lruMisses++
+		}
+		// Now Opt
+		_, okOpt := opt.Get(key)
+		opt.lastRequestNum++
+		if !okOpt { // not found
+			opt.Put(key, 2.71828) 
+			optMisses++
+		}
+	}
+	fmt.Printf("COMPETITIVENESS: %.3f", float32(lruMisses)/float32(optMisses))
 }
