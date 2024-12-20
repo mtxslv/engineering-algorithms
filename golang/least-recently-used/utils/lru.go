@@ -130,7 +130,11 @@ func (c *LRUCacheV1) Get(key string) (float32, bool) {
 LINKS:
 	https://www.cs.cornell.edu/courses/cs4410/2015su/lectures/lec15-replacement.html
 	https://www2.cs.uregina.ca/~hamilton/courses/330/notes/memory/page_replacement.html
+	https://www.reddit.com/r/algorithms/comments/igkc1d/optimal_offline_caching_farthestinfuture_algorithm/
+	https://courses.cs.washington.edu/courses/cse421/18au/lecture/lecture-8.pdf
+
 */
+
 
 type LRUCacheOPT struct {
 	capacity int 
