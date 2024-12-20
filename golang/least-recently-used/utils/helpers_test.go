@@ -26,3 +26,14 @@ func TestCheckMisses(t *testing.T){
 		t.Errorf("Number of cache misses wrong")
 	}
 }
+
+func TestStringSlice(t *testing.T) {
+	wordLen := 6
+	listLen := 4
+	arr := generateRandomStrings(wordLen,listLen)
+	if len(arr) != listLen { t.Fail() }
+	for _, word := range arr {
+		t.Logf(word)
+		if len(word) != wordLen { t.Fail() }
+	}
+}
