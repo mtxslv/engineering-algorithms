@@ -37,3 +37,17 @@ func TestStringSlice(t *testing.T) {
 		if len(word) != wordLen { t.Fail() }
 	}
 }
+
+func TestStrSequenceGeneration(t *testing.T) {
+	words := []string{
+		"rick", "morty", "beth", "summer", "jerry",
+	}
+	listLen := 15
+	sequence := generateRandomSequenceStr(listLen, words)
+	for _, word := range sequence {
+		t.Log(word)
+	}
+	if len(sequence) != listLen {
+		t.Fail()
+	}
+}
