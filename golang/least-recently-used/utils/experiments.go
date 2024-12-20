@@ -90,7 +90,7 @@ func SimulationWithRandomness(){
  func SimulationLRUOPT(wordLen, listLen, requestsNum, capacity int){
 	// First of all generate ids [strings]
 	words := generateRandomStrings(wordLen,listLen)
-	requests := generateRandomSequenceStr(wordLen,words)
+	requests := generateRandomSequenceStr(requestsNum,words)
 
 	// Now the caches...
 	lru := NewLRUCacheV1(capacity)
@@ -115,6 +115,9 @@ func SimulationWithRandomness(){
 			optMisses++
 		}
 	}
-	fmt.Printf("LRU misses: %d | OPT misses: %d\n", lruMisses, optMisses)
-	fmt.Printf("COMPETITIVENESS: %.3f\n", float32(lruMisses)/float32(optMisses))
+
+	// Display results
+	fmt.Printf("Total Requests (N): %d | Cache Size (K): %d\n", len(requests), capacity)
+	fmt.Printf("LRU Misses: %d | OPT Misses: %d\n", lruMisses, optMisses)
+	fmt.Printf("Competitiveness (LRU/OPT): %.3f\n", float32(lruMisses)/float32(optMisses))
 }
