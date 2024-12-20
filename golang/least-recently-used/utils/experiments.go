@@ -76,7 +76,7 @@ func SimulationWithRandomness(){
 			requests = RandomIntSlice(numberOfRequests,maxLim)
 			msg := CheckMisses(lru,requests)
 			result := fmt.Sprintf("CACHE: %d | %d REQUESTS | RandLimMax: %d | %s\n",aCacheSize,numberOfRequests,maxLim,msg)
-			fmt.Printf(result)
+			fmt.Printf("%s",result)
 			multiplier++
 		}
 	}

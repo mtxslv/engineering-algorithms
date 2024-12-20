@@ -33,7 +33,7 @@ func TestStringSlice(t *testing.T) {
 	arr := generateRandomStrings(wordLen,listLen)
 	if len(arr) != listLen { t.Fail() }
 	for _, word := range arr {
-		t.Logf(word)
+		t.Logf("%s\n",word)
 		if len(word) != wordLen { t.Fail() }
 	}
 }
