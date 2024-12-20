@@ -30,3 +30,13 @@ func TestMakeMarkingCache(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestCacheByte(t *testing.T) {
+	cache, _ := NewRandomMarkingCache(10)
+	cache.Mark(0) // Mark bit at 0
+	cache.Mark(1) // Mark bit at 1
+	if cache.markingByte != 3 {
+		t.Fail()
+	}
+	
+}
