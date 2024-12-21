@@ -1,10 +1,10 @@
 package utils
 
-
 import (
-	"fmt"
-	"errors"
 	"container/list"
+	"errors"
+	"fmt"
+	"math/rand"
 )
 
 ////////////////// LEAST RECENTLY USED /////////////////////
@@ -131,3 +131,50 @@ func (c *RandomMarkingCache) KeyPosition(key string) int {
 	}
 	return -1
 }
+
+// b is the key, i guess
+func (c *RandomMarkingCache) RandomizedMarking(b string) {
+	// is b block in the cache?
+	_, found := c.cache[b]
+	if found {
+		// Where is b?
+		it := c.KeyPosition(b)
+		c.Mark(it)
+	} else {
+		// are all blocks marked?
+		if c.AllMarked() {
+			// unmark all
+			c.markingByte = 0
+		}
+		// Select an unmarked block uniformly at random
+		toEvict := rand.Intn(c.capacity)
+		// Evict block u
+		keyToEvict := c.cacheOrder[toEvict]
+		delete(c.cache,keyToEvict)
+		// place block b into the cache
+		c.cache[b] = 0.0 // FIX IT LATER
+		c.cacheOrder[toEvict] = b
+	}
+
+}
+
+// func (c *RandomMarkingCache) Put(key string, value float32) {
+// 	// Does the element exist?
+// 	el, found := c.cache[key]
+// 	if found {
+// 		// I guess I'll need to update value?
+// 		c.Mark()
+
+// 	}
+// }
+
+// func (c *RandomMarkingCache) Get(key string) (float32, bool) {
+// 	// Does the element exist?
+// 	el, found := c.cache[key]
+// 	if !found {
+// 		// No, return nothing
+// 		return 0.0,false
+// 	} else {
+// 		return el, true
+// 	}
+// }
