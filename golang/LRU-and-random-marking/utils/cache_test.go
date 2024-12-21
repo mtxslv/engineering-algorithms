@@ -102,3 +102,13 @@ func TestMarkUnmarkLimit(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestAllMarked(t *testing.T) {
+	cache, _ := NewRandomMarkingCache(3)
+	cache.Mark(0)
+	cache.Mark(1)
+	cache.Mark(2)
+	if !cache.AllMarked(){
+		t.Fail()
+	}
+}
