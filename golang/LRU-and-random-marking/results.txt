@@ -1,0 +1,10 @@
+Total Requests (N): 336 | Cache Size (K): 15 | LRU Misses: 65 | RMC Misses: 68 | Competitiveness (LRU/OPT): 0.956
+Total Requests (N): 336 | Cache Size (K): 15 | LRU Misses: 65 | RMC Misses: 72 | Competitiveness (LRU/OPT): 0.903
+Total Requests (N): 336 | Cache Size (K): 15 | LRU Misses: 65 | RMC Misses: 70 | Competitiveness (LRU/OPT): 0.929
+Total Requests (N): 336 | Cache Size (K): 15 | LRU Misses: 65 | RMC Misses: 72 | Competitiveness (LRU/OPT): 0.903
+Total Requests (N): 336 | Cache Size (K): 15 | LRU Misses: 65 | RMC Misses: 69 | Competitiveness (LRU/OPT): 0.942
+Total Requests (N): 336 | Cache Size (K): 15 | LRU Misses: 65 | RMC Misses: 69 | Competitiveness (LRU/OPT): 0.942
+Total Requests (N): 336 | Cache Size (K): 15 | LRU Misses: 65 | RMC Misses: 75 | Competitiveness (LRU/OPT): 0.867
+Total Requests (N): 336 | Cache Size (K): 15 | LRU Misses: 65 | RMC Misses: 70 | Competitiveness (LRU/OPT): 0.929
+Total Requests (N): 336 | Cache Size (K): 15 | LRU Misses: 65 | RMC Misses: 69 | Competitiveness (LRU/OPT): 0.942
+Total Requests (N): 336 | Cache Size (K): 15 | LRU Misses: 65 | RMC Misses: 66 | Competitiveness (LRU/OPT): 0.985
