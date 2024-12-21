@@ -6,7 +6,7 @@ go build main.go
 # Initialize loop counter
 trial=1
 
-while [ $trial -le 10 ]
+while [ $trial -le 500 ]
 do
     # Execute the go program with args
     ./main ../matrix-mult/mem-access-matmult.txt >> results.txt
