@@ -141,3 +141,24 @@ func TestUnmarkedBits(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestPutMarkedCache(t *testing.T) {
+	cache, _ := NewRandomMarkingCache(4)
+	cache.Put("euler", 2.71)
+	cache.Put("pi", 3.14)
+	cache.Put("golden", 1.61)
+	cache.Put("gravity", 9.8)
+
+	expectedCacheOrder := []string{ "euler", "pi", "golden","gravity"}
+	if !reflect.DeepEqual(expectedCacheOrder, cache.cacheOrder) || cache.markingByte != 15 {
+		t.Fail()
+	}
+
+	cache.Put("euler", 2.71828)
+	t.Logf("%d", cache.markingByte)
+	cache.Put("sqrt2", 1.414)
+
+	t.Logf("%+v", cache.cacheOrder)
+	t.Logf("%+v", cache.cache)
+	t.Logf("%d", cache.markingByte)
+}
