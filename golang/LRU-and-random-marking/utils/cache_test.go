@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"reflect"
 	"testing"
 	"errors"
 )
@@ -123,6 +124,17 @@ func TestSelectUnmarkedButAllMarked(t *testing.T) {
 	}
 	// SELECT SHOULD RETURN -1
 	if cache.SelectFromUnmarked() != -1 {
+		t.Fail()
+	}
+}
+
+func TestUnmarkedBits(t *testing.T) {
+	cache,_ := NewRandomMarkingCache(4)
+	cache.markingByte = 11
+	unmarked := cache.UnmarkedBitsArray()
+	expected := []int{2}
+	t.Logf("%+v", unmarked)
+	if !reflect.DeepEqual(unmarked, expected) {
 		t.Fail()
 	}
 }
