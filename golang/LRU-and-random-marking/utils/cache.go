@@ -115,6 +115,10 @@ func (c *RandomMarkingCache) Unmark(i int) error {
 	return nil
 } 
 
-// func (c *RandomMarkingCache) AllMarked() bool {
-
-// } 
+func (c *RandomMarkingCache) AllMarked() bool {
+	if c.markingByte == 1<< uint16(c.capacity) -1 {
+		return true
+	} else {
+		return false
+	}
+} 
