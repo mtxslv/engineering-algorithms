@@ -42,7 +42,7 @@ func TestCacheByte(t *testing.T) {
 }
 
 func TestCacheByteUnmark(t *testing.T) {
-	cache, _ := NewRandomMarkingCache(10)
+	cache, _ := NewRandomMarkingCache(16)
 	i := 0
 	for i < 5 {
 		cache.Mark(i) /* 1 1 1 1 1 = 31 */
@@ -89,4 +89,16 @@ func TestCacheByteUnmark(t *testing.T) {
 	}
 	if cache.markingByte != 0 { t.Fail() }
 
+}
+
+func TestMarkUnmarkLimit(t *testing.T) {
+	cache, _ := NewRandomMarkingCache(2)
+	err := cache.Mark(3)
+	if !errors.Is(err, ErrAssignmentOutOfBounds) {
+		t.Fail()
+	}
+	err = cache.Unmark(3)
+	if !errors.Is(err, ErrAssignmentOutOfBounds) {
+		t.Fail()
+	}
 }
