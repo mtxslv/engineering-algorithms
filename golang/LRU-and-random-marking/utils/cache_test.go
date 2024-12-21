@@ -40,3 +40,24 @@ func TestCacheByte(t *testing.T) {
 	}
 	
 }
+
+func TestCacheByteUnmark(t *testing.T) {
+	cache, _ := NewRandomMarkingCache(10)
+	i := 0
+	for i < 5 {
+		cache.Mark(i) /* 1 1 1 1 1 = 31 */
+		i++
+	}
+	if cache.markingByte != 31 {
+		t.Fail()
+	}
+
+	cache.Unmark(1)
+	cache.Unmark(3)
+
+	t.Logf("%d\n", cache.markingByte)
+
+	if cache.markingByte != 21 {
+		t.Fail()
+	}	
+}
