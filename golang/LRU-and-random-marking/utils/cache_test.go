@@ -55,9 +55,38 @@ func TestCacheByteUnmark(t *testing.T) {
 	cache.Unmark(1)
 	cache.Unmark(3)
 
-	t.Logf("%d\n", cache.markingByte)
-
 	if cache.markingByte != 21 {
 		t.Fail()
 	}	
+	i = 0
+	for i < 16 {
+		cache.Mark(i)
+		i++
+	}
+
+	cache.Unmark(0)
+	cache.Unmark(6)
+	cache.Unmark(7)
+	cache.Unmark(11)
+	cache.Unmark(15)
+
+	if cache.markingByte != 30526 {
+		t.Fail()
+	}
+
+	i = 0
+	for i < 16 {
+		cache.Mark(i)
+		i++
+	}
+
+	if cache.markingByte != 65535 { t.Fail() }
+
+	i = 0
+	for i < 16 {
+		cache.Unmark(i)
+		i++
+	}
+	if cache.markingByte != 0 { t.Fail() }
+
 }
