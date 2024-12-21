@@ -182,7 +182,6 @@ func (c *RandomMarkingCache) Put(key string, value float32) {
 			toEvict := c.SelectFromUnmarked()
 			// Evict block
 			keyToEvict := c.cacheOrder[toEvict]
-			fmt.Printf("Evict block at position %d (key %s)", toEvict, keyToEvict)
 			delete(c.cache,keyToEvict)
 			// place block b into the cache
 			c.cache[key] = value 
