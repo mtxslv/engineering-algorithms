@@ -26,7 +26,7 @@ func TestMakeMarkingCache(t *testing.T) {
 	}
 
 	cache, err := NewRandomMarkingCache(15)
-	if err != nil || cache.capacity != 15 {
+	if err != nil || cache.capacity != 15 || len(cache.cacheOrder) != 15{
 		t.Fail()
 	}
 }
