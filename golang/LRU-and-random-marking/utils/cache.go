@@ -95,7 +95,7 @@ func NewRandomMarkingCache(capacity int) (*RandomMarkingCache, error) {
 
 /*i starts at 0*/
 func (c *RandomMarkingCache) Mark(i int) {
-	c.markingByte = c.markingByte + 1 << i
+	c.markingByte = c.markingByte | 1 << i
 }
 
 /*i starts at 0*/
