@@ -112,3 +112,17 @@ func TestAllMarked(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestSelectUnmarkedButAllMarked(t *testing.T) {
+	cache,_ := NewRandomMarkingCache(16)
+	// MARK ALL BITS
+	it := 0
+	for it < 16 {
+		cache.Mark(it)
+		it++
+	}
+	// SELECT SHOULD RETURN -1
+	if cache.SelectFromUnmarked() != -1 {
+		t.Fail()
+	}
+}
