@@ -181,3 +181,23 @@ func (c *RandomMarkingCache) Get(key string) (float32, bool) {
 // 	}
 // }
 
+
+func (c *RandomMarkingCache) SelectFromUnmarked() int {
+	var unmarkedPositions []int 
+	it := 0
+	for it < c.capacity {
+		mask := 1 << it
+		maskedBit := c.markingByte & uint16(mask)
+		if maskedBit == 0 {
+			unmarkedPositions = append(unmarkedPositions, it)
+		}
+		it++
+	}
+	if len(unmarkedPositions) == 0 {
+		return -1
+	} else {
+		return unmarkedPositions[
+			rand.Intn(len(unmarkedPositions)),
+		]
+	}
+}
