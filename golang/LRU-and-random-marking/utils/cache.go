@@ -182,7 +182,7 @@ func (c *RandomMarkingCache) Get(key string) (float32, bool) {
 // }
 
 
-func (c *RandomMarkingCache) SelectFromUnmarked() int {
+func (c *RandomMarkingCache) UnmarkedBitsArray() []int {
 	var unmarkedPositions []int 
 	it := 0
 	for it < c.capacity {
@@ -193,6 +193,11 @@ func (c *RandomMarkingCache) SelectFromUnmarked() int {
 		}
 		it++
 	}
+	return unmarkedPositions
+}
+
+func (c *RandomMarkingCache) SelectFromUnmarked() int {
+	unmarkedPositions := c.UnmarkedBitsArray()
 	if len(unmarkedPositions) == 0 {
 		return -1
 	} else {
