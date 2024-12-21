@@ -79,6 +79,7 @@ type RandomMarkingCache struct {
 	capacity int
 	markingByte uint16
 	cache map[string]float32
+	cacheOrder []string
 }
 
 func NewRandomMarkingCache(capacity int) (*RandomMarkingCache, error) {
@@ -89,6 +90,7 @@ func NewRandomMarkingCache(capacity int) (*RandomMarkingCache, error) {
 		capacity: capacity,
 		markingByte: uint16(0),
 		cache: make(map[string]float32),
+		cacheOrder: make([]string,capacity),
 	}
 	return cachePtr, nil
 }
