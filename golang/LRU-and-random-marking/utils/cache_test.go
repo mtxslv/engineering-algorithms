@@ -137,4 +137,7 @@ func TestUnmarkedBits(t *testing.T) {
 	if !reflect.DeepEqual(unmarked, expected) {
 		t.Fail()
 	}
+	if cache.SelectFromUnmarked() != 2 {
+		t.Fail()
+	}
 }
