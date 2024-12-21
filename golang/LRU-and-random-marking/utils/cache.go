@@ -73,7 +73,7 @@ func (c *LRUCacheV1) Get(key string) (float32, bool) {
 ////////////////// RANDOM MARKING /////////////////////
 
 var ErrCacheSizeTooLarge = errors.New("Cache size must be less than or equal to 16")
-
+var ErrAssignmentOutOfBounds = errors.New("Trying to reach a bit beyond cache capacity")
 
 type RandomMarkingCache struct {
 	capacity int
@@ -94,12 +94,25 @@ func NewRandomMarkingCache(capacity int) (*RandomMarkingCache, error) {
 }
 
 /*i starts at 0*/
-func (c *RandomMarkingCache) Mark(i int) {
+func (c *RandomMarkingCache) Mark(i int) error {
+
+	if i >= c.capacity {
+		return fmt.Errorf("Failed given:\n%w\n",ErrAssignmentOutOfBounds)
+	}
 	c.markingByte = c.markingByte | 1 << i
+	return nil
 }
 
 /*i starts at 0*/
-func (c *RandomMarkingCache) Unmark(i int) {
+func (c *RandomMarkingCache) Unmark(i int) error {
+	if i >= c.capacity {
+		return fmt.Errorf("Failed given:\n%w\n",ErrAssignmentOutOfBounds)
+	}	
 	mask := 65534<<i  + 1<<i - 1 
 	c.markingByte = c.markingByte & uint16(mask)
+	return nil
 } 
+
+// func (c *RandomMarkingCache) AllMarked() bool {
+
+// } 
