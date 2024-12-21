@@ -6,60 +6,7 @@ import (
 	"utils/utils"
 )
 
-func getData() map[string]float32 {
-	data := make(map[string]float32)
-
-	data["A_0_0"] = 0 
-	data["A_0_1"] = 0
-	data["A_1_0"] = 0
-	data["A_1_1"] = 0
-	data["A_2_0"] = 0
-	data["A_2_1"] = 0
-	data["A_3_0"] = 0
-	data["A_3_1"] = 0
-
-	data["B_0_0"] = 0
-	data["B_0_1"] = 0
-	data["B_0_2"] = 0
-	data["B_0_3"] = 0
-	data["B_1_0"] = 0
-	data["B_1_1"] = 0
-	data["B_1_2"] = 0
-	data["B_1_3"] = 0
-
-	data["C_0_0"] = 0
-	data["C_0_1"] = 0
-	data["C_0_2"] = 0
-	data["C_0_3"] = 0
-	data["C_1_0"] = 0
-	data["C_1_1"] = 0
-	data["C_1_2"] = 0
-	data["C_1_3"] = 0
-	data["C_2_0"] = 0
-	data["C_2_1"] = 0
-	data["C_2_2"] = 0
-	data["C_2_3"] = 0
-	data["C_3_0"] = 0
-	data["C_3_1"] = 0
-	data["C_3_2"] = 0
-	data["C_3_3"] = 0
-
-	data["colsB"] = 0
-	data["itCol"] = 0
-	data["itK"] = 0
-	data["itRow"] = 0
-	data["rowsA"] = 0
-	data["rowsB"] = 0
-	return data
-}
-
 func main(){
-	// capacity := 10
-	// lru := utils.NewLRUCacheV1(capacity)
-	// rmc, err := utils.NewRandomMarkingCache(capacity)
-	// if err != nil {
-	// 	panic(err)
-	// }
 
 	// Check if parameters were provided
 	argsWithProg := os.Args
@@ -69,14 +16,39 @@ func main(){
 	} 
 
 	filePath := argsWithProg[1]
-
-	txt := utils.LoadLines(filePath)
-
+	requests := utils.LoadLines(filePath)
 	
-	// fmt.Printf("%d\n",len(txt))
-	for it, line := range txt {
-		// fmt.Printf("WHAT SO\n")
-		fmt.Printf("LINE %d : %s\n", it, line)
+	// Now the caches...
+	capacity := 15 // universe of 39 items requested
+	lru := utils.NewLRUCacheV1(capacity)
+	rmc, err := utils.NewRandomMarkingCache(capacity)
+	if err != nil {
+		panic(err)
 	}
+
+	// ... and their misses
+	lruMisses := 0
+	rmcMisses := 0
+
+	// Now let's iterate on the requests
+	for _, key := range requests { 
+		// First on LRU
+		_, okLru := lru.Get(key)
+		if !okLru { // not found
+			lru.Put(key, 1.6180) 
+			lruMisses++
+		}
+		// Now Opt
+		_, okOpt := rmc.Get(key)
+		if !okOpt { // not found
+			rmc.Put(key, 2.71828) 
+			rmcMisses++
+		}
+	}
+
+	// Display results
+	fmt.Printf("Total Requests (N): %d | Cache Size (K): %d | ", len(requests), capacity)
+	fmt.Printf("LRU Misses: %d | RMC Misses: %d | ", lruMisses, rmcMisses)
+	fmt.Printf("Competitiveness (LRU/OPT): %.3f\n", float32(lruMisses)/float32(rmcMisses))
 
 }
