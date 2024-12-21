@@ -157,6 +157,58 @@ func (c *RandomMarkingCache) RandomizedMarking(b string) {
 	}
 }
 
+func (c *RandomMarkingCache) IsCacheFull() bool {
+	it := 0
+	for it < c.capacity {
+		if len(c.cacheOrder[it]) == 0 {
+			return false
+		}
+		it++
+	}
+	return true
+}
+
+func (c *RandomMarkingCache) Put(key string, value float32) {
+	// Does the element exist?
+	_, found := c.cache[key]
+	if !found { 
+		// Does not exist in cache! Check if it is full
+		if c.IsCacheFull(){ // Cache is full
+			// are all blocks marked?
+			if c.AllMarked() {
+				// unmark all
+				c.markingByte = 0
+			}
+			toEvict := c.SelectFromUnmarked()
+			// Evict block
+			keyToEvict := c.cacheOrder[toEvict]
+			fmt.Printf("Evict block at position %d (key %s)", toEvict, keyToEvict)
+			delete(c.cache,keyToEvict)
+			// place block b into the cache
+			c.cache[key] = value 
+			c.cacheOrder[toEvict] = key
+			// mark new block
+			c.Mark(toEvict)
+		} else { // Cache is not full
+			// Mark and update
+			for it, k := range c.cacheOrder {
+				if len(k) == 0 {
+					c.Mark(it) // mark block residing on cache
+					c.cacheOrder[it] = key
+					break
+				}
+			}
+			c.cache[key] = value
+		}
+
+	} else { // element found
+		it := c.KeyPosition(key)
+		c.Mark(it) // mark block residing on cache
+		c.cache[key] = value
+	}
+}
+
+
 func (c *RandomMarkingCache) Get(key string) (float32, bool) {
 	// Does the element exist?
 	el, found := c.cache[key]
@@ -170,16 +222,6 @@ func (c *RandomMarkingCache) Get(key string) (float32, bool) {
 		return el, true
 	}
 }
-
-// func (c *RandomMarkingCache) Put(key string, value float32) {
-// 	// Does the element exist?
-// 	el, found := c.cache[key]
-// 	if found {
-// 		// I guess I'll need to update value?
-// 		c.Mark()
-
-// 	}
-// }
 
 
 func (c *RandomMarkingCache) UnmarkedBitsArray() []int {
