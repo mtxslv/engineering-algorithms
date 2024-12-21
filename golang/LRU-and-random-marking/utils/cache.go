@@ -155,7 +155,20 @@ func (c *RandomMarkingCache) RandomizedMarking(b string) {
 		c.cache[b] = 0.0 // FIX IT LATER
 		c.cacheOrder[toEvict] = b
 	}
+}
 
+func (c *RandomMarkingCache) Get(key string) (float32, bool) {
+	// Does the element exist?
+	el, found := c.cache[key]
+	if !found {
+		// No, return nothing
+		return 0.0,false
+	} else {
+		// It is, let's mark it
+		it := c.KeyPosition(key) 
+		c.Mark(it)
+		return el, true
+	}
 }
 
 // func (c *RandomMarkingCache) Put(key string, value float32) {
@@ -168,13 +181,3 @@ func (c *RandomMarkingCache) RandomizedMarking(b string) {
 // 	}
 // }
 
-// func (c *RandomMarkingCache) Get(key string) (float32, bool) {
-// 	// Does the element exist?
-// 	el, found := c.cache[key]
-// 	if !found {
-// 		// No, return nothing
-// 		return 0.0,false
-// 	} else {
-// 		return el, true
-// 	}
-// }
