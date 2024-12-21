@@ -122,3 +122,12 @@ func (c *RandomMarkingCache) AllMarked() bool {
 		return false
 	}
 } 
+
+func (c *RandomMarkingCache) KeyPosition(key string) int {
+	for it, k := range c.cacheOrder {
+		if k == key {
+			return it
+		}
+	}
+	return -1
+}
