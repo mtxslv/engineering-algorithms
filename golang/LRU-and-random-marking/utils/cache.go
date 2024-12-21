@@ -93,6 +93,13 @@ func NewRandomMarkingCache(capacity int) (*RandomMarkingCache, error) {
 	return cachePtr, nil
 }
 
+/*i starts at 0*/
 func (c *RandomMarkingCache) Mark(i int) {
 	c.markingByte = c.markingByte + 1 << i
 }
+
+/*i starts at 0*/
+func (c *RandomMarkingCache) Unmark(i int) {
+	mask := 65534<<i  + 1<<i - 1 
+	c.markingByte = c.markingByte & uint16(mask)
+} 
