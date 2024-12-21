@@ -138,7 +138,7 @@ func (c *RandomMarkingCache) RandomizedMarking(b string) {
 	_, found := c.cache[b]
 	if found {
 		// Where is b?
-		it := c.KeyPosition(b)
+		it := c.KeyPosition(b) // CHECAR DEPOIS SE NÃO É -1
 		c.Mark(it)
 	} else {
 		// are all blocks marked?
@@ -165,7 +165,7 @@ func (c *RandomMarkingCache) Get(key string) (float32, bool) {
 		return 0.0,false
 	} else {
 		// It is, let's mark it
-		it := c.KeyPosition(key) 
+		it := c.KeyPosition(key)  // CHECAR DEPOIS SE NÃO É -1
 		c.Mark(it)
 		return el, true
 	}
