@@ -42,7 +42,7 @@ void lupSolver(
     
     // Define n 
     int n = L.size();
-    
+
     // Define y 
     std::vector<std::vector<float>> y;
     y.resize(n, std::vector<float>(1,0.0f));
@@ -50,13 +50,19 @@ void lupSolver(
 
     float sum;
 
-    for (int i=0; i<<n; i++){
+    for (int i=0; i<n; i++){
         sum = 0.0f;
-        for (int j=0; j<i-1; j++){
+        for (int j=0; j<i; j++){
             sum += L[i][j]*y[j][0];
-        }
+        } // Y2 = 3-0.2*8=
         y[i][0] = b[p[i]][0] - sum;
+        // std::cout << "B["<<p[i]<<"][0] = " << b[p[i]][0] << std::endl;
+        std::cout << "Y["<<i<<"] = " << y[i][0] << std::endl;
     }
+
+    // for (int k = 0; k < 3 ; k++){
+        // std::cout << "Y = " << y[k][0] << std::endl;
+    // }    
 
     for (int i = n-1; i >= 0; i--){
         sum = 0.0f;
