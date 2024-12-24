@@ -18,7 +18,7 @@ void testingLUPsolver(){
     // Create and initialize the 2D vector (matrix)
     vector<vector<float>> L = {
         {1.0f, 0.0f, 0.0f},
-        {0.2f, 2.0f, 0.0f},
+        {0.2f, 1.0f, 0.0f},
         {0.6f, 0.5f, 1.0f}
     };
     vector<vector<float>> U = {
@@ -32,9 +32,9 @@ void testingLUPsolver(){
         {0.0f, 1.0f, 0.0f},
     };
     vector<vector<float>> b = {
-        {8},
         {3},
         {7},
+        {8},
     };
     vector<vector<float>> x;
     vector<int> p = permutationToArray(P); // ANS MUST BE [2, 0, 1]
