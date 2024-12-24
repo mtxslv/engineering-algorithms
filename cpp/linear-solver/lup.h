@@ -12,4 +12,6 @@ void lupSolver(
 
 void printMatrix(const std::vector<std::vector<float>>& matrix);
 
+std::vector<int> permutationToArray(std::vector<std::vector<float>>& P);
+
 #endif

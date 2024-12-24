@@ -15,17 +15,28 @@ void demo(){
 
 
 void testingLUPsolver(){
-    vector<vector<float>> L;
-    vector<vector<float>> U;
     // Create and initialize the 2D vector (matrix)
-    vector<vector<float>> matrix = {
+    vector<vector<float>> L = {
         {1.0f, 0.0f, 0.0f},
         {0.2f, 2.0f, 0.0f},
         {0.6f, 0.5f, 1.0f}
     };
-
+    vector<vector<float>> U = {
+        {5.0f, 6.0f,  3.0f},
+        {0.0f, 0.8f, -0.6f},
+        {0.0f, 0.0f,  2.5f},
+    };
+    vector<vector<float>> P = {
+        {0.0f, 0.0f, 1.0f},
+        {1.0f, 0.0f, 0.0f},
+        {0.0f, 1.0f, 0.0f},
+    };
+    vector<int> ans = permutationToArray(P); // ANS MUST BE [2, 0, 1]
+    for (int k = 0; k < 3 ; k++){
+        std::cout << "ANS = " << ans[k] << std::endl;
+    }
     // Print the matrix
-    printMatrix(matrix);
+    printMatrix(P);
 }
 
 int main(){
