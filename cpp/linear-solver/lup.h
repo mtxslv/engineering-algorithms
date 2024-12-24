@@ -6,8 +6,7 @@ void lupSolver(
     std::vector<std::vector<float>>& U, 
     std::vector<int>& p, // permutation array
     std::vector<std::vector<float>>& b, 
-    std::vector<std::vector<float>>& x, // result
-    int n
+    std::vector<std::vector<float>>& x // result
 );
 
 void printMatrix(const std::vector<std::vector<float>>& matrix);

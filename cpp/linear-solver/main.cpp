@@ -31,9 +31,16 @@ void testingLUPsolver(){
         {1.0f, 0.0f, 0.0f},
         {0.0f, 1.0f, 0.0f},
     };
-    vector<int> ans = permutationToArray(P); // ANS MUST BE [2, 0, 1]
+    vector<vector<float>> b = {
+        {8},
+        {3},
+        {7},
+    };
+    vector<vector<float>> x;
+    vector<int> p = permutationToArray(P); // ANS MUST BE [2, 0, 1]
+    lupSolver(L,U,p,b,x);
     for (int k = 0; k < 3 ; k++){
-        std::cout << "ANS = " << ans[k] << std::endl;
+        std::cout << "ANS = " << x[k][0] << std::endl;
     }
     // Print the matrix
     printMatrix(P);
