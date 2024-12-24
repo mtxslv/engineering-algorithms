@@ -20,7 +20,6 @@ std::vector<int> permutationToArray(std::vector<std::vector<float>>& P){
    int n = P.size();
    std::vector<int> p;
    p.resize(1,n);
-   std::cout << "PERMUTATION MATRIX HAS SIZE: " << n<<"x"<<P[0].size() <<std::endl;
    for (int i = 0; i < n; i++) {
      for (int j = 0; j < n; j++) {
         if (P[i][j] == 1) {
@@ -54,21 +53,15 @@ void lupSolver(
         sum = 0.0f;
         for (int j=0; j<i; j++){
             sum += L[i][j]*y[j][0];
-        } // Y2 = 3-0.2*8=
+        } 
         y[i][0] = b[p[i]][0] - sum;
-        // std::cout << "B["<<p[i]<<"][0] = " << b[p[i]][0] << std::endl;
-        std::cout << "Y["<<i<<"] = " << y[i][0] << std::endl;
     }
-
-    // for (int k = 0; k < 3 ; k++){
-        // std::cout << "Y = " << y[k][0] << std::endl;
-    // }    
 
     for (int i = n-1; i >= 0; i--){
         sum = 0.0f;
         for (int j = i+1; j < n; j++) {
             sum += U[i][j]*x[j][0];
         }
-        x[i][0] = (y[i][1]-sum)/U[i][i];
+        x[i][0] = (y[i][0]-sum)/U[i][i];
     }
 }
