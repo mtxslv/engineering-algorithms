@@ -68,6 +68,7 @@ void lupSolver(
 }
 
 void LupDecomposition(std::vector<std::vector<float>>& A) {
+
     int n = A.size();
 
     // Let \pi[1:n] be a new array
@@ -83,13 +84,14 @@ void LupDecomposition(std::vector<std::vector<float>>& A) {
     float p, aux;
 
     for (int k=0; k<n; k++){
-        p = 0;
+        
+        p = 0.0f;
         
         // find largest absolute value in column k
         for (int i=k; i<n; i++){
             if(abs(A[i][k]) > p) {
                 p = abs(A[i][k]);
-                // row number of the largest found so far
+                // k_ is the row number of the largest found so far
                 k_ = i ;
             }  
         }
@@ -111,8 +113,7 @@ void LupDecomposition(std::vector<std::vector<float>>& A) {
             A[k_][i] = aux;
         }
 
-        for (int i=k+1; i<n; k++) {
-
+        for (int i=k+1; i<n; i++) {
             A[i][k] = A[i][k] / A[k][k];
 
             // compute L and U in place in A
