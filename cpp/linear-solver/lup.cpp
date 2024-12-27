@@ -160,8 +160,4 @@ void LupDecompAndTranscription(
             }
         }
     }
-    std::cout << "======== L DECOMP =======" << std::endl;
-    printMatrix(L);
-    std::cout << "======== U DECOMP =======" << std::endl;
-    printMatrix(U);
 }

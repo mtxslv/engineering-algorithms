@@ -54,6 +54,10 @@ void testingLUPsolver(){
     vector<vector<float>> Lans, Uans;
     vector<int> pi;
     LupDecompAndTranscription(A,L,U,pi);
+    std::cout << "======== L DECOMP =======" << std::endl;
+    printMatrix(L);
+    std::cout << "======== U DECOMP =======" << std::endl;
+    printMatrix(U);    
     std::cout << "======== A =======" << std::endl;
     printMatrix(A);
     std::cout << "======== PI =======\n[\n" ;
