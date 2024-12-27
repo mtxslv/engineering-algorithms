@@ -43,7 +43,15 @@ void testingLUPsolver(){
         std::cout << "ANS = " << x[k][0] << std::endl;
     }
     // Print the matrix
-    printMatrix(P);
+    printMatrix(P);    
+    std::cout << "L U P DECOMPOSITION" << std::endl;
+    vector<vector<float>> A = {
+        {1,2,0},
+        {3,4,4},
+        {5,6,3},
+    };
+    LupDecomposition(A);
+    printMatrix(A);
 }
 
 int main(){

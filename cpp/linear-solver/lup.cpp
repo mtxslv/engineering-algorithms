@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "lup.h"
+#include <math.h>
 
 // Function to print a 2D vector (matrix)
 void printMatrix(const std::vector<std::vector<float>>& matrix) {
@@ -63,5 +64,63 @@ void lupSolver(
             sum += U[i][j]*x[j][0];
         }
         x[i][0] = (y[i][0]-sum)/U[i][i];
+    }
+}
+
+void LupDecomposition(std::vector<std::vector<float>>& A) {
+    int n = A.size();
+
+    // Let \pi[1:n] be a new array
+    std::vector<float> pi;
+    pi.resize(n);
+
+    for (int i = 0; i<n; i++){
+        // initialize pi to the identity permutation
+        pi[i] = i;
+    }
+
+    int k_;
+    float p, aux;
+
+    for (int k=0; k<n; k++){
+        p = 0;
+        
+        // find largest absolute value in column k
+        for (int i=k; i<n; i++){
+            if(abs(A[i][k]) > p) {
+                p = abs(A[i][k]);
+                // row number of the largest found so far
+                k_ = i ;
+            }  
+        }
+
+        if (p == 0) {
+            // raise error "singular matrix"
+            throw std::invalid_argument("Singular Matrix");
+        }
+
+        // exchange pi[k] with pi[k_]
+        aux = pi[k];
+        pi[k] = pi[k_];
+        pi[k_] = aux;
+
+        // exchange rows k and k_
+        for (int i=0; i<n; i++){
+            aux = A[k][i];
+            A[k][i] = A[k_][i];
+            A[k_][i] = aux;
+        }
+
+        for (int i=k+1; i<n; k++) {
+
+            A[i][k] = A[i][k] / A[k][k];
+
+            // compute L and U in place in A
+            
+            for (int j = k+1; j<n; j++){
+                A[i][j] = A[i][j] - A[i][k]*A[k][j];
+            }
+        
+        }
     }
 }
