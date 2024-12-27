@@ -67,12 +67,14 @@ void lupSolver(
     }
 }
 
-void LupDecomposition(std::vector<std::vector<float>>& A) {
+void LupDecomposition(
+    std::vector<std::vector<float>>& A,
+    std::vector<int>& pi
+) {
 
     int n = A.size();
 
     // Let \pi[1:n] be a new array
-    std::vector<float> pi;
     pi.resize(n);
 
     for (int i = 0; i<n; i++){
@@ -123,7 +125,7 @@ void LupDecomposition(std::vector<std::vector<float>>& A) {
             }
         
         }
-    }
+    }   
 }
 
 void LupDecompAndTranscription(
@@ -133,7 +135,7 @@ void LupDecompAndTranscription(
     std::vector<int>& p // permutation array, row array   
 ) {
     // First, decompose A in-place
-    LupDecomposition(A);
+    LupDecomposition(A,p);
 
     // Now, let's transcribe A into L and U
     int n = A.size();

@@ -12,7 +12,10 @@ void lupSolver(
 void printMatrix(const std::vector<std::vector<float>>& matrix);
 
 std::vector<int> permutationToArray(std::vector<std::vector<float>>& P);
-void LupDecomposition(std::vector<std::vector<float>>& A) ;
+void LupDecomposition(
+    std::vector<std::vector<float>>& A,
+    std::vector<int>& pi
+);
 void LupDecompAndTranscription(
     std::vector<std::vector<float>>& A,
     std::vector<std::vector<float>>& L, 
