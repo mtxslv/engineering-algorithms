@@ -50,7 +50,10 @@ void testingLUPsolver(){
         {3,4,4},
         {5,6,3},
     };
-    LupDecomposition(A);
+    // LupDecomposition(A);
+    vector<vector<float>> Lans, Uans;
+    LupDecompAndTranscription(A,L,U,p);
+    std::cout << "======== A =======" << std::endl;
     printMatrix(A);
 }
 

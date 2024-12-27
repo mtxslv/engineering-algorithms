@@ -7,7 +7,7 @@
 void printMatrix(const std::vector<std::vector<float>>& matrix) {
     for (const auto& row : matrix) {
         for (const auto& value : row) {
-            std::cout << value << " ";
+            std::cout << value << "\t";
         }
         std::cout << std::endl;
     }
@@ -124,4 +124,42 @@ void LupDecomposition(std::vector<std::vector<float>>& A) {
         
         }
     }
+}
+
+void LupDecompAndTranscription(
+    std::vector<std::vector<float>>& A,
+    std::vector<std::vector<float>>& L, 
+    std::vector<std::vector<float>>& U, 
+    std::vector<int>& p // permutation array, row array   
+) {
+    // First, decompose A in-place
+    LupDecomposition(A);
+
+    // Now, let's transcribe A into L and U
+    int n = A.size();
+
+    for (int i=0 ; i<n; i++) {
+        for (int j=0 ; j<n; j++) {
+            // Upper matrix
+            if (i>j){ 
+                U[i][j] = 0;
+            } else {
+                U[i][j] = A[i][j];
+            }
+            // Lower matrix
+            if (i<j) {
+                L[i][j] = 0;
+            } else {
+                if (i == j) {
+                    L[i][j] = 1 ;
+                } else {
+                    L[i][j] = A[i][j];
+                }
+            }
+        }
+    }
+    std::cout << "======== L DECOMP =======" << std::endl;
+    printMatrix(L);
+    std::cout << "======== U DECOMP =======" << std::endl;
+    printMatrix(U);
 }
