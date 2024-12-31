@@ -16,7 +16,16 @@ vector<vector<float>> readFile(const char * filePath){
         return T;
     }
 
+    string line;
+    while (getline(file, line)) {
+        vector<float> row;
+        istringstream iss(line);
+        float value;
+        while(iss >> value) {
+            row.push_back(value);
+        }
+        T.push_back(row);
+    }
+
     return T;
-
-
 }

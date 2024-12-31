@@ -14,7 +14,11 @@ int main(int argc, char* argv[]) {
     int m = atoi(argv[3]); // number of constraints
 
     cout << "Processed tableau containing "<< n << " variable(s) and " << m << " constraint(s)." << endl;
-    readFile(argv[1]);
+    vector<vector<float>> T = readFile(argv[1]); // Tableau matrix
+
+    simplexTableau(T,n,m);
+
+    printMatrix(T);
 
 }
 
