@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "simplex.h"
 #include "processFile.h"
 
@@ -22,9 +23,8 @@ int main(int argc, char* argv[]) {
 
     simplexTableau(T,n,m);
     cout << "Processed tableau containing "<< n << " variable(s) and " << m << " constraint(s)." << endl;
-
-    printMatrix(T);
-
+    string ans = processOutput(T,n,m);
+    cout << ans;
 }
 
 /*
