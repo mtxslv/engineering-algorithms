@@ -10,9 +10,9 @@ int main(){
         {0.0f,   2.0f,   1.0f, 0.0f, 1.0f, 16.0f}
     };
     vector<vector<float>> Ttest {
-        {1.0f,   0.0f,   -30.0f, 0.0f, 0.0f,  0.0f},
-        {0.0f,   1.0f,    1.0f, 1.0f, 0.0f, 12.0f},
-        {0.0f,   2.0f,    1.0f, 0.0f, 1.0f, 16.0f}
+        {1.0f,   0.0f,   -10.0f, 0.0f, 20.0f,  320.0f},
+        {0.0f,   0.0f,    0.5f, 1.0f, -0.5f, 4.0f},
+        {0.0f,   1.0f,    0.5f, 0.0f, 0.5f, 8.0f}
     };  
     
     int n = 2 ; // 2 variables
@@ -24,6 +24,7 @@ int main(){
     // cout << "Tableau Ttest has negative c values? " << ansTtest << endl ;
     printMatrix(T);
     simplexTableau(T,n,m);
+    cout << endl << endl << "FINAL MATRIX::" << endl;
     printMatrix(T);
 }
 

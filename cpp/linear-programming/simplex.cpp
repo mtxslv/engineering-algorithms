@@ -30,12 +30,16 @@ void simplexTableau(
     
     // Variables to find col where largest c_i happens
     int jP = -1;
-    float jPcompare = FLT_MAX;
+    float jPcompare;
 
-    // Pivot value;
+    // Pivot auxiliary variables;
     float pivot, multiplier ;
 
-    // while (checkIfNegative(T,n)) {
+    while (checkIfNegative(T,n)) {
+        // Reset comparison values
+        jPcompare = FLT_MAX;
+        qCompare = FLT_MAX;
+
         // First, find in which column the largest c_i happens
         for (int i = 1; i < n+1 ; i++) { // n variables. T[0][0] is Z
             if (T[0][i] < jPcompare) {
@@ -43,11 +47,6 @@ void simplexTableau(
                 jP = i;
             }    
         }
-        cout << endl;
-        cout << endl;
-        cout << "jP = " << jP;
-        cout << endl;
-        cout << endl;
 
         // Let's populate the quotient vector
         for (int i=1; i<m+1; i++) {
@@ -58,7 +57,6 @@ void simplexTableau(
                 // on the pivot column and the last tableau column
                 q[i-1] = T[i][m+n+1]/ T[i][jP]; 
             }
-            cout << "q[" << i-1 << "] = " << q[i-1] << endl;
         }
 
         // Now we found the smallest restriction quotient
@@ -68,37 +66,25 @@ void simplexTableau(
                 qCompare = q[i];
             }
         }
-        cout << "Last qCompare value: " << qCompare << endl;
-        cout << "The Pivot element is T["<<iP<<"]["<<jP<<"] = " << T[iP][jP] << endl;
 
         // Now we pivot 
         pivot = T[iP][jP];
 
         // First, make pivot value equal to 1
         for (int j= 0; j < n+m+2 ; j++) {
-            cout << T[iP][j] << "/"<<T[iP][jP] << " = " << T[iP][j]/T[iP][jP] << " la republique" <<endl ;
             T[iP][j] = T[iP][j]/pivot;
         }
 
-        cout << endl;
-        cout << endl;
-        cout << endl;
-        cout << endl;
-
-        printMatrix(T);
-
         // Use the pivot row to pivot the rest of the matrix
         for (int i=0; i<m+1;i++){
-            cout << " Pivoting row #"<< i << endl;
             multiplier = T[i][jP];
             for (int j=0; j<n+m+2; j++){
                 if (i != iP) {
-                    cout << "T["<<i<<"]["<<j<<"] = " << T[i][j] << " - " << T[i][jP] << "*" << T[iP][j] << endl;
                     T[i][j] = T[i][j] - multiplier*T[iP][j];
                 }
             }
         }
-    // }
+    }
 }
 
 // Function to print a 2D vector (matrix)
