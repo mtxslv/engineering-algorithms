@@ -22,6 +22,7 @@ int main(){
     // int ansTtest = checkIfNegative(Ttest, n);
     // cout << "Tableau T has negative c values? " << ansT << endl;
     // cout << "Tableau Ttest has negative c values? " << ansTtest << endl ;
+    printMatrix(T);
     simplexTableau(T,n,m);
     printMatrix(T);
 }
