@@ -1,5 +1,6 @@
 #include <iostream>
 #include "simplex.h"
+#include "processFile.h"
 
 using namespace std;
 
@@ -8,6 +9,12 @@ int main(int argc, char* argv[]) {
         cerr << "Usage: " << "simplexsolver <tableau_file> <number_of_variables> <number_of_constraints>" << endl;
         return 1;
     }
+
+    int n = atoi(argv[2]); // number of variables
+    int m = atoi(argv[3]); // number of constraints
+
+    cout << "Processed tableau containing "<< n << " variable(s) and " << m << " constraint(s)." << endl;
+    readFile(argv[1]);
 
 }
 
