@@ -13,4 +13,6 @@ bool checkIfNegative(std::vector<std::vector<float>>& T, int n);
 
 void printMatrix(const std::vector<std::vector<float>>& matrix);
 
+std::string processOutput(std::vector<std::vector<float>>& T, int n, int m);
+
 #endif

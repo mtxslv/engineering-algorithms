@@ -1,6 +1,9 @@
 #include <cfloat> // To use FLT MAX
 #include <iostream>
+#include <iomanip>
+#include <string>
 #include <vector>
+#include <sstream>
 #include "simplex.h"
 
 using namespace std;
@@ -95,4 +98,55 @@ void printMatrix(const std::vector<std::vector<float>>& matrix) {
         }
         std::cout << std::endl;
     }
+}
+
+std::string processOutput(std::vector<std::vector<float>>& T, int n, int m) {
+    std::string ans = "Maximized objective value: ";
+    
+    std::stringstream ss;
+    ss << ans << std::fixed << std::setprecision(5) << T[0][m + n + 1] << endl;
+    
+
+    vector<float> sum;
+    sum.resize(n+m); // input and slack variables
+    vector<float> pos; // positions of the values on the last col
+    pos.resize(n+m);
+
+    // Let's check which variables are being used
+    // A variable used must have a single 1 on the column
+    for (int i = 0; i < m+1 ; i++) {
+        for (int j = 0; j < n+m; j++) {
+            sum[j] += T[i][j+1]; // j+1 because the 0-th col is var z
+            // If it is 1, keep row number
+            if (T[i][j+1] == 1) {
+                pos[j] = i;
+            }
+        }
+    } 
+    // Now we look for the desired values
+    int inputVarI = 1;
+    int slackVarI = 1;
+    for (int j = 0; j < n+m; j++) {
+        if(j < n) { // we are dealing with the input variables
+            ss << "x" << inputVarI << " = " ;
+            if(sum[j] == 1){
+                ss << std::setprecision(5) << T[pos[j]][m + n + 1];
+            } else {
+                ss << std::setprecision(5) << 0.0;
+            }
+            ss << endl;
+            inputVarI++;
+        } else { // we are dealing with the slack variables
+            ss << "s" << slackVarI << " = " ;
+            if(sum[j] == 1){
+                ss << std::setprecision(5) << T[pos[j]][m + n + 1];
+            } else {
+                ss << std::setprecision(5) << 0.0;
+            }
+            ss << endl;
+            slackVarI++;
+        }
+    }
+    
+    return ss.str();
 }
