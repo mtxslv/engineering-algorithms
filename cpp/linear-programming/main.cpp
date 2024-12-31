@@ -3,18 +3,12 @@
 
 using namespace std;
 
-int main(){
-    vector<vector<float>> T {
-        {1.0f, -4.0f, -3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
-        {0.0f,  2.0f,  3.0f, 1.0f, 0.0f, 0.0f, 0.0f, 6.0f},
-        {0.0f, -3.0f,  2.0f, 0.0f, 1.0f, 0.0f, 0.0f, 3.0f},
-        {0.0f,  0.0f,  2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 5.0f},
-        {0.0f,  2.0f,  1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 4.0f}
-    }; 
-    simplexTableau(T,2,4); // 2 variables and 4 constraints
-    printMatrix(T);
-    cout << endl << endl << "FINAL MATRIX::" << endl;
-    printMatrix(T);
+int main(int argc, char* argv[]) {
+    if (argc != 4) {
+        cerr << "Usage: " << "simplexsolver <tableau_file> <number_of_variables> <number_of_constraints>" << endl;
+        return 1;
+    }
+
 }
 
 /*
@@ -28,6 +22,20 @@ int main(){
         {0.0f,   2.0f,   1.0f, 0.0f, 1.0f, 16.0f}
     }; 
     simplexTableau(T,2,2); // 2 variables and 2 constraints
+    printMatrix(T);
+    cout << endl << endl << "FINAL MATRIX::" << endl;
+    printMatrix(T);
+*/
+
+/*
+    vector<vector<float>> T {
+        {1.0f, -4.0f, -3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+        {0.0f,  2.0f,  3.0f, 1.0f, 0.0f, 0.0f, 0.0f, 6.0f},
+        {0.0f, -3.0f,  2.0f, 0.0f, 1.0f, 0.0f, 0.0f, 3.0f},
+        {0.0f,  0.0f,  2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 5.0f},
+        {0.0f,  2.0f,  1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 4.0f}
+    }; 
+    simplexTableau(T,2,4); // 2 variables and 4 constraints
     printMatrix(T);
     cout << endl << endl << "FINAL MATRIX::" << endl;
     printMatrix(T);
