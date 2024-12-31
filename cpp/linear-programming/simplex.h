@@ -11,4 +11,6 @@ void simplexTableau(
 
 bool checkIfNegative(std::vector<std::vector<float>>& T, int n);
 
+void printMatrix(const std::vector<std::vector<float>>& matrix);
+
 #endif
