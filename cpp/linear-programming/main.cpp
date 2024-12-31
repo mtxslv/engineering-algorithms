@@ -13,10 +13,15 @@ int main(int argc, char* argv[]) {
     int n = atoi(argv[2]); // number of variables
     int m = atoi(argv[3]); // number of constraints
 
-    cout << "Processed tableau containing "<< n << " variable(s) and " << m << " constraint(s)." << endl;
     vector<vector<float>> T = readFile(argv[1]); // Tableau matrix
 
+    if (!checkMatrixFormat(T,n,m)) {
+        cout << "Matrix format does not conform to quantity of variables and restrictions" << endl;
+        return 1;
+    }
+
     simplexTableau(T,n,m);
+    cout << "Processed tableau containing "<< n << " variable(s) and " << m << " constraint(s)." << endl;
 
     printMatrix(T);
 
