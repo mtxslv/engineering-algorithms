@@ -5,25 +5,14 @@ using namespace std;
 
 int main(){
     vector<vector<float>> T {
-        {1.0f, -40.0f, -30.0f, 0.0f, 0.0f,  0.0f},
-        {0.0f,   1.0f,   1.0f, 1.0f, 0.0f, 12.0f},
-        {0.0f,   2.0f,   1.0f, 0.0f, 1.0f, 16.0f}
-    };
-    vector<vector<float>> Ttest {
-        {1.0f,   0.0f,   -10.0f, 0.0f, 20.0f,  320.0f},
-        {0.0f,   0.0f,    0.5f, 1.0f, -0.5f, 4.0f},
-        {0.0f,   1.0f,    0.5f, 0.0f, 0.5f, 8.0f}
-    };  
-    
-    int n = 2 ; // 2 variables
-    int m = 2 ; // 2 constrains
-
-    // int ansT = checkIfNegative(T,n);
-    // int ansTtest = checkIfNegative(Ttest, n);
-    // cout << "Tableau T has negative c values? " << ansT << endl;
-    // cout << "Tableau Ttest has negative c values? " << ansTtest << endl ;
+        {1.0f, -4.0f, -3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f},
+        {0.0f,  2.0f,  3.0f, 1.0f, 0.0f, 0.0f, 0.0f, 6.0f},
+        {0.0f, -3.0f,  2.0f, 0.0f, 1.0f, 0.0f, 0.0f, 3.0f},
+        {0.0f,  0.0f,  2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 5.0f},
+        {0.0f,  2.0f,  1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 4.0f}
+    }; 
+    simplexTableau(T,2,4); // 2 variables and 4 constraints
     printMatrix(T);
-    simplexTableau(T,n,m);
     cout << endl << endl << "FINAL MATRIX::" << endl;
     printMatrix(T);
 }
@@ -33,4 +22,13 @@ int main(){
    0      1      1    1    0   12
    0      2      1    0    1   16
 
+    vector<vector<float>> T {
+        {1.0f, -40.0f, -30.0f, 0.0f, 0.0f,  0.0f},
+        {0.0f,   1.0f,   1.0f, 1.0f, 0.0f, 12.0f},
+        {0.0f,   2.0f,   1.0f, 0.0f, 1.0f, 16.0f}
+    }; 
+    simplexTableau(T,2,2); // 2 variables and 2 constraints
+    printMatrix(T);
+    cout << endl << endl << "FINAL MATRIX::" << endl;
+    printMatrix(T);
 */
