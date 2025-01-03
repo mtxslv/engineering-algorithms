@@ -7,7 +7,7 @@ using namespace std;
 
 
 int main(int argc, char* argv[]) {
-    if (argc != 3) {
+    if (argc != 2) {
         cerr << "Usage: " << "lupinverse <matrix_file>" << endl;
         return 1;
     }
