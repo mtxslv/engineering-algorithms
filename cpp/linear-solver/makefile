@@ -6,7 +6,7 @@ DEPS = file1.h processFile.h lup.h
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 make: main.o file1.o processFile.o lup.o
-	$(CC) -o main main.o file1.o processFile.o lup.o
+	$(CC) -o lupinverse main.o file1.o processFile.o lup.o
 	rm *.o
 
 simpleclean:
