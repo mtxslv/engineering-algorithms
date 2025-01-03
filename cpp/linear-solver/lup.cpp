@@ -1,13 +1,23 @@
+#include <cmath>
+#include <iomanip>
 #include <iostream>
 #include <vector>
 #include "lup.h"
 #include <math.h>
 
 // Function to print a 2D vector (matrix)
-void printMatrix(const std::vector<std::vector<float>>& matrix) {
+void printMatrix(const std::vector<std::vector<float>>& matrix, int decimals) {
     for (const auto& row : matrix) {
         for (const auto& value : row) {
-            std::cout << value << "\t";
+            if (decimals < 0) {
+                std::cout << value << "\t";
+            } else {
+                if (value > -4e-06 && value < 5e-06) {
+                    std::cout << static_cast<int>(round(value)) << "\t"; // simplify visualization
+                }   else {
+                    std::cout << std::setprecision(decimals) << value << "\t";
+                }                 
+            }
         }
         std::cout << std::endl;
     }

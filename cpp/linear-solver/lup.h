@@ -9,7 +9,7 @@ void lupSolver(
     std::vector<std::vector<float>>& x // result
 );
 
-void printMatrix(const std::vector<std::vector<float>>& matrix);
+void printMatrix(const std::vector<std::vector<float>>& matrix, int decimals=-1);
 
 std::vector<int> permutationToArray(std::vector<std::vector<float>>& P);
 void LupDecomposition(
