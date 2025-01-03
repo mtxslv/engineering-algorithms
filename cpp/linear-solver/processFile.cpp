@@ -30,15 +30,11 @@ vector<vector<float>> readFile(const char * filePath){
     return T;
 }
 
-bool checkMatrixFormat(vector<vector<float>>& T, int n, int m) {
+bool checkMatrixSquare(vector<vector<float>>& T) {
     int howManyRows = T.size();
 
-    if (howManyRows != m+1) { // m restrictions and function to maximize
-        return false;
-    }
-
     for( int i = 0 ; i <  howManyRows; i++) {
-        if(T[i].size() != n+m+2){ // n variables, m restrictions, z an b cols
+        if(T[i].size() != howManyRows){ // n variables, m restrictions, z an b cols
             return false;
         }
     }

@@ -4,5 +4,5 @@
 #include <vector>
 
 std::vector<std::vector<float>> readFile(const char * filePath);
-bool checkMatrixFormat(std::vector<std::vector<float>>& T, int n, int m);
+bool checkMatrixSquare(std::vector<std::vector<float>>& T);
 #endif
