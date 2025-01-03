@@ -45,7 +45,7 @@ void simplexTableau(
         qCompare = FLT_MAX;
 
         // First, find in which column the largest c_i happens
-        for (int i = 1; i < n+1 ; i++) { // n variables. T[0][0] is Z
+        for (int i = 1; i < n+m+1 ; i++) { // Here we consider the slack variables too. Moreover, T[0][0] is Z
             if (T[0][i] < jPcompare) {
                 jPcompare = T[0][i];
                 jP = i;
@@ -88,8 +88,6 @@ void simplexTableau(
                 }
             }
         }
-        printMatrix(T);
-        cout << endl;
     }
 }
 
