@@ -8,9 +8,10 @@
 
 using namespace std;
 
-bool checkIfNegative(vector<vector<float>>& T, int n){
-    // Return negative if any value of T[0,1:n] is still less than 0
-    for (int i = 1; i < n+1 ; i++) { // n variables. T[0][0] is Z
+bool checkIfNegative(vector<vector<float>>& T, int n, int m){
+    // Return negative if any value of T[0,1:n+m+1] is still less than 0
+    // That is, if any variable's multiplier is negative
+    for (int i = 1; i < n+m+1 ; i++) { // n variables. T[0][0] is Z
         if (T[0][i] < 0) {
             return true;
         }
@@ -38,7 +39,7 @@ void simplexTableau(
     // Pivot auxiliary variables;
     float pivot, multiplier ;
 
-    while (checkIfNegative(T,n)) {
+    while (checkIfNegative(T,n,m)) {
         // Reset comparison values
         jPcompare = FLT_MAX;
         qCompare = FLT_MAX;
@@ -87,6 +88,8 @@ void simplexTableau(
                 }
             }
         }
+        printMatrix(T);
+        cout << endl;
     }
 }
 

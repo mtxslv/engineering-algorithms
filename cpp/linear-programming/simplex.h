@@ -9,7 +9,7 @@ void simplexTableau(
     int m
 );
 
-bool checkIfNegative(std::vector<std::vector<float>>& T, int n);
+bool checkIfNegative(std::vector<std::vector<float>>& T, int n, int m);
 
 void printMatrix(const std::vector<std::vector<float>>& matrix);
 
