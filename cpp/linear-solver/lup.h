@@ -22,4 +22,8 @@ void LupDecompAndTranscription(
     std::vector<std::vector<float>>& U, 
     std::vector<int>& p // permutation array, row array   
 ) ;
+
+std::vector<std::vector<float>> LupInverse(
+    std::vector<std::vector<float>> A
+) ;
 #endif

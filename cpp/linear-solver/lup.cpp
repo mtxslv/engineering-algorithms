@@ -161,3 +161,46 @@ void LupDecompAndTranscription(
         }
     }
 }
+
+
+std::vector<std::vector<float>> LupInverse(
+    std::vector<std::vector<float>> A
+) {
+
+    int n = A.size();
+
+    // Inverse is also a nxn matrix
+    std::vector<std::vector<float>> inverse;
+    inverse.resize(n);
+    for(int i = 0; i < n; i++){
+        inverse[i].resize(n,0.0f);
+    } 
+
+    // LUP-decompose A
+    std::vector<std::vector<float>> L, U;
+    std::vector<int> pi;
+    LupDecompAndTranscription(A,L,U,pi);
+
+    for(int i = 0; i < n; i++) {
+        // Define c_i as the i-th column of a nxn identity matrix
+        std::vector<std::vector<float>> c_i;
+        c_i.resize(n);
+        for (int j = 0; j < n; j++){
+            if (i == j){
+                c_i[j][0] = 1;
+            } else {
+                c_i[j][0] = 0;
+            }
+        }
+
+        std::vector<std::vector<float>> x;
+
+        lupSolver(L,U,pi,c_i,x);
+
+        // Now we transcribe x into the inverse
+        for (int j = 0; j < n; j++){
+            inverse[i][j] = x[j][0];
+        }
+    }
+    return inverse;
+}
