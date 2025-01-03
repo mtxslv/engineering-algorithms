@@ -7,8 +7,9 @@ using namespace std;
 
 
 int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        cerr << "Usage: " << "lupinverse <matrix_file>" << endl;
+    if (argc != 2 && argc != 4) {
+        cerr << "Usage: " << "./lupinverse <matrix_file> -c <inverse_file>" << endl;
+        cerr << "The -c flag and its argument is optional for checking if the product is the identity matrix." << endl;
         return 1;
     }
 
