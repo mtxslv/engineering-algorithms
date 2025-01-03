@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
 
         vector<vector<float>> identity;
         mulMat(A,O,identity);
-        printMatrix(identity);
+        printMatrix(identity, 0);
     }
 
 }
