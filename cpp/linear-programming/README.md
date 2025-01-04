@@ -46,7 +46,7 @@ s4 = 0.00000
 
 ## [example3.txt](./example3.txt)
 
-The only wrong value here is the slack variable S3's value. Should be 0, but it is the same as Z.
+Answer correct.
 
 ```shell
 $ ./simplexsolver example3.txt 2 3
@@ -56,7 +56,7 @@ x1 = 2.00000
 x2 = 6.00000
 s1 = 2.00000
 s2 = 0.00000
-s3 = 36.00000
+s3 = 0.00000
 ```
 
 ## [example4.txt](./example4.txt) 
@@ -77,7 +77,7 @@ s4 = 0.00000
 
 ## [example5.txt](./example5.txt) 
 
-must give a maximized objective value of 15. The exact form of the answer may depend, since we have a degenerated solution. Even so, comparing to what is seen in [page 35](./support-materials/Disciplina_Otimizao_de_Sistemas_-1a_parte_v9_corr3.pdf), the only wrong value is the S3 (should be 0, but it is equal to Z).
+must give a maximized objective value of 15. The exact values of the variables (slack and problem's) may depend, since we have a degenerated solution. Even so, it returns what is expected in [page 35](./support-materials/Disciplina_Otimizao_de_Sistemas_-1a_parte_v9_corr3.pdf).
 
 ```shell
 $ ./simplexsolver example5.txt 2 3
@@ -87,5 +87,5 @@ x1 = 3.00000
 x2 = 3.00000
 s1 = 0.00000
 s2 = 1.00000
-s3 = 15.00000
+s3 = 0.00000
 ```
