@@ -1,4 +1,5 @@
 #include <cfloat> // To use FLT MAX
+#include <cmath> // To use abs
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -117,7 +118,7 @@ std::string processOutput(std::vector<std::vector<float>>& T, int n, int m) {
     // A variable used must have a single 1 on the column
     for (int i = 0; i < m+1 ; i++) {
         for (int j = 0; j < n+m; j++) {
-            sum[j] += T[i][j+1]; // j+1 because the 0-th col is var z
+            sum[j] += abs(T[i][j+1]); // j+1 because the 0-th col is var z
             // If it is 1, keep row number
             if (T[i][j+1] == 1) {
                 pos[j] = i;
