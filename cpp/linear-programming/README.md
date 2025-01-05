@@ -97,3 +97,20 @@ s3 = 0.00000
 ## [example7.txt](./example7.txt)
 
 [página 4](https://egyankosh.ac.in/bitstream/123456789/18135/1/Unit-4.pdf)
+
+## [example8.txt](./example8.txt)
+
+It comes from [this website](https://people.richland.edu/james/ictcm/2006/3dsimplex.html). The answer is correct:
+
+```shell
+$ ./simplexsolver example8.txt 3 4
+Processed tableau containing 3 variable(s) and 4 constraint(s).
+Maximized objective value: 268.00000
+x1 = 1.80000
+x2 = 20.80000
+x3 = 1.60000
+s1 = 0.00000
+s2 = 0.00000
+s3 = 2.60000
+s4 = 0.00000
+```
