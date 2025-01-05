@@ -89,3 +89,11 @@ s1 = 0.00000
 s2 = 1.00000
 s3 = 0.00000
 ```
+
+## [example6.txt](./example6.txt)
+
+[página 47](http://www.maths.lse.ac.uk/Personal/stengel/HillierLieberman9thEdition.pdf)
+
+## [example7.txt](./example7.txt)
+
+[página 4](https://egyankosh.ac.in/bitstream/123456789/18135/1/Unit-4.pdf)
