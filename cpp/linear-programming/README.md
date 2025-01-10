@@ -114,3 +114,17 @@ s2 = 0.00000
 s3 = 2.60000
 s4 = 0.00000
 ```
+
+## [example9.txt](./example9.txt)
+
+[examples comes from youtube example](https://youtu.be/9YKLXFqCy6E?si=dO8H4DqDfVpinkWu)
+
+```shell
+$ ./simplexsolver example9.txt 2 2
+Processed tableau containing 2 variable(s) and 2 constraint(s).
+Maximized objective value: 32.00000
+x1 = 2.00000
+x2 = 3.00000
+s1 = 0.00000
+s2 = 0.00000
+```
