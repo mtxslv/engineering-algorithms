@@ -30,6 +30,14 @@ vector<vector<float>> readFile(const char * filePath){
     return T;
 }
 
+bool isMinimizationProblem(vector<vector<float>>& T) {
+    if (T[0][0] == 1.0f) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 bool checkMatrixFormat(vector<vector<float>>& T, int n, int m) {
     int howManyRows = T.size();
 

@@ -21,10 +21,21 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    if (isMinimizationProblem(T)){
+        // METHOD TO GET FIRST VALID SOLUTION
+        // ...
+        // TELL IT IS MINIMIZATION PROBLEM
+        cout << "Minimization problem" << endl;
+    } else {
+        cout << "Maximization problem" << endl;
+    }
     simplexTableau(T,n,m);
     cout << "Processed tableau containing "<< n << " variable(s) and " << m << " constraint(s)." << endl;
     string ans = processOutput(T,n,m);
     cout << ans;
+    cout<<endl;
+    cout<<endl;
+    printMatrix(T);
 }
 
 /*
