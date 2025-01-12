@@ -6,6 +6,7 @@
 #include <vector>
 #include <sstream>
 #include "simplex.h"
+#include "processFile.h"
 
 using namespace std;
 
@@ -39,7 +40,6 @@ void simplexTableau(
 
     // Pivot auxiliary variables;
     float pivot, multiplier ;
-
     while (checkIfNegative(T,n,m)) {
         // Reset comparison values
         jPcompare = FLT_MAX;
@@ -52,15 +52,20 @@ void simplexTableau(
                 jP = i;
             }    
         }
-
+        float ratio;
         // Let's populate the quotient vector
         for (int i=1; i<m+1; i++) {
-            if (T[i][jP] <= 0) {
+            if (T[i][jP] == 0) {
                 q[i-1] = FLT_MAX;
             } else {
                 // element wise division between the restriction rows
                 // on the pivot column and the last tableau column
-                q[i-1] = T[i][m+n+1]/ T[i][jP]; 
+                ratio = T[i][m+n+1]/ T[i][jP];
+                if (ratio <= 0) {
+                    q[i-1] = FLT_MAX; 
+                } else {
+                    q[i-1] = ratio; 
+                }
             }
         }
 
@@ -89,9 +94,6 @@ void simplexTableau(
                 }
             }
         }
-        cout << endl;
-        cout << endl;
-        printMatrix(T);
     }
 }
 
@@ -163,10 +165,17 @@ void printMatrix(const std::vector<std::vector<float>>& matrix) {
 }
 
 std::string processOutput(std::vector<std::vector<float>>& T, int n, int m) {
-    std::string ans = "Maximized objective value: ";
-    
+    std::string ans;
+    bool minPro = isMinimizationProblem(T); 
+    if (minPro){
+        ans = "Minimized objective value: ";
+    } else {
+        ans = "Maximized objective value: ";
+    }
+
+    float objectiveValue = T[0][0]*T[0][m + n + 1];
     std::stringstream ss;
-    ss << ans << std::fixed << std::setprecision(5) << T[0][m + n + 1] << endl;
+    ss << ans << std::fixed << std::setprecision(5) << objectiveValue << endl;
     
 
     vector<float> sum;
@@ -190,7 +199,11 @@ std::string processOutput(std::vector<std::vector<float>>& T, int n, int m) {
     int slackVarI = 1;
     for (int j = 0; j < n+m; j++) {
         if(j < n) { // we are dealing with the input variables
-            ss << "x" << inputVarI << " = " ;
+            if (minPro){
+                ss << "y" << inputVarI << " = " ;
+            } else {
+                ss << "x" << inputVarI << " = " ;
+            }
             if(sum[j] == 1){
                 ss << std::setprecision(5) << T[pos[j]][m + n + 1];
             } else {
