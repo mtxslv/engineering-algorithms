@@ -77,6 +77,7 @@ s4 = 0.00000
 
 ## [example5.txt](./maximization-examples/example5.txt) 
 
+**WRONG ANSWER HERE! DO NOT CONSIDER THIS EXAMPLE**
 must give a maximized objective value of 15. The exact values of the variables (slack and problem's) may depend, since we have a degenerated solution. Even so, it returns what is expected in [page 35](./support-materials/Disciplina_Otimizao_de_Sistemas_-1a_parte_v9_corr3.pdf).
 
 ```shell
@@ -89,6 +90,7 @@ s1 = 0.00000
 s2 = 1.00000
 s3 = 0.00000
 ```
+
 
 ## [example6.txt](./maximization-examples/example6.txt)
 
