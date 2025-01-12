@@ -89,8 +89,68 @@ void simplexTableau(
                 }
             }
         }
+        cout << endl;
+        cout << endl;
+        printMatrix(T);
     }
 }
+
+void firstFeasibleSolutionMinimization(
+    std::vector<std::vector<float>>& T,
+    int n,
+    int m    
+) {
+    // Quotient
+    vector<float> q;
+    q.resize(m);
+    float qCompare = FLT_MIN;
+
+    int iP = -1; // Row where smallest quotient happens
+    
+    // jP is a given variable
+    int jP = 1; // Change later
+
+    // Pivot auxiliary variables;
+    float pivot, multiplier ;    
+
+    // Let's populate the quotient vector
+    for (int i=1; i<m+1; i++) {
+        if (T[i][jP] <= 0) {
+            q[i-1] = FLT_MIN;
+        } else {
+            // element wise division between the restriction rows
+            // on the pivot column and the last tableau column
+            q[i-1] = T[i][m+n+1]/ T[i][jP]; 
+        }
+    }
+
+    // Now we found the greatest restriction quotient
+    for (int i=0; i<m; i++){
+        if (q[i] > qCompare){
+            iP = i+1; // q[i] is shiftted backwards, hence the +1
+            qCompare = q[i];
+        }
+    }
+
+    // Now we pivot 
+    pivot = T[iP][jP];
+
+    // First, make pivot value equal to 1
+    for (int j= 0; j < n+m+2 ; j++) {
+        T[iP][j] = T[iP][j]/pivot;
+    }
+
+    // Use the pivot row to pivot the rest of the matrix
+    for (int i=0; i<m+1;i++){
+        multiplier = T[i][jP];
+        for (int j=0; j<n+m+2; j++){
+            if (i != iP) {
+                T[i][j] = T[i][j] - multiplier*T[iP][j];
+            }
+        }
+    }    
+}
+
 
 // Function to print a 2D vector (matrix)
 void printMatrix(const std::vector<std::vector<float>>& matrix) {

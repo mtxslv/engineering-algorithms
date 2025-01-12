@@ -16,6 +16,8 @@ int main(int argc, char* argv[]) {
 
     vector<vector<float>> T = readFile(argv[1]); // Tableau matrix
 
+    printMatrix(T);
+
     if (!checkMatrixFormat(T,n,m)) {
         cout << "Matrix format does not conform to quantity of variables and restrictions" << endl;
         return 1;
@@ -26,6 +28,9 @@ int main(int argc, char* argv[]) {
         // ...
         // TELL IT IS MINIMIZATION PROBLEM
         cout << "Minimization problem" << endl;
+        firstFeasibleSolutionMinimization(T,n,m);
+        printMatrix(T);
+
     } else {
         cout << "Maximization problem" << endl;
     }
@@ -35,7 +40,6 @@ int main(int argc, char* argv[]) {
     cout << ans;
     cout<<endl;
     cout<<endl;
-    printMatrix(T);
 }
 
 /*
