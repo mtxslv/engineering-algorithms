@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string>
+#include <cstring>
 #include "simplex.h"
 #include "processFile.h"
 #include "userInput.h"
@@ -8,16 +8,36 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    if (argc != 4) {
-        cerr << "Usage: " << endl;
-        cout << "\tsimplexsolver <tableau_file> <number_of_variables> <number_of_constraints>" << endl;
+
+    if (argc != 1 && argc != 5) {
+        cerr << "You can call the interactive window with:" << endl;
+        cerr << "\t ./simplexsolver" << endl;
+        cerr << "Optionally, you can directly provide a tableau file using: " << endl;
+        cerr << "\t./simplexsolver -f <tableau_file> <number_of_variables> <number_of_constraints>" << endl;
         return 1;
     }
 
-    int n = atoi(argv[2]); // number of variables
-    int m = atoi(argv[3]); // number of constraints
+    // first define variables
+    vector<vector<float>> T ;
+    int n; 
+    int m; 
 
-    vector<vector<float>> T = readFile(argv[1]); // Tableau matrix
+    if (argc == 1) {
+        cout << "YOU NEED TO CALL USER INPUT HERE" << endl;
+        return 1;
+    } else {
+        if (strcmp(argv[1], "-f")){
+            cerr << "You can call the interactive window with:" << endl;
+            cerr << "\t ./simplexsolver" << endl;
+            cerr << "Optionally, you can directly provide a tableau file using: " << endl;
+            cerr << "\t./simplexsolver -f <tableau_file> <number_of_variables> <number_of_constraints>" << endl;
+            return 1;            
+        }
+        n = atoi(argv[3]); // number of variables
+        m = atoi(argv[4]); // number of constraints
+
+        T = readFile(argv[2]); // Tableau matrix
+    }
 
     if (!checkMatrixFormat(T,n,m)) {
         cout << "Matrix format does not conform to quantity of variables and restrictions" << endl;
