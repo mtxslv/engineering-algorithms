@@ -7,7 +7,8 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
     if (argc != 4) {
-        cerr << "Usage: " << "simplexsolver <tableau_file> <number_of_variables> <number_of_constraints>" << endl;
+        cerr << "Usage: " << endl;
+        cout << "\tsimplexsolver <tableau_file> <number_of_variables> <number_of_constraints>" << endl;
         return 1;
     }
 
