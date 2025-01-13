@@ -4,7 +4,6 @@
 #include "processFile.h"
 #include "userInput.h"
 
-
 using namespace std;
 
 int main(int argc, char* argv[]) {
@@ -23,8 +22,7 @@ int main(int argc, char* argv[]) {
     int m; 
 
     if (argc == 1) {
-        cout << "YOU NEED TO CALL USER INPUT HERE" << endl;
-        return 1;
+        processUserInput(T,n,m);
     } else {
         if (strcmp(argv[1], "-f")){
             cerr << "You can call the interactive window with:" << endl;

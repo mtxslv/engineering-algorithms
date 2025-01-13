@@ -6,7 +6,7 @@ DEPS = simplex.h processFile.h userInput.h
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 make: main.o simplex.o processFile.o userInput.o
-	$(CC) -o simplexsolver main.o simplex.o processFile.o
+	$(CC) -o simplexsolver main.o simplex.o processFile.o userInput.o
 	rm *.o
 
 simpleclean:
