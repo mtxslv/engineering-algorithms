@@ -2,6 +2,8 @@
 #include <string>
 #include "simplex.h"
 #include "processFile.h"
+#include "userInput.h"
+
 
 using namespace std;
 
