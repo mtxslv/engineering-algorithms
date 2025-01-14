@@ -115,16 +115,22 @@ void firstFeasibleSolutionMinimization(
     // Pivot auxiliary variables;
     float pivot, multiplier ;    
 
-    // Let's populate the quotient vector
-    for (int i=1; i<m+1; i++) {
-        if (T[i][jP] <= 0) {
-            q[i-1] = FLT_MIN;
-        } else {
-            // element wise division between the restriction rows
-            // on the pivot column and the last tableau column
-            q[i-1] = T[i][m+n+1]/ T[i][jP]; 
+        float ratio;
+        // Let's populate the quotient vector
+        for (int i=1; i<m+1; i++) {
+            if (T[i][jP] == 0) {
+                q[i-1] = FLT_MAX;
+            } else {
+                // element wise division between the restriction rows
+                // on the pivot column and the last tableau column
+                ratio = T[i][m+n+1]/ T[i][jP];
+                if (ratio <= 0) {
+                    q[i-1] = FLT_MAX; 
+                } else {
+                    q[i-1] = ratio; 
+                }
+            }
         }
-    }
 
     // Now we found the greatest restriction quotient
     for (int i=0; i<m; i++){
