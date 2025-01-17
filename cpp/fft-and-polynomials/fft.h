@@ -6,7 +6,7 @@
 
 using namespace std;
 
-vector<double> DFT(vector<double> a);
-vector<double> FFT(vector<double> a);
+vector<complex<double>> DFT(vector<double> a);
+vector<complex<double>> FFT(vector<double> a);
 
 #endif
