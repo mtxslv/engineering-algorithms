@@ -1,7 +1,11 @@
 #ifndef TAYLORSERIES_H
 #define TAYLORSERIES_H
 
-double naturalLogarithm(int n);
-double arcTan(int n);
+#include <vector>
+
+using namespace std;
+
+vector<double> naturalLogarithm(int n);
+vector<double> arcTan(int n);
 
 #endif
