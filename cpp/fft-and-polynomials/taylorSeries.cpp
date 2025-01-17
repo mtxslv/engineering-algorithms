@@ -22,7 +22,11 @@ vector<double> naturalLogarithm(int n){
 vector<double> arcTan(int n) {
     vector<double> params = vector<double>(n+1, 0.0); 
     for (int k=1; k<=n ; k++){
-        params[k] = pow(-1,k-1)/(2*k-1);
+        if (k%2 == 0) {
+            params[k] = 0;
+        } else {
+            params[k] = pow(-1,k-1)/(2*k-1);
+        }
     }
     return params;
-}
+} // CHECAR DEPOIS SE TÁ CERTO (ACHO QUE NÃO, NUM SEI)
