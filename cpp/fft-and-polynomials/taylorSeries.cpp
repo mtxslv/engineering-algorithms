@@ -16,7 +16,13 @@ vector<double> naturalLogarithm(int n){
     return params;
 }
 
-
-// vector<double> arcTan(int n) {
-
-// }
+/*
+    arcTan implements the params for arctan(x)
+*/
+vector<double> arcTan(int n) {
+    vector<double> params = vector<double>(n+1, 0.0); 
+    for (int k=1; k<=n ; k++){
+        params[k] = pow(-1,k-1)/(2*k-1);
+    }
+    return params;
+}
