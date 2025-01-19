@@ -9,21 +9,26 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    // vector<double> a = {1.0, 2.0, 3.0, 4.0, 5.0};
-    // vector<complex<double>> dftA = DFT(a);
-    // for (int k = 0; k < 4; k++) {
-    //     cout << dftA[k] << endl;
-    // }
-    vector<double> a = {1.0,2.0,3.0,4.0,5.0};
-    // vector<double> paddedA = padToPowerOf2(a);
-    // for(int k = 0 ; k < paddedA.size(); k++) {
-    //     cout << paddedA[k] << endl;
-    // }     
-    // // vector<double> a = {1.0,2.0};
-    vector<complex<double>> fftA = safeFFT(a);
-    cout << "AGORA A FFT" << endl;
-    cout << "FFT SIZE: \t" << fftA.size() << endl; 
-    for(int k = 0 ; k < fftA.size(); k++) {
-        cout << fftA[k] << endl;
-    } 
+    int howManyTerms = 32;
+
+    vector<double> params = naturalLogarithm(howManyTerms);
+    double y = poly(0.3, params); // 0.262364264
+    cout << "ln(1+0.3) = 0.262364264 | COMPUTED: " << y << endl;
+    
+    y = poly(0.7, params); // 0.53062825106
+    cout << "ln(1+0.7) = 0.53062825106 | COMPUTED: " << y;
+    cout << endl;
+
+    //////////////////////////////////////////////////////
+
+    vector<double> paramsAT = arcTan(1024*howManyTerms);
+    cout << "TERMS FOR ARCTAN :" << endl;
+    for (int k = 0; k < howManyTerms ; k++) {
+        cout << "\t" << paramsAT[k] << endl;
+    }
+    y = poly(1.0, paramsAT); // 0.785398163
+    cout << "arctan(1) = 0.785398163 | COMPUTED: " << y << endl;
+    y = poly(0.577350269, paramsAT); // 0.523598775
+    cout << "arctan(0.577350269) = 0.523598775 | COMPUTED: " << y << endl;
+
 }
