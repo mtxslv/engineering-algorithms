@@ -1,6 +1,7 @@
+#include <bit>
+#include <cmath>
 #include <complex>
 #include <vector>
-
 #include <iostream>
 
 using namespace std;
@@ -33,25 +34,26 @@ vector<complex<double>> DFT(vector<double> a){
     return y;
 }
 
-vector<complex<double>> FFT(vector<double> a){
+// Compute FFT
+vector<complex<double>> FFT(vector<double> a) {
     int n = a.size();
     vector<complex<double>> y;
-    
-    if (n == 1){
+
+    if (n == 1) {
         y.resize(1);
-        y[0] = complex<double>(a[0],0); // DFT of 1 element is the element itself
+        y[0] = complex<double>(a[0], 0); // DFT of 1 element is the element itself
         return y;
     }
-    
+
     y.resize(n);
 
-    complex<double> omega_n = polar(1.0,-2*M_PI/(double)n);
-    complex<double> omega = complex<double>(1,0);
+    complex<double> omega_n = polar(1.0, -2 * M_PI / (double)n);
+    complex<double> omega = complex<double>(1, 0);
 
-    // split vector a into even and odd
+    // Split vector a into even and odd indices
     vector<double> aEven, aOdd;
-    for (int k; k < n; k++){
-        if (k%2 == 0) { // k even 
+    for (int k = 0; k < n; k++) {
+        if (k % 2 == 0) { // k even
             aEven.push_back(a[k]);
         } else {
             aOdd.push_back(a[k]);
@@ -61,15 +63,43 @@ vector<complex<double>> FFT(vector<double> a){
     vector<complex<double>> yEven = FFT(aEven);
     vector<complex<double>> yOdd = FFT(aOdd);
 
-    for(int k = 0; k <= n/2-1; k++){
-        y[k] = yEven[k] + omega*yOdd[k];
-        y[k+n/2] = yEven[k] - omega*yOdd[k];
-        omega = omega*omega_n;
+    for (int k = 0; k < n / 2; k++) {
+        y[k] = yEven[k] + omega * yOdd[k];
+        y[k + n / 2] = yEven[k] - omega * yOdd[k];
+        omega = omega * omega_n;
     }
 
     return y;
 }
 
+// Find the next power of 2
+int nextPowerOf2(int n) {
+    if (n <= 0) {
+        return 1; // Or handle as an error
+    }
+    if ((n & (n - 1)) == 0) { // Already a power of 2
+        return n;
+    }
+    n--;
+    n |= n >> 1;
+    n |= n >> 2;
+    n |= n >> 4;
+    n |= n >> 8;
+    n |= n >> 16;
+    n++;
+    return n;
+}
 
-//https://www.reddit.com/r/DSP/comments/13ji73d/question_about_c_implementation_of_dft/
-// https://stackoverflow.com/questions/51679516/discrete-fourier-transform-c
+// Pad the input to the next power of 2
+vector<double> padToPowerOf2(vector<double> a) {
+    int n = a.size();
+    int N = nextPowerOf2(n);
+    a.resize(N, 0.0); // Resize and pad with zeros
+    return a;
+}
+
+// Safe FFT implementation with padding
+vector<complex<double>> safeFFT(vector<double> a) {
+    vector<double> okA = padToPowerOf2(a);
+    return FFT(okA);
+}
