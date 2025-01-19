@@ -8,25 +8,24 @@ using namespace std;
     For more information, read:
         https://en.cppreference.com/w/cpp/numeric/complex/polar
 */
-vector<complex<double>> rootsOfUnity(int n){
-    vector<complex<double>> roots = vector<complex<double>>(n,complex<double>(0,0));
+vector<complex<double>> rootsOfUnity(int n) {
+    vector<complex<double>> roots(n, complex<double>(0, 0));
     double phase;
     for (int k = 0; k < n; k++) {
-        phase = 2*M_PI*(double)k/(double)n;
-        roots[k] = polar(1.0, phase);
+        phase = -2 * M_PI * k / n; // Negative sign for forward DFT
+        roots[k] = polar(1.0, phase); // Magnitude 1, phase angle
     }
     return roots;
-}   
+}  
 
 vector<complex<double>> DFT(vector<double> a){
     int n = a.size();
-    vector<complex<double>> y = vector<complex<double>>(n,complex<double>(0,0));
-    
-    complex<double> unity_root_k;
-    for (int k = 0; k < n ; k++) {
-        unity_root_k = polar(1.0,(double)n/(double)k);
+    vector<complex<double>> roots = rootsOfUnity(n);
+
+    vector<complex<double>> y(n, complex<double>(0, 0));
+    for (int k = 0; k < n; k++) {
         for (int j = 0; j < n; j++) {
-            // y[k] += a[j]
+            y[k] += a[j] * roots[(k * j) % n]; // Ensure index wraps around
         }
     }
     return y;
