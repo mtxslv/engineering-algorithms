@@ -31,3 +31,20 @@ void taylorSeriesEx() {
     y = poly(0.577350269, paramsAT); // 0.523598775
     cout << "arctan(0.577350269) = 0.523598775 | COMPUTED: " << y << endl;
 }
+
+void DFTandFFT(){
+    int n = 8; // always a power of 2
+    vector<double> a;
+    for (int k = 0 ; k < n; k++) {
+        a.push_back((double)(k+1));
+    }
+
+    vector<complex<double>> aFFT, aDFT;
+
+    aFFT = FFT(a);
+    aDFT = DFT(a);
+
+    for (int k = 0 ; k < n ; k++) {
+        cout << "DFT[" << k << "] = " << aDFT[k] << " | FFT[" << k << "] = " << aFFT[k] << endl;
+    }
+}
