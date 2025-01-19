@@ -3,6 +3,21 @@
 
 using namespace std;
 
+/* 
+    Return the n roots of unity in cartesian form.
+    For more information, read:
+        https://en.cppreference.com/w/cpp/numeric/complex/polar
+*/
+vector<complex<double>> rootsOfUnity(int n){
+    vector<complex<double>> roots = vector<complex<double>>(n,complex<double>(0,0));
+    double phase;
+    for (int k = 0; k < n; k++) {
+        phase = 2*M_PI*(double)k/(double)n;
+        roots[k] = polar(1.0, phase);
+    }
+    return roots;
+}   
+
 vector<complex<double>> DFT(vector<double> a){
     int n = a.size();
     vector<complex<double>> y = vector<complex<double>>(n,complex<double>(0,0));

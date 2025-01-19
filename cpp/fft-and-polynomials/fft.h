@@ -6,6 +6,7 @@
 
 using namespace std;
 
+vector<complex<double>> rootsOfUnity(int n);
 vector<complex<double>> DFT(vector<double> a);
 vector<complex<double>> FFT(vector<double> a);
 
