@@ -1,11 +1,14 @@
+#include <chrono>
+#include <cmath>
+#include <cstring>
 #include <iomanip>
 #include <iostream>
-#include <cstring>
 #include <vector>
 #include "fft.h"
 #include "polynomial.h"
 #include "taylorSeries.h"
 
+using namespace chrono;
 using namespace std;
 
 void taylorSeriesEx() { 
@@ -32,7 +35,7 @@ void taylorSeriesEx() {
     cout << "arctan(0.577350269) = 0.523598775 | COMPUTED: " << y << endl;
 }
 
-void DFTandFFT(){
+void DFTandFFTtermsCompare(){
     int n = 8; // always a power of 2
     vector<double> a;
     for (int k = 0 ; k < n; k++) {
@@ -47,4 +50,40 @@ void DFTandFFT(){
     for (int k = 0 ; k < n ; k++) {
         cout << "DFT[" << k << "] = " << aDFT[k] << " | FFT[" << k << "] = " << aFFT[k] << endl;
     }
+}
+
+void DFTandFFT(){
+
+    int howManyTerms;
+    vector<double> paramsDFT, paramsFFT;
+    vector<complex<double>> aFFT, aDFT;
+
+    for (int n = 8 ; n <= 15 ; n++) {
+        
+        // create polynomial parameters
+        howManyTerms = pow(2,n);
+        paramsDFT = naturalLogarithm(howManyTerms);
+        paramsFFT = naturalLogarithm(howManyTerms);
+
+        // NOW COMPUTE
+
+        // FFT
+        auto startFFT = high_resolution_clock::now();
+        aFFT = FFT(paramsFFT);
+        auto stopFFT = high_resolution_clock::now();
+
+        // DFT
+        auto startDFT = high_resolution_clock::now();
+        aDFT = DFT(paramsDFT);        
+        auto stopDFT = high_resolution_clock::now();
+
+
+        auto durationDFT = duration_cast<microseconds>(stopDFT - startDFT);
+        auto durationFFT = duration_cast<microseconds>(stopFFT - startFFT);
+
+        cout << "Transformation for polynomial of " << howManyTerms << " terms:" << endl;
+        cout << "\tComputing DFT took " << durationDFT.count() << " microseconds" << endl;
+        cout << "\tComputing FFT took " << durationFFT.count() << " microseconds" << endl;
+    }
+
 }

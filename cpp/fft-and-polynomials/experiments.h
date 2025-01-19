@@ -3,5 +3,6 @@
 
 void taylorSeriesEx();
 void DFTandFFT();
+void DFTandFFTtermsCompare();
 
 #endif
