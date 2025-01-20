@@ -103,3 +103,51 @@ vector<complex<double>> safeFFT(vector<double> a) {
     vector<double> okA = padToPowerOf2(a);
     return FFT(okA);
 }
+
+// Compute I-FFT
+vector<complex<double>> IFFT(vector<complex<double>> a) {
+    int n = a.size();
+    vector<complex<double>> y;
+
+    if (n == 1) {
+        y.resize(1);
+        y[0] = a[0]; // DFT of 1 element is the element itself
+        return y;
+    }
+
+    y.resize(n);
+
+    // Conjugate the input
+    for (int i = 0; i < n; i++) {
+        a[i] = conj(a[i]);
+    }
+
+    // Compute FFT of conjugated input
+    complex<double> omega_n = polar(1.0, -2 * M_PI / (double)n); // Note the negative sign
+    complex<double> omega = complex<double>(1, 0);
+
+    vector<complex<double>> aEven, aOdd;
+    for (int k = 0; k < n; k++) {
+        if (k % 2 == 0) {
+            aEven.push_back(a[k]);
+        } else {
+            aOdd.push_back(a[k]);
+        }
+    }
+
+    vector<complex<double>> yEven = IFFT(aEven);
+    vector<complex<double>> yOdd = IFFT(aOdd);
+
+    for (int k = 0; k < n / 2; k++) {
+        y[k] = yEven[k] + omega * yOdd[k];
+        y[k + n / 2] = yEven[k] - omega * yOdd[k];
+        omega = omega * omega_n;
+    }
+
+    // Conjugate the result and scale it by dividing by n
+    for (int i = 0; i < n; i++) {
+        y[i] = conj(y[i]) / (double)n;
+    }
+
+    return y;
+}
