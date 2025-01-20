@@ -15,4 +15,6 @@ std::vector<double> conv1D(
     std::vector<double> A,
     std::vector<double> B
 );
+void printPoly(char icon, vector<double> P);
+
 #endif

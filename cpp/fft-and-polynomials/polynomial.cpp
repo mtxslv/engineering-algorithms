@@ -2,6 +2,7 @@
 #include <math.h>       /* pow */
 #include <complex>
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
@@ -89,4 +90,18 @@ vector<double> polynomialProduct ( vector<double> A, vector<double> B) {
         }
     }
     return C;
+}
+
+void printPoly(char icon, vector<double> P){
+    cout << icon << "(x) = " << P[0] ;
+
+    for(int i = 1; i < P.size(); i++){
+        if (P[i] >= 0) {
+            cout << " + " ;
+        } else {
+            cout << " ";
+        }
+        cout << P[i] << "*x^" << i;
+    }
+    cout << endl;
 }
