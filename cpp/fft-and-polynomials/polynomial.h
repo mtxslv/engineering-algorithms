@@ -11,5 +11,8 @@ std::vector<std::complex<double>> conv1D(
     std::vector<std::complex<double>> B
 );
 vector<double> polynomialProduct ( vector<double> A, vector<double> B);
-
+std::vector<double> conv1D(
+    std::vector<double> A,
+    std::vector<double> B
+);
 #endif
