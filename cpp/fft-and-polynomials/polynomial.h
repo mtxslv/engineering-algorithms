@@ -6,5 +6,8 @@
 using namespace std;
 
 double poly(double x, vector<double> params);
-
+std::vector<std::complex<double>> conv1D(
+    std::vector<std::complex<double>> A,
+    std::vector<std::complex<double>> B
+);
 #endif
