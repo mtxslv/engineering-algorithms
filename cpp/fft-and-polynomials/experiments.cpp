@@ -148,3 +148,28 @@ void FFTandIDFT(){
 
 
 }
+
+void comparisonFFTandPolyProd(){
+    vector<double> A = {2.0, 1.0}; // x + 2
+    vector<double> B = {4.0, 0.0, -3.0, 5.0}; // 4 + 0x -3x² + 5x³ 
+
+    // Regular poly prod
+    vector<double> C = polynomialProduct(A,B); // 8 + 4x -6x² + 7x³ + 5x⁴
+
+    // FFT each polynomial
+    vector<complex<double>> aFFT = FFT(A);
+    vector<complex<double>> bFFT = FFT(B);
+
+    // Conv1D in frequency domain
+    vector<complex<double>> cFFT = conv1D(aFFT, bFFT);
+
+    // IDFT the result
+    vector<complex<double>> recC = IDFT(cFFT);
+
+    // Show the results
+    for( int k = 0; k < recC.size(); k++){
+        cout << recC[k] << "\t";
+    }
+    cout << endl;
+
+}

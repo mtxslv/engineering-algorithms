@@ -7,6 +7,7 @@ void DFTandFFTtermsCompare();
 void taylorSeriesEx();
 void regularPolynomialProduct();
 void FFTandIDFT();
+void comparisonFFTandPolyProd();
 
 
 #endif
