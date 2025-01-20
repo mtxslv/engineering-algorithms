@@ -13,4 +13,6 @@ vector<complex<double>> safeFFT(vector<double> a);
 int nextPowerOf2(int n);
 vector<double> padToPowerOf2(vector<double> a);
 vector<complex<double>> IFFT(vector<complex<double>> a);
+vector<complex<double>> IDFT(vector<complex<double>> a);
+
 #endif

@@ -151,3 +151,16 @@ vector<complex<double>> IFFT(vector<complex<double>> a) {
 
     return y;
 }
+
+vector<complex<double>> IDFT(vector<complex<double>> a) {
+    int n = a.size();
+    vector<complex<double>> roots = rootsOfUnity(n);
+
+    vector<complex<double>> y(n, complex<double>(0, 0));
+    for (int k = 0; k < n; k++) {
+        for (int j = 0; j < n; j++) {
+            y[k] += (a[j] * pow(roots[(k * j) % n],-1))/(double)n; // Ensure index wraps around
+        }
+    }
+    return y;    
+}
