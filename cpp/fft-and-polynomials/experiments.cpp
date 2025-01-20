@@ -87,3 +87,20 @@ void DFTandFFT(){
     }
 
 }
+
+void convolution1DTest(){
+    vector<complex<double>> A = {
+        complex<double>(1.0, 0.0),
+        complex<double>(2.0, 0.0),
+        complex<double>(3.0, 0.0),
+    };
+    vector<complex<double>> B = {
+        complex<double>(0.0, 0.0),
+        complex<double>(1.0, 0.0),
+        complex<double>(0.5, 0.0),
+    };    
+    vector<complex<double>> C = conv1D(A,B);
+    for (int i = 0; i < C.size(); i++){
+        cout << C[i] << endl;
+    }
+}

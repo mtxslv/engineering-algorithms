@@ -11,6 +11,6 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
     // taylorSeriesEx();
-    DFTandFFT();
-
+    // DFTandFFT();
+    convolution1DTest();
 }
