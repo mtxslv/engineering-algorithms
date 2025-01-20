@@ -44,3 +44,18 @@ std::vector<std::complex<double>> conv1D(
     }
     return result;
 }
+
+vector<double> polynomialProduct ( vector<double> A, vector<double> B) {
+    int n = A.size()-1;
+    int m = B.size()-1;
+    int outSize = n + m + 1;
+
+    vector<double> C(outSize);
+
+    for(int i = 0 ; i <= n ; i++) {
+        for (int j = 0; j <= m; j++) {
+            C[i+j] += A[i]*B[j];
+        }
+    }
+    return C;
+}

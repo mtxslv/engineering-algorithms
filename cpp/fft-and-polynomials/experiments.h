@@ -5,5 +5,5 @@ void convolution1DTest();
 void DFTandFFT();
 void DFTandFFTtermsCompare();
 void taylorSeriesEx();
-
+void regularPolynomialProduct();
 #endif

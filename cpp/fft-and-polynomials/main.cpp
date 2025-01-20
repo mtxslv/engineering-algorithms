@@ -12,5 +12,6 @@ using namespace std;
 int main(int argc, char* argv[]) {
     // taylorSeriesEx();
     // DFTandFFT();
-    convolution1DTest();
+    // convolution1DTest();
+    regularPolynomialProduct();
 }

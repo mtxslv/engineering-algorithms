@@ -104,3 +104,22 @@ void convolution1DTest(){
         cout << C[i] << endl;
     }
 }
+
+void regularPolynomialProduct(){
+    // https://runestone.academy/ns/books/published/int-algebra/PolynomialFunctions.html
+
+    vector<double> A = {2.0, 1.0}; // x + 2
+    vector<double> B = {4.0, 0.0, -3.0, 5.0}; // 4 + 0x -3x² + 5x³ 
+    vector<double> C = polynomialProduct(A,B); // 8 + 4x -6x² + 7x³ + 5x⁴
+
+    cout << "C(x) = " << C[0] ;
+    for(int i = 1; i < C.size(); i++){
+        if (C[i] >= 0) {
+            cout << " + " ;
+        } else {
+            cout << " ";
+        }
+        cout << C[i] << "*x^" << i;
+    }
+    cout << endl;
+}
