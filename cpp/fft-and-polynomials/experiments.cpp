@@ -123,3 +123,28 @@ void regularPolynomialProduct(){
     }
     cout << endl;
 }
+
+void FFTandIDFT(){
+    vector<double> A = {1.0, 2.0, 3.0, 4.0};
+    // vector<double> A = {7.0, 2.0, 9.0, 5.0};
+    vector<complex<double>> fftA = FFT(A); // 
+
+    cout << "FFT COEFFICIENTS: " << endl;
+    for (int k = 0; k < fftA.size(); k++){
+        cout << fftA[k] << "\t";
+    }
+    cout << endl;
+
+    vector<complex<double>> restoredA = IDFT(fftA);
+
+
+    cout << "REGULAR COEFFICIENTS: " << endl;
+    for (int k = 0; k < restoredA.size(); k++){
+        cout << restoredA[k] << "\t";
+    }
+    cout << endl;
+
+    cout << "COEFFICIENTS MUST BE: 1, 2, 3, 4" << endl;
+
+
+}

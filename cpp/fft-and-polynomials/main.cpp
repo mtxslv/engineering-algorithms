@@ -13,5 +13,7 @@ int main(int argc, char* argv[]) {
     // taylorSeriesEx();
     // DFTandFFT();
     // convolution1DTest();
-    regularPolynomialProduct();
+    // regularPolynomialProduct();
+    // comparisonFFTandPolyProd();
+    FFTandIDFT();
 }
