@@ -153,12 +153,20 @@ void comparisonFFTandPolyProd(){
     vector<double> A = {2.0, 1.0}; // x + 2
     vector<double> B = {4.0, 0.0, -3.0, 5.0}; // 4 + 0x -3x² + 5x³ 
 
+    // Print both polynomials
+    cout << endl << "Polynomials to multiply:" << endl;
+    printPoly('A', A);
+    printPoly('B', B);
+
     // Regular poly prod
     vector<double> Cconv1D = conv1D(A,B);
     vector<double> C = polynomialProduct(A,B); // 8 + 4x -6x² + 7x³ + 5x⁴
 
+
+    cout << endl << "Polynomial from regular term-by-term product: " << endl;
     printPoly('C', C);
-    printPoly('D', Cconv1D);
+    cout << "Polynomial from 1D Convolution: " << endl;
+    printPoly('C', Cconv1D);
 
     // Pad A to have 4 points
     A.push_back(0);
@@ -170,20 +178,78 @@ void comparisonFFTandPolyProd(){
         B.push_back(0);
     }
 
+    cout << endl << "We pad both parameters vector to have the same power-2 size..." << endl;
+    cout << "A parameters: [\t" ;
+    for (int i = 0; i < A.size() ; i++){
+        cout << A[i] << "\t" ;
+    }
+    cout << "]" << endl;
+
+    cout << "B parameters: [\t" ;
+    for (int i = 0; i < B.size() ; i++){
+        cout << B[i] << "\t" ;
+    }
+    cout << "]" << endl;    
+
     // FFT each polynomial
     vector<complex<double>> aFFT = FFT(A);
     vector<complex<double>> bFFT = FFT(B);
 
-    // Conv1D in frequency domain
+    cout << endl << "Now we take the FFT of each polynomial's parameter vector..." << endl;
+    cout << "fft{A} = [\t";
+    for (int i = 0; i < aFFT.size() ; i++){
+        cout << aFFT[i].real() ;
+        if(aFFT[i].imag() < 0) {
+           cout <<  aFFT[i].imag();
+        } else {
+           cout << "+ " << aFFT[i].imag();
+        }    
+        cout << "i\t";
+    }
+    cout << "]" << endl;
+    cout << "fft{B} = [\t";
+    for (int i = 0; i < bFFT.size() ; i++){
+        cout << bFFT[i].real() ;
+        if(bFFT[i].imag() < 0) {
+           cout <<  bFFT[i].imag();
+        } else {
+           cout << "+ " << bFFT[i].imag();
+        }    
+        cout << "i\t";
+    }
+    cout << "]" << endl;    
+
+    // pointwise prod in frequency domain
     vector<complex<double>> cFFT = pointwiseProd(aFFT, bFFT);
+    cout << "The pointwise product creates a new parameter vector... let's call it..." << endl;
+    cout << "fft{C} = [\t";
+    for (int i = 0; i < cFFT.size() ; i++){
+        cout << cFFT[i].real() ;
+        if(cFFT[i].imag() < 0) {
+           cout <<  cFFT[i].imag();
+        } else {
+           cout << "+ " << cFFT[i].imag();
+        }    
+        cout << "i\t";
+    }
+    cout << "]" << endl;   
 
     // // IDFT the result
     vector<complex<double>> recC = IDFT(cFFT);
-
-    // Show the results
-    for( int k = 0; k < recC.size(); k++){
-        cout << recC[k] << "\t";
+    cout << endl << "We IDFT the result, creating a 'restored' C: " << endl;
+    cout << "IDFT{fft{C}} = [\t";
+    for (int i = 0; i < recC.size() ; i++){
+        if (recC[i].real() < 1e-15 && recC[i].real() > -1e-15){
+            cout << 0 ;
+        } else {
+            cout << recC[i].real() ;
+        }
+        if(recC[i].imag() < 1e-15 && recC[i].imag() > -1e-15) {
+           cout <<  "+0i\t"; 
+        }    
     }
-    cout << endl;
+    cout << "]" << endl;   
+
+    cout<< endl << "Notice these are the parameters of the product C!"<< endl;
 
 }
