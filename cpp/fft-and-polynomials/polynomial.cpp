@@ -105,3 +105,27 @@ void printPoly(char icon, vector<double> P){
     }
     cout << endl;
 }
+
+vector<complex<double>> pointwiseProd(
+    vector<complex<double>> A,
+    vector<complex<double>> B
+) {
+    // Ensure A is the larger vector (if not, swap them)
+    if (A.size() < B.size()) {
+        std::swap(A,B);
+
+        // Now pad B
+        for (int k=0; k < A.size() - B.size(); k++){
+            B.push_back(complex<double>(0.0));
+        }
+    }
+
+    int n = A.size();
+    vector<complex<double>> C(n);
+
+    for (int k=0; k < n; k++){
+        C[k] = A[k]*B[k];
+    }
+
+    return C;
+}

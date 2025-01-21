@@ -154,16 +154,30 @@ void comparisonFFTandPolyProd(){
     vector<double> B = {4.0, 0.0, -3.0, 5.0}; // 4 + 0x -3x² + 5x³ 
 
     // Regular poly prod
+    vector<double> Cconv1D = conv1D(A,B);
     vector<double> C = polynomialProduct(A,B); // 8 + 4x -6x² + 7x³ + 5x⁴
+
+    printPoly('C', C);
+    printPoly('D', Cconv1D);
+
+    // Pad A to have 4 points
+    A.push_back(0);
+    A.push_back(0);
+
+    // Now pad both to 2n
+    for (int k = 0; k < 4; k++){
+        A.push_back(0);
+        B.push_back(0);
+    }
 
     // FFT each polynomial
     vector<complex<double>> aFFT = FFT(A);
     vector<complex<double>> bFFT = FFT(B);
 
     // Conv1D in frequency domain
-    vector<complex<double>> cFFT = conv1D(aFFT, bFFT);
+    vector<complex<double>> cFFT = pointwiseProd(aFFT, bFFT);
 
-    // IDFT the result
+    // // IDFT the result
     vector<complex<double>> recC = IDFT(cFFT);
 
     // Show the results

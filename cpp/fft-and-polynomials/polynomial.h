@@ -16,5 +16,8 @@ std::vector<double> conv1D(
     std::vector<double> B
 );
 void printPoly(char icon, vector<double> P);
-
+vector<complex<double>> pointwiseProd(
+    vector<complex<double>> A,
+    vector<complex<double>> B
+) ;
 #endif
